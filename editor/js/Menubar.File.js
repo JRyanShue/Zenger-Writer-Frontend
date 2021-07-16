@@ -26,92 +26,53 @@ function MenubarFile( editor ) {
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/slice' ) );
 	option.onClick( async function () {
+
+		// Use to ensure changes register
 		console.log("\(v1.1\) Slicing STL...");
 
+		// Generate STL blob from build plate
 		var { STLExporter } = await import( '../../examples/jsm/exporters/STLExporter.js' );
-
 		var exporter = new STLExporter();
-
-		// const body = new FormData();
 		var buffer = exporter.parse( editor.scene, { binary: true } );
 		var blob = new Blob( [ buffer ], { type: 'application/octet-stream' } );
-		console.log("BLOB:", blob);
-		console.log("TYPE:", typeof blob)
-		// body.append('files', blob , "ExampleSTL");
-		// console.log(body);
 
-		// Build formData object.
+		// Build FormData object
 		let formData = new FormData();
 		formData.append('stl', blob, 'modelSTL.stl');
-		formData.append('testint', 1234);
+		formData.append('action', "slice");
 		
-		for(var pair of formData.entries()) {
-			console.log(pair[0]+ ', '+ pair[1]);
-		 }
+		// for(var pair of formData.entries()) {
+		// 	console.log(pair[0]+ ', '+ pair[1]);
+		// }
 
+		// Send FormData to backend for slicing
 		fetch('http://172.18.122.122/put_stl',
 			{
 				method: 'POST',
 				body: formData,
 			})
 			.then(response => response.json())
+			.then(
+				// Get generated gcode and return
+				fetchGcode()
+				)
 			.then(data => {
 				console.log('Success:', data);
 			})
 			.catch((error) => {
 				console.error('Error:', error);
 			});
-
-		// const data = { stl: blob };
-		// fetch('http://172.18.122.122/put_stl', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/octet-stream',
-		// 	},
-		// 	body: JSON.stringify(data),
-		// })
-		// .then(response => response.json())
-		// .then(data => {
-		//   console.log('Success:', data);
-		// })
-		// .catch((error) => {
-		//   console.error('Error:', error);
-		// });
-		// fetch('http://172.18.122.122/put_stl').then(response => console.log(response)) ;
-		
-//body: body
-		
-		// console.log("Blob:", blob);
-
-		// const body = new FormData();
-		// const file = event.dataTransfer.files[0];
-		// body.append('files', file , file.name);
-
-		
-
-		let stl_obj = {
-		STL : blob,
-		STLRaw : buffer,
-		action : "slice"
-		};
-
-		var stl_json = JSON.stringify(stl_obj);
-
-		console.log("JSON:", stl_json);
-		// saveArrayBuffer( buffer, 'model-binary.stl' );
-
-		// fetch('http://172.18.122.122/get_gcode')
-		
-		// fetch response from gcode generator URL
-		// fetch('http://172.18.122.122/get_gcode') // get_gcode
-		// 	.then(response => response.text())  // use .text() because it's a gcode file, not JSON
-		// 	.then(value => {
-		// 		returnGcode(value);
-		// 	});  // callback for handling gcode value
-
-		// console.log(returnedPromise);
+			
 	})
 	options.add( option );
+
+	function fetchGcode() {
+		fetch('http://172.18.122.122/get_gcode') // get_gcode
+			.then(response => response.text())  // use .text() because it's a gcode file, not JSON
+			.then(value => {
+				returnGcode(value);
+			})  // callback for handling gcode value)
+	}
 
 	function returnGcode(gcode) {
 		console.log(gcode);
