@@ -25,11 +25,77 @@ function MenubarFile( editor ) {
 	var option = new UIRow();
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/slice' ) );
-	option.onClick( function () {
-		console.log("Slicing STL...");
+	option.onClick( async function () {
+		console.log("\(v1.0\) Slicing STL...");
+
+		var { STLExporter } = await import( '../../examples/jsm/exporters/STLExporter.js' );
+
+		var exporter = new STLExporter();
+
+		const body = new FormData();
+		var buffer = exporter.parse( editor.scene, { binary: true } );
+		var blob = new Blob( [ buffer ], { type: 'application/octet-stream' } );
+		console.log("BLOB:", blob);
+		body.append('files', blob , "ExampleSTL");
+		console.log(body);
+
+		const data = { stl: blob };
+		fetch('http://172.18.122.122/put_stl', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/octet-stream',
+			},
+			body: JSON.stringify(data),
+		})
+		.then(response => response.json())
+		.then(data => {
+		  console.log('Success:', data);
+		})
+		.catch((error) => {
+		  console.error('Error:', error);
+		});
+		// fetch('http://172.18.122.122/put_stl').then(response => console.log(response)) ;
 		
+//body: body
+		
+		// console.log("Blob:", blob);
+
+		// const body = new FormData();
+		// const file = event.dataTransfer.files[0];
+		// body.append('files', file , file.name);
+
+		
+
+		let stl_obj = {
+		STL : blob,
+		STLRaw : buffer,
+		action : "slice"
+		};
+
+		var stl_json = JSON.stringify(stl_obj);
+
+		console.log("JSON:", stl_json);
+		// saveArrayBuffer( buffer, 'model-binary.stl' );
+
+		// fetch('http://172.18.122.122/get_gcode')
+		
+		// fetch response from gcode generator URL
+		// fetch('http://172.18.122.122/get_gcode') // get_gcode
+		// 	.then(response => response.text())  // use .text() because it's a gcode file, not JSON
+		// 	.then(value => {
+		// 		returnGcode(value);
+		// 	});  // callback for handling gcode value
+
+		// console.log(returnedPromise);
 	})
 	options.add( option );
+
+	function returnGcode(gcode) {
+		console.log(gcode);
+		saveString(gcode, "model.gcode");
+		// var net = require('net');
+
+	}
 
 	// New
 
@@ -384,7 +450,9 @@ function MenubarFile( editor ) {
 
 		var exporter = new STLExporter();
 
-		saveArrayBuffer( exporter.parse( editor.scene, { binary: true } ), 'model-binary.stl' );
+		var buffer = exporter.parse( editor.scene, { binary: true } );
+		console.log("buffer:", buffer);
+		saveArrayBuffer( buffer, 'model-binary.stl' );
 
 	} );
 	options.add( option );
@@ -508,6 +576,20 @@ function MenubarFile( editor ) {
 		link.download = filename || 'data.json';
 		link.dispatchEvent( new MouseEvent( 'click' ) );
 
+	}
+
+	function returnFile( blob, filename ) {
+
+		if ( link.href ) {
+
+			URL.revokeObjectURL( link.href );
+
+		}
+
+		link.href = URL.createObjectURL( blob );
+		link.download = filename || 'data.json';
+		link.dispatchEvent( new MouseEvent( 'click' ) );
+		
 	}
 
 	function saveArrayBuffer( buffer, filename ) {
