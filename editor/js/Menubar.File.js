@@ -26,34 +26,57 @@ function MenubarFile( editor ) {
 	option.setClass( 'option' );
 	option.setTextContent( strings.getKey( 'menubar/file/slice' ) );
 	option.onClick( async function () {
-		console.log("\(v1.0\) Slicing STL...");
+		console.log("\(v1.1\) Slicing STL...");
 
 		var { STLExporter } = await import( '../../examples/jsm/exporters/STLExporter.js' );
 
 		var exporter = new STLExporter();
 
-		const body = new FormData();
+		// const body = new FormData();
 		var buffer = exporter.parse( editor.scene, { binary: true } );
 		var blob = new Blob( [ buffer ], { type: 'application/octet-stream' } );
 		console.log("BLOB:", blob);
-		body.append('files', blob , "ExampleSTL");
-		console.log(body);
+		console.log("TYPE:", typeof blob)
+		// body.append('files', blob , "ExampleSTL");
+		// console.log(body);
 
-		const data = { stl: blob };
-		fetch('http://172.18.122.122/put_stl', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/octet-stream',
-			},
-			body: JSON.stringify(data),
-		})
-		.then(response => response.json())
-		.then(data => {
-		  console.log('Success:', data);
-		})
-		.catch((error) => {
-		  console.error('Error:', error);
-		});
+		// Build formData object.
+		let formData = new FormData();
+		formData.append('stl', blob, 'modelSTL.stl');
+		formData.append('testint', 1234);
+		
+		for(var pair of formData.entries()) {
+			console.log(pair[0]+ ', '+ pair[1]);
+		 }
+
+		fetch('http://172.18.122.122/put_stl',
+			{
+				method: 'POST',
+				body: formData,
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log('Success:', data);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+
+		// const data = { stl: blob };
+		// fetch('http://172.18.122.122/put_stl', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/octet-stream',
+		// 	},
+		// 	body: JSON.stringify(data),
+		// })
+		// .then(response => response.json())
+		// .then(data => {
+		//   console.log('Success:', data);
+		// })
+		// .catch((error) => {
+		//   console.error('Error:', error);
+		// });
 		// fetch('http://172.18.122.122/put_stl').then(response => console.log(response)) ;
 		
 //body: body
