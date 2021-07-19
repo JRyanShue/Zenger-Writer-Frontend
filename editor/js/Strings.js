@@ -127,6 +127,7 @@ function Strings( config ) {
 			'sidebar/object/renderorder': 'Render Order',
 			'sidebar/object/userdata': 'User data',
 
+			'sidebar/geometry/snapdown': 'Snap to Build Plate',
 			'sidebar/geometry/type': 'Type',
 			'sidebar/geometry/new': 'New',
 			'sidebar/geometry/uuid': 'UUID',

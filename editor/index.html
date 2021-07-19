@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js editor</title>
+		<title>Zenger Writer</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="apple-touch-icon" href="images/icon.png">
@@ -76,7 +76,7 @@
 			window.THREE = THREE; // Expose THREE to APP Scripts and Console
 			window.VRButton = VRButton; // Expose VRButton to APP Scripts
 
-			var viewport = new Viewport( editor );
+			var viewport = new Viewport( editor, 235 );
 			document.body.appendChild( viewport.dom );
 
 			var toolbar = new Toolbar( editor );

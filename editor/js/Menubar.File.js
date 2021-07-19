@@ -6,6 +6,8 @@ import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 function MenubarFile( editor ) {
 
+	const IP = "172.31.145.188";
+
 	var config = editor.config;
 	var strings = editor.strings;
 
@@ -40,34 +42,32 @@ function MenubarFile( editor ) {
 		let formData = new FormData();
 		formData.append('stl', blob, 'modelSTL.stl');
 		formData.append('action', "slice");
-		
-		// for(var pair of formData.entries()) {
-		// 	console.log(pair[0]+ ', '+ pair[1]);
-		// }
 
-		// Send FormData to backend for slicing
-		fetch('http://172.18.122.122/put_stl',
-			{
-				method: 'POST',
-				body: formData,
-			})
-			.then(response => response.json())
-			.then(
-				// Get generated gcode and return
-				fetchGcode()
-				)
-			.then(data => {
-				console.log('Success:', data);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
+		await sliceSTL(formData);
+		fetchGcode();
 			
 	})
 	options.add( option );
 
-	function fetchGcode() {
-		fetch('http://172.18.122.122/get_gcode') // get_gcode
+	async function sliceSTL(formData) {
+		// Send FormData to backend for slicing
+		const response = await fetch('http://' + IP + '/put_stl',
+		{
+			method: 'POST',
+			body: formData,
+		});
+		// return await response.json();
+		// .then(response => response.json())
+		// .then(data => {
+		// 	console.log('Success:', data);
+		// })
+		// .catch((error) => {
+		// 	console.error('Error:', error);
+		// });
+	}
+
+	async function fetchGcode() {
+		await fetch('http://' + IP + '/get_gcode') // get_gcode
 			.then(response => response.text())  // use .text() because it's a gcode file, not JSON
 			.then(value => {
 				returnGcode(value);

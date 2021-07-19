@@ -9,6 +9,8 @@ import { SidebarGeometryModifiers } from './Sidebar.Geometry.Modifiers.js';
 
 import { VertexNormalsHelper } from '../../examples/jsm/helpers/VertexNormalsHelper.js';
 
+import { SetPositionCommand } from './commands/SetPositionCommand.js';
+
 function SidebarGeometry( editor ) {
 
 	var strings = editor.strings;
@@ -94,6 +96,30 @@ function SidebarGeometry( editor ) {
 	} );
 	container.addStatic( objectActions );
 	*/
+
+	// Snap to build plate (test)
+	var snapButton = new UIButton( strings.getKey( 'sidebar/geometry/snapdown' ) );
+	snapButton.onClick( function () {
+
+		const absoluteBounds = new THREE.Box3();
+
+		console.log("snapping down");
+		var object = editor.selected;  // works like a THREE.Mesh()
+		var geometry = object.geometry;
+		geometry.computeBoundingBox();
+
+		absoluteBounds.copy( geometry.boundingBox ).applyMatrix4( object.matrixWorld );
+
+		console.log("min:", absoluteBounds.min);
+
+		console.log("x:", object.position.x);
+
+		var newPosition = new THREE.Vector3(object.position.x, object.position.y - absoluteBounds.min.y, object.position.z)
+		
+		editor.execute( new SetPositionCommand( editor, object, newPosition ) );
+
+	} );
+	container.add( snapButton );
 
 	// type
 

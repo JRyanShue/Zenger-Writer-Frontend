@@ -17,7 +17,7 @@ import { SetScaleCommand } from './commands/SetScaleCommand.js';
 
 import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment.js';
 
-function Viewport( editor ) {
+function Viewport( editor, size ) {
 
 	var signals = editor.signals;
 
@@ -27,6 +27,9 @@ function Viewport( editor ) {
 
 	container.add( new ViewportCamera( editor ) );
 	container.add( new ViewportInfo( editor ) );
+
+	// Size of build plate x and y in mm
+	var sidelen = size;
 
 	//
 
@@ -44,12 +47,12 @@ function Viewport( editor ) {
 
 	var grid = new THREE.Group();
 
-	var grid1 = new THREE.GridHelper( 30, 30, 0x888888 );
+	var grid1 = new THREE.GridHelper( sidelen, sidelen, 0x888888 );
 	grid1.material.color.setHex( 0x888888 );
 	grid1.material.vertexColors = false;
 	grid.add( grid1 );
 
-	var grid2 = new THREE.GridHelper( 30, 6, 0x222222 );
+	var grid2 = new THREE.GridHelper( sidelen, sidelen/5, 0x222222 );
 	grid2.material.color.setHex( 0x222222 );
 	grid2.material.depthFunc = THREE.AlwaysDepth;
 	grid2.material.vertexColors = false;
