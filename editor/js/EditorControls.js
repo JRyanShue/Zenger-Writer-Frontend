@@ -141,15 +141,21 @@ function EditorControls( object, domElement ) {
 
 		// Swap Y and Z for Vector3 in use
 		// vector.set( vector.x, oldY+(oldZ-vector.z), oldZ+(oldY-vector.y));
+
+		console.log("dY", oldCoordinatesVector.z - oldY, "dZ", oldCoordinatesVector.y - oldZ)
+
 		vector.x = oldCoordinatesVector.x;
 		vector.y += oldCoordinatesVector.z - oldY;
 		vector.z += oldCoordinatesVector.y - oldZ;
+
+		// vector.y *= -1;
+		// vector.z *= -1;
 
 		// I believe that vector here is correct
 
 		console.log("NEW: x", vector.x, "y", vector.y, "z", vector.z);
 
-		object.position.copy( center ).add( vector );
+		object.position.copy( center ).add( oldCoordinatesVector );  // vector
 
 		object.lookAt( center );
 
