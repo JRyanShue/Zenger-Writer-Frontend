@@ -14,6 +14,7 @@ function EditorControls( object, domElement ) {
 
 	var scope = this;
 	var vector = new THREE.Vector3();
+	var oldCoordinatesVector = new THREE.Vector3();
 	var delta = new THREE.Vector3();
 	var box = new THREE.Box3();
 
@@ -91,18 +92,62 @@ function EditorControls( object, domElement ) {
 
 	};
 
+	// vector.copy( object.position ).sub( center );  // initialize
 	this.rotate = function ( delta ) {
 
+		// Use an intermediary Vector3 to swap Y and Z. 
+		// var oldCoordinatesVector = new THREE.Vector3();
+		oldCoordinatesVector.copy( object.position ).sub( center );
 		vector.copy( object.position ).sub( center );
 
-		spherical.setFromVector3( vector );
+		if (spherical.theta) {
+			oldCoordinatesVector.setFromSpherical( spherical );
+		} else {
+			spherical.setFromVector3( oldCoordinatesVector );
 
-		spherical.theta += delta.x * scope.rotationSpeed;
+			spherical.theta += delta.x * scope.rotationSpeed;  // delta.x: amount mouse dragged in x. There is no delta.z.
+			spherical.phi += delta.y * scope.rotationSpeed;
+	
+			spherical.makeSafe();
+		}
+
+		console.log("LOGGED: x", vector.x, "y", vector.y, "z", vector.z);
+
+		// The two vectors are identical at this point
+
+		// console.log(vector.x == oldCoordinatesVector.x && vector.y == oldCoordinatesVector.y && vector.z == oldCoordinatesVector.z);
+
+		spherical.setFromVector3( oldCoordinatesVector );
+
+		spherical.theta += delta.x * scope.rotationSpeed;  // delta.x: amount mouse dragged in x. There is no delta.z.
 		spherical.phi += delta.y * scope.rotationSpeed;
 
 		spherical.makeSafe();
 
+		// Remember old vector values
+		var oldX = vector.x;
+		var oldY = vector.y;
+		var oldZ = vector.z;
+
+		console.log("OLD: x", oldX, "y", oldY, "z", oldZ);
+
+		// Oscillates back and forth
+		
 		vector.setFromSpherical( spherical );
+
+		console.log("oldCoordinatesVector.z", oldCoordinatesVector.z);
+
+		// console.log("OLD: x", vector.x, "y", vector.y, "z", vector.z);
+
+		// Swap Y and Z for Vector3 in use
+		// vector.set( vector.x, oldY+(oldZ-vector.z), oldZ+(oldY-vector.y));
+		vector.x = oldCoordinatesVector.x;
+		vector.y += oldCoordinatesVector.z - oldY;
+		vector.z += oldCoordinatesVector.y - oldZ;
+
+		// I believe that vector here is correct
+
+		console.log("NEW: x", vector.x, "y", vector.y, "z", vector.z);
 
 		object.position.copy( center ).add( vector );
 

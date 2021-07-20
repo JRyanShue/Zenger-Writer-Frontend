@@ -48,11 +48,13 @@ function Viewport( editor, size ) {
 	var grid = new THREE.Group();
 
 	var grid1 = new THREE.GridHelper( sidelen, sidelen, 0x888888 );
+	grid1.rotateX(Math.PI / 2);  // Follow coordinate convention
 	grid1.material.color.setHex( 0x888888 );
 	grid1.material.vertexColors = false;
 	grid.add( grid1 );
 
 	var grid2 = new THREE.GridHelper( sidelen, sidelen/5, 0x222222 );
+	grid2.rotateX(Math.PI / 2);  // Follow coordinate convention
 	grid2.material.color.setHex( 0x222222 );
 	grid2.material.depthFunc = THREE.AlwaysDepth;
 	grid2.material.vertexColors = false;

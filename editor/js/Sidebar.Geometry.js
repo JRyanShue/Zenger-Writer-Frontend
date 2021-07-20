@@ -108,13 +108,9 @@ function SidebarGeometry( editor ) {
 		var geometry = object.geometry;
 		geometry.computeBoundingBox();
 
-		absoluteBounds.copy( geometry.boundingBox ).applyMatrix4( object.matrixWorld );
+		absoluteBounds.copy( geometry.boundingBox ).applyMatrix4( object.matrixWorld );  // Absolute bounding box
 
-		console.log("min:", absoluteBounds.min);
-
-		console.log("x:", object.position.x);
-
-		var newPosition = new THREE.Vector3(object.position.x, object.position.y - absoluteBounds.min.y, object.position.z)
+		var newPosition = new THREE.Vector3(object.position.x, object.position.y, object.position.z - absoluteBounds.min.z)
 		
 		editor.execute( new SetPositionCommand( editor, object, newPosition ) );
 
