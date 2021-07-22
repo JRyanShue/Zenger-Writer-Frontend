@@ -48,7 +48,8 @@ function eulerX(vector, dT1) {
 }
 
 /* Modify z/xy position of vector to orbit around vector origin at dT speed.  
-Relies on dy of mouse right-click drag. */
+Relies on dy of mouse right-click drag. 
+Slows down at poles (bug) */
 function eulerY(vector, dT2) {
 
     // For calculations, not modification of the reference
@@ -60,7 +61,7 @@ function eulerY(vector, dT2) {
     let pythagoreanZXY = Math.sqrt( Math.pow(z, 2) + Math.pow( pythagoreanXY, 2 ) );
 
     let dT = dT2 * ( pythagoreanZXY / 300 );  // adjust for distance from center
-    console.log("dT", dT);
+    // console.log("dT", dT);
 
     // Use Euler's method to determine the next point to jump to
 
@@ -105,7 +106,7 @@ function eulerY(vector, dT2) {
     dz = Math.abs ( Math.atan(pythagoreanXY/z) );
     vector.z += dz * -dT;
 
-    console.log("x", x.toPrecision(4), "y", y.toPrecision(4), "xy", pythagoreanXY.toPrecision(4), "xyz", pythagoreanZXY.toPrecision(4), "z", z.toPrecision(4), "dx", dx.toPrecision(2), "dy", dy.toPrecision(2), "dz", dz.toPrecision(2));
+    // console.log("x", x.toPrecision(4), "y", y.toPrecision(4), "xy", pythagoreanXY.toPrecision(4), "xyz", pythagoreanZXY.toPrecision(4), "z", z.toPrecision(4), "dx", dx.toPrecision(2), "dy", dy.toPrecision(2), "dz", dz.toPrecision(2));
 
     // Use Pythagorean distance to compensate for Euler's method error by pulling the viewpoint toward the center
     let newPythagoreanXY = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) );

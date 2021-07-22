@@ -5,6 +5,7 @@ import { Loader } from './Loader.js';
 import { History as _History } from './History.js';
 import { Strings } from './Strings.js';
 import { Storage as _Storage } from './Storage.js';
+import { SliceSettings } from './SliceSettings.js';
 
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
@@ -125,6 +126,8 @@ function Editor() {
 	this.viewportCamera = this.camera;
 
 	this.addCamera( this.camera );
+
+	this.settings = new SliceSettings(); 
 
 }
 

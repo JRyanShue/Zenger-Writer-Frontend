@@ -33,7 +33,9 @@ function EditorControls( object, domElement ) {
 	var dT1;
 	var dT2;
 
-	var testSet = false;
+	// Set starting position for debugging
+	// var setPos = false;
+	// const startingPosition = new THREE.Vector3(300, 300, 300);
 
 	// events
 
@@ -105,13 +107,13 @@ function EditorControls( object, domElement ) {
 		// Update vector
 		vector.copy( object.position ).sub( center );
 
-		if (!testSet) {
-			// for testing
-			vector.x = -250.9;
-			vector.y = -233.1;
-			vector.z = 235.1;
-			testSet = true;
-		}
+		// if (!setPos) {
+		// 	// Starting position for debugging
+		// 	vector.x = startingPosition.x;
+		// 	vector.y = startingPosition.y;
+		// 	vector.z = startingPosition.z;
+		// 	setPos = true;
+		// }
 
 		// dT1: amount of xy orbit evoked at point
 		dT1 = 400 * delta.x * scope.rotationSpeed;
