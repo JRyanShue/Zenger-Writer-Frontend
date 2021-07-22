@@ -1,6 +1,6 @@
 import * as THREE from '../../build/three.module.js';
 
-// import { OrbitControls } from '../../examples/js/controls/OrbitControls';
+import { eulerX, eulerY } from "./EulerControls.js";
 
 function EditorControls( object, domElement ) {
 
@@ -8,7 +8,7 @@ function EditorControls( object, domElement ) {
 
 	this.enabled = true;
 	this.center = new THREE.Vector3();
-	this.panSpeed = 0.002;
+	this.panSpeed = 0.0006;
 	this.zoomSpeed = 0.1;
 	this.rotationSpeed = 0.005;
 
@@ -29,11 +29,11 @@ function EditorControls( object, domElement ) {
 	var normalMatrix = new THREE.Matrix3();
 	var pointer = new THREE.Vector2();
 	var pointerOld = new THREE.Vector2();
-	var spherical = new THREE.Spherical();
 	var sphere = new THREE.Sphere();
-	var viewScale;
-	var yFlip;
-	var dT;
+	var dT1;
+	var dT2;
+
+	var testSet = false;
 
 	// events
 
@@ -102,47 +102,28 @@ function EditorControls( object, domElement ) {
 	// vector.copy( object.position ).sub( center );  // initialize
 	this.rotate = function ( delta ) {
 
+		// Update vector
 		vector.copy( object.position ).sub( center );
 
-		let pythagoreanDistance = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) );
-		viewScale = pythagoreanDistance / 300;
-		dT = 200 * delta.x * scope.rotationSpeed * viewScale
-
-		// Use Euler's method to determine the next point to jump to
-
-		let dx;
-		yFlip = 2 * ( +( vector.y > 0 ) ) - 1;
-		let xFlipIs = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) > 0;
-		
-		if (xFlipIs){
-			dx = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) * dT;
-		} else {
-			dx = -( -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) + Math.PI ) * dT; // +(this.Pi2)
+		if (!testSet) {
+			// for testing
+			vector.x = -250.9;
+			vector.y = -233.1;
+			vector.z = 235.1;
+			testSet = true;
 		}
-		
 
-		if (dx/dT < -this.Pi2) {
-			vector.x += -Math.PI * dT - dx;
-		} 
-		else if (dx/dT > this.Pi2) {
-			vector.x += Math.PI * dT - dx;
-		}
-		else{
-			vector.x += dx;
-		} 
+		// dT1: amount of xy orbit evoked at point
+		dT1 = 400 * delta.x * scope.rotationSpeed;
+		eulerX( vector, dT1 );
 
-		// dY
-		let dy = yFlip * Math.atan(vector.x/vector.y) * dT;
-		vector.y += dy;
-
-		// Use Pythagorean distance to compensate for Euler's method error by pulling the viewpoint toward the center
-		let newPythagoreanDistance = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) );
-		vector.x *= pythagoreanDistance/newPythagoreanDistance;
-		vector.y *= pythagoreanDistance/newPythagoreanDistance;
+		// dT2: amount of zxy orbit evoked at point
+		dT2 = 400 * delta.y * scope.rotationSpeed;
+		eulerY( vector, dT2 );
 
 		// console.log("dx:", (dx/dT).toPrecision(3), "dy:", (dy/dT).toPrecision(3), "x", (vector.x).toPrecision(3), "y", (vector.y).toPrecision(3), "z", (vector.z).toPrecision(3), "o", +xFlipIs); 
 
-		vector.z += 200*delta.y * scope.rotationSpeed;
+		// vector.z += 200 * delta.y * scope.rotationSpeed;
 
 		object.position.copy( center ).add( vector );
 
