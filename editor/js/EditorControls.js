@@ -1,5 +1,7 @@
 import * as THREE from '../../build/three.module.js';
 
+// import { OrbitControls } from '../../examples/js/controls/OrbitControls';
+
 function EditorControls( object, domElement ) {
 
 	// API
@@ -9,6 +11,8 @@ function EditorControls( object, domElement ) {
 	this.panSpeed = 0.002;
 	this.zoomSpeed = 0.1;
 	this.rotationSpeed = 0.005;
+
+	this.Pi2 = Math.PI/2
 
 	// internals
 
@@ -27,6 +31,10 @@ function EditorControls( object, domElement ) {
 	var pointerOld = new THREE.Vector2();
 	var spherical = new THREE.Spherical();
 	var sphere = new THREE.Sphere();
+	var viewScale;
+	var xFlip;
+	var yFlip;
+	var dMouseX;
 
 	// events
 
@@ -95,67 +103,69 @@ function EditorControls( object, domElement ) {
 	// vector.copy( object.position ).sub( center );  // initialize
 	this.rotate = function ( delta ) {
 
-		// Use an intermediary Vector3 to swap Y and Z. 
-		// var oldCoordinatesVector = new THREE.Vector3();
-		oldCoordinatesVector.copy( object.position ).sub( center );
 		vector.copy( object.position ).sub( center );
 
-		if (spherical.theta) {
-			oldCoordinatesVector.setFromSpherical( spherical );
-		} else {
-			spherical.setFromVector3( oldCoordinatesVector );
+		viewScale = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) ) / 300;
+		yFlip = 2 * ( +( vector.y > 0 ) ) - 1;
 
-			spherical.theta += delta.x * scope.rotationSpeed;  // delta.x: amount mouse dragged in x. There is no delta.z.
-			spherical.phi += delta.y * scope.rotationSpeed;
-	
-			spherical.makeSafe();
-		}
+		// // I believe that vector here is correct
+		// console.log("ATAN:", Math.atan(vector.x/vector.y));
 
-		console.log("LOGGED: x", vector.x, "y", vector.y, "z", vector.z);
+		// console.log("x", vector.x, "y", vector.y, "z", vector.z);
 
-		// The two vectors are identical at this point
+		// console.log("CENTER: x", center.x);
 
-		// console.log(vector.x == oldCoordinatesVector.x && vector.y == oldCoordinatesVector.y && vector.z == oldCoordinatesVector.z);
+		/*
+		 Can do some math with spherical stuff for this
+		 vector represents a point in 3D space. The view will always point towards the center of the object. 
+		 vector x/y/z values are as expected/desired. 
+		*/
 
-		spherical.setFromVector3( oldCoordinatesVector );
+		//js autoconvert from bool to int
 
-		spherical.theta += delta.x * scope.rotationSpeed;  // delta.x: amount mouse dragged in x. There is no delta.z.
-		spherical.phi += delta.y * scope.rotationSpeed;
+		// zoomout issue not related to y/x flip factor
+		dMouseX = 200*delta.x * scope.rotationSpeed*viewScale
 
-		spherical.makeSafe();
+		// console.log("o", Math.atan(5));
+		// console.log("os", Math.atan(-5));
 
-		// Remember old vector values
-		var oldX = vector.x;
-		var oldY = vector.y;
-		var oldZ = vector.z;
+		// let dx = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) - (((Math.atan(vector.x/vector.y)+(this.Pi2))-this.Pi2)*+(Math.abs((Math.atan(vector.x/vector.y)+(this.Pi2))) > this.Pi2)) * dMouseX;
+		// let dy = yFlip *Math.atan(vector.x/vector.y) - (this.Pi2*+((Math.atan(vector.x/vector.y)) > this.Pi2))*dMouseX;
 
-		console.log("OLD: x", oldX, "y", oldY, "z", oldZ);
-
-		// Oscillates back and forth
+		let dx;
+		let xFlipIs = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) > 0;
 		
-		vector.setFromSpherical( spherical );
+		if (xFlipIs){
+			dx = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) * dMouseX;
+		} else {
+			dx = -( -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) + Math.PI ) * dMouseX; // +(this.Pi2)
+		}
+		let dy = yFlip *Math.atan(vector.x/vector.y) *dMouseX;
 
-		console.log("oldCoordinatesVector.z", oldCoordinatesVector.z);
+		if (dx/dMouseX < -this.Pi2) {
+			console.log("1");
+			vector.x += -Math.PI * dMouseX - dx;
+		} 
+		else if (dx/dMouseX > this.Pi2) {
+			console.log("2");
+			vector.x += Math.PI * dMouseX - dx;
+		}
+		else{
+			console.log("3");
+			vector.x += dx;
+		} 
 
-		// console.log("OLD: x", vector.x, "y", vector.y, "z", vector.z);
+		vector.y += dy;
 
-		// Swap Y and Z for Vector3 in use
-		// vector.set( vector.x, oldY+(oldZ-vector.z), oldZ+(oldY-vector.y));
+		console.log("dx:", (dx/dMouseX).toPrecision(3), "dy:", (dy/dMouseX).toPrecision(3), "x", (vector.x).toPrecision(3), "y", (vector.y).toPrecision(3), "z", (vector.z).toPrecision(3), "o", +xFlipIs); //, "ymove:", dy/dMouseX);
+		
+		// vector.x += -viewScale*(Math.atan(vector.x/vector.y)+(this.Pi2))*200*delta.x * scope.rotationSpeed*this.Pi2;
+		// vector.y += viewScale*Math.atan(vector.x/vector.y)*200*delta.x * scope.rotationSpeed*this.Pi2;
 
-		console.log("dY", oldCoordinatesVector.z - oldY, "dZ", oldCoordinatesVector.y - oldZ)
+		vector.z += 200*delta.y * scope.rotationSpeed;
+		// vector.z += 10*delta.x * scope.rotationSpeed;
 
-		vector.x = oldCoordinatesVector.x;
-		vector.y += oldCoordinatesVector.z - oldY;
-		vector.z += oldCoordinatesVector.y - oldZ;
-
-		// vector.y *= -1;
-		// vector.z *= -1;
-
-		// I believe that vector here is correct
-
-		console.log("NEW: x", vector.x, "y", vector.y, "z", vector.z);
-
-		object.position.copy( center ).add( oldCoordinatesVector );  // vector
+		object.position.copy( center ).add( vector );  // vector
 
 		object.lookAt( center );
 
@@ -224,17 +234,17 @@ function EditorControls( object, domElement ) {
 
 	function onMouseDown( event ) {
 
-		if ( event.button === 0 ) {
+		if ( event.button === 0 ) {  // Left click
 
-			state = STATE.ROTATE;
+			// state = STATE.ROTATE;
 
-		} else if ( event.button === 1 ) {
-
-			state = STATE.ZOOM;
-
-		} else if ( event.button === 2 ) {
+		} else if ( event.button === 1 ) {  // Middle mouse button
 
 			state = STATE.PAN;
+
+		} else if ( event.button === 2 ) {  // Right click
+
+			state = STATE.ROTATE;
 
 		}
 

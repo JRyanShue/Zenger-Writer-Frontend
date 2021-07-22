@@ -6,7 +6,7 @@ import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 function MenubarFile( editor ) {
 
-	const IP = "172.31.145.188";
+	const IP = "172.28.150.81";
 
 	var config = editor.config;
 	var strings = editor.strings;
