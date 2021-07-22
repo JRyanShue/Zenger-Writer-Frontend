@@ -32,9 +32,8 @@ function EditorControls( object, domElement ) {
 	var spherical = new THREE.Spherical();
 	var sphere = new THREE.Sphere();
 	var viewScale;
-	var xFlip;
 	var yFlip;
-	var dMouseX;
+	var dT;
 
 	// events
 
@@ -105,67 +104,47 @@ function EditorControls( object, domElement ) {
 
 		vector.copy( object.position ).sub( center );
 
-		viewScale = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) ) / 300;
-		yFlip = 2 * ( +( vector.y > 0 ) ) - 1;
+		let pythagoreanDistance = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) );
+		viewScale = pythagoreanDistance / 300;
+		dT = 200 * delta.x * scope.rotationSpeed * viewScale
 
-		// // I believe that vector here is correct
-		// console.log("ATAN:", Math.atan(vector.x/vector.y));
-
-		// console.log("x", vector.x, "y", vector.y, "z", vector.z);
-
-		// console.log("CENTER: x", center.x);
-
-		/*
-		 Can do some math with spherical stuff for this
-		 vector represents a point in 3D space. The view will always point towards the center of the object. 
-		 vector x/y/z values are as expected/desired. 
-		*/
-
-		//js autoconvert from bool to int
-
-		// zoomout issue not related to y/x flip factor
-		dMouseX = 200*delta.x * scope.rotationSpeed*viewScale
-
-		// console.log("o", Math.atan(5));
-		// console.log("os", Math.atan(-5));
-
-		// let dx = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) - (((Math.atan(vector.x/vector.y)+(this.Pi2))-this.Pi2)*+(Math.abs((Math.atan(vector.x/vector.y)+(this.Pi2))) > this.Pi2)) * dMouseX;
-		// let dy = yFlip *Math.atan(vector.x/vector.y) - (this.Pi2*+((Math.atan(vector.x/vector.y)) > this.Pi2))*dMouseX;
+		// Use Euler's method to determine the next point to jump to
 
 		let dx;
+		yFlip = 2 * ( +( vector.y > 0 ) ) - 1;
 		let xFlipIs = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) > 0;
 		
 		if (xFlipIs){
-			dx = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) * dMouseX;
+			dx = -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) * dT;
 		} else {
-			dx = -( -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) + Math.PI ) * dMouseX; // +(this.Pi2)
+			dx = -( -yFlip *(Math.atan(vector.x/vector.y)+(this.Pi2)) + Math.PI ) * dT; // +(this.Pi2)
 		}
-		let dy = yFlip *Math.atan(vector.x/vector.y) *dMouseX;
+		
 
-		if (dx/dMouseX < -this.Pi2) {
-			console.log("1");
-			vector.x += -Math.PI * dMouseX - dx;
+		if (dx/dT < -this.Pi2) {
+			vector.x += -Math.PI * dT - dx;
 		} 
-		else if (dx/dMouseX > this.Pi2) {
-			console.log("2");
-			vector.x += Math.PI * dMouseX - dx;
+		else if (dx/dT > this.Pi2) {
+			vector.x += Math.PI * dT - dx;
 		}
 		else{
-			console.log("3");
 			vector.x += dx;
 		} 
 
+		// dY
+		let dy = yFlip * Math.atan(vector.x/vector.y) * dT;
 		vector.y += dy;
 
-		console.log("dx:", (dx/dMouseX).toPrecision(3), "dy:", (dy/dMouseX).toPrecision(3), "x", (vector.x).toPrecision(3), "y", (vector.y).toPrecision(3), "z", (vector.z).toPrecision(3), "o", +xFlipIs); //, "ymove:", dy/dMouseX);
-		
-		// vector.x += -viewScale*(Math.atan(vector.x/vector.y)+(this.Pi2))*200*delta.x * scope.rotationSpeed*this.Pi2;
-		// vector.y += viewScale*Math.atan(vector.x/vector.y)*200*delta.x * scope.rotationSpeed*this.Pi2;
+		// Use Pythagorean distance to compensate for Euler's method error by pulling the viewpoint toward the center
+		let newPythagoreanDistance = Math.sqrt( Math.pow(vector.x, 2) + Math.pow( vector.y, 2 ) );
+		vector.x *= pythagoreanDistance/newPythagoreanDistance;
+		vector.y *= pythagoreanDistance/newPythagoreanDistance;
+
+		// console.log("dx:", (dx/dT).toPrecision(3), "dy:", (dy/dT).toPrecision(3), "x", (vector.x).toPrecision(3), "y", (vector.y).toPrecision(3), "z", (vector.z).toPrecision(3), "o", +xFlipIs); 
 
 		vector.z += 200*delta.y * scope.rotationSpeed;
-		// vector.z += 10*delta.x * scope.rotationSpeed;
 
-		object.position.copy( center ).add( vector );  // vector
+		object.position.copy( center ).add( vector );
 
 		object.lookAt( center );
 
