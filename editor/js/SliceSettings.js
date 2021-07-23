@@ -11,54 +11,54 @@ class SliceSettings {
         this.dict = {
 
             // QUALITY
-            "layerHeight" : 1.4,
-            "lineWidth" : 0.4,
+            "layer_height" : 1.4,
+            "line_width" : 0.4,
             
             // SHELL
-            "wallThickness" : 0.8,
-            "topBottomThickness" : 0.8,
-            "topBottomPattern" : "lines",
-            "horizontalExpansion" : -0.1,
-            "initialLayerHorizontalExpansion" : -0.2,
+            "wall_thickness" : 0.8,
+            "top_bottom_thickness" : 0.8,
+            "top_bottom_pattern" : "lines",
+            "xy_offset" : -0.1,  // Horizontal Expansion
+            "xy_offset_layer_0" : -0.2,
 
             // INFILL
-            "infillDensity" : 20,
-            "infillPattern" : "grid",
+            "infill_sparse_density" : 20,
+            "infill_pattern" : "grid",
             
             // TEMPERATURE
-            "hotendTemperature" : 205,
-            "bedTemperature" : 50,
-            "flow" : 100,
+            "material_print_temperature" : 205,
+            "material_bed_temperature" : 50,
+            "material_flow" : 100,
 
             // SPEED 
-            "printSpeed" : 50,
-            "wallSpeed" : 25,
-            "topBottomSpeed" : 25,
-            "travelSpeed" : 150,
-            "initialLayerSpeed" : 20,
-            "initialLayerTravelSpeed" : 100,
+            "speed_print" : 50,
+            "speed_wall" : 25,
+            "speed_topbottom" : 25,
+            "speed_travel" : 150,
+            "speed_layer_0" : 20,
+            "speed_travel_layer_0" : 100,
 
             // TRAVEL
-            "enableRetraction" : true,
-            "retractionDistance" : 6,
-            "retractionSpeed" : 45,
-            "combingMode" : "all",
+            "retraction_enable" : true,
+            "retraction_amount" : 6,
+            "retraction_speed" : 45,
+            "retraction_combing" : "all",
 
             // COOLING
-            "fanSpeed" : 100,
-            "initialFanSpeed" : 0,
+            "cool_fan_speed" : 100,
+            "cool_fan_speed_0" : 0,
 
             // SUPPORT 
-            "addSupports" : true,
-            "supportStructure" : "normal",
-            "supportPlacement" : "touching buildplate",
-            "supportOverhangAngle" : 65,
-            "supportDensity" : 10,
-            "supportZDistance" : 0.2,
-            "supportXYDistance" : 0.8,
+            "support_enable" : true,
+            "support_structure" : "normal",
+            "support_type" : "buildplate",
+            "support_angle" : 65,
+            "support_infill_rate" : 10,
+            "support_z_distance" : 0.2,
+            "support_xy_distance" : 0.8,
 
             // BUILD PLATE ADHESION
-            "buildPlateAdhesionType" : "skirt"
+            "adhesion_type" : "skirt"
 
         }
 
