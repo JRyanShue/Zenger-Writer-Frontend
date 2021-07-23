@@ -9,7 +9,7 @@ class SliceSettings {
         // set default print settings
 
         // QUALITY
-        this.layerHeight = 0.2;
+        this.layerHeight = 0.3;
         this.lineWidth = 0.4;
         
         // SHELL

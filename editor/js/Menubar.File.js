@@ -4,6 +4,8 @@ import { zipSync, strToU8 } from '../../examples/jsm/libs/fflate.module.js';
 
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
+import { Slice } from './Slicer.js';
+
 function MenubarFile( editor ) {
 
 	const IP = "172.28.150.81";
@@ -29,57 +31,10 @@ function MenubarFile( editor ) {
 	option.setTextContent( strings.getKey( 'menubar/file/slice' ) );
 	option.onClick( async function () {
 
-		// Use to ensure changes register
-		console.log("\(v1.1\) Slicing STL...");
-
-		// Generate STL blob from build plate
-		var { STLExporter } = await import( '../../examples/jsm/exporters/STLExporter.js' );
-		var exporter = new STLExporter();
-		var buffer = exporter.parse( editor.scene, { binary: true } );
-		var blob = new Blob( [ buffer ], { type: 'application/octet-stream' } );
-
-		// Build FormData object
-		let formData = new FormData();
-		formData.append('stl', blob, 'modelSTL.stl');
-		formData.append('action', "slice");
-
-		await sliceSTL(formData);
-		fetchGcode();
+		Slice( editor, IP, saveString );
 			
 	})
 	options.add( option );
-
-	async function sliceSTL(formData) {
-		// Send FormData to backend for slicing
-		const response = await fetch('http://' + IP + '/put_stl',
-		{
-			method: 'POST',
-			body: formData,
-		});
-		// return await response.json();
-		// .then(response => response.json())
-		// .then(data => {
-		// 	console.log('Success:', data);
-		// })
-		// .catch((error) => {
-		// 	console.error('Error:', error);
-		// });
-	}
-
-	async function fetchGcode() {
-		await fetch('http://' + IP + '/get_gcode') // get_gcode
-			.then(response => response.text())  // use .text() because it's a gcode file, not JSON
-			.then(value => {
-				returnGcode(value);
-			})  // callback for handling gcode value)
-	}
-
-	function returnGcode(gcode) {
-		console.log(gcode);
-		saveString(gcode, "model.gcode");
-		// var net = require('net');
-
-	}
 
 	// New
 
