@@ -23,7 +23,8 @@ async function buildFormData ( editor, formData, blob ) {
 
     formData.append( 'stl', blob, 'modelSTL.stl' );
     formData.append( 'action', "slice" );
-    formData.append( 'layer height', editor.settings.layerHeight ); 
+
+    editor.settings.set( formData );
 
 }
 
