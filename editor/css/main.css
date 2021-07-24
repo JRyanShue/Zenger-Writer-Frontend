@@ -302,7 +302,7 @@ select {
 
 #viewport {
 	position: absolute;
-	top: 32px;
+	top: 100px;
 	left: 0;
 	right: 300px;
 	bottom: 0;
@@ -331,9 +331,13 @@ select {
 }
 
 #menubar {
+	--bar-height: 100px;
+	--line-height: 16px; 
+	--padding-amount: 8px;
+
 	position: absolute;
 	width: 100%;
-	height: 32px;
+	height: var(--bar-height);
 	background: #eee;
 	padding: 0;
 	margin: 0;
@@ -344,7 +348,7 @@ select {
 	#menubar .menu {
 		float: left;
 		cursor: pointer;
-		padding-right: 8px;
+		padding-right: var(--padding-amount);
 	}
 
 	#menubar .menu.right {
@@ -356,10 +360,11 @@ select {
 
 		#menubar .menu .title {
 			display: inline-block;
-			color: #888;
+			color: rgb(43, 43, 43);
 			margin: 0;
-			padding: 8px;
-			line-height: 16px;
+			padding: var(--padding-amount);
+			line-height: var(--line-height);
+			padding-top: calc( var(--bar-height) - var(--line-height) - var(--padding-amount) );
 		}
 
 		#menubar .menu .options {
