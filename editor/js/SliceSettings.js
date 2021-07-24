@@ -11,7 +11,7 @@ class SliceSettings {
         this.dict = {
 
             // QUALITY
-            "layer_height" : 0.2,
+            "layer_height" : 1.4,
             "line_width" : 0.4,
             
             // SHELL
@@ -23,7 +23,7 @@ class SliceSettings {
 
             // INFILL
             "infill_sparse_density" : 20,
-            "infill_pattern" : "lines",
+            "infill_pattern" : "grid",
             
             // TEMPERATURE
             "material_print_temperature" : 205,

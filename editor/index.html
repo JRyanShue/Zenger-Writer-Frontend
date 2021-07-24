@@ -14,11 +14,6 @@
 
 		<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js" defer></script>
 
-		<!-- React imports -->
-		<script src="https://unpkg.com/react@16.4.1/umd/react.production.min.js"></script>
-		<script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@szhsin/react-menu@1.10.1/dist/index.min.js"></script>
-
 		<script src="../examples/js/libs/draco/draco_encoder.js"></script>
 		<script src="../examples/js/controls/OrbitControls.js"></script>
 
@@ -50,15 +45,10 @@
 		<script src="js/libs/ternjs/doc_comment.js"></script>
 		<script src="js/libs/tern-threejs/threejs.js"></script>
 		<script src="js/libs/signals.min.js"></script>
-		
-		<!-- Holds the menubar code -->
-		<div id="menubar" class="menubar"></div>
 
 		<script type="module">
 
 			import * as THREE from '../build/three.module.js';
-
-			// const e = React.createElement;
 
 			import { Editor } from './js/Editor.js';
 			import { Viewport } from './js/Viewport.js';
@@ -69,8 +59,6 @@
 			import { Menubar } from './js/Menubar.js';
 			import { Resizer } from './js/Resizer.js';
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js';
-
-			import { ReactMenu } from './js/ReactMenu.js';
 
 			window.URL = window.URL || window.webkitURL;
 			window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
@@ -104,20 +92,8 @@
 			var sidebar = new Sidebar( editor );
 			document.body.appendChild( sidebar.dom );
 
-			// MENUBAR (uses React)
-
-			ReactDOM.render(
-				React.createElement( ReactMenu, {toWhat: 'adrg'}, null),
-				document.getElementById('menubar')
-			);
-			// const para = document.createElement("p");
-			// const node = document.createTextNode("This is new.");
-			// para.appendChild(node);
-			
-			// const element = document.getElementById("menubar");
-			// element.appendChild(para);
-
-			
+			var menubar = new Menubar( editor );
+			document.body.appendChild( menubar.dom );
 
 			var resizer = new Resizer( editor );
 			document.body.appendChild( resizer.dom );
