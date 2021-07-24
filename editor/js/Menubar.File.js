@@ -8,9 +8,6 @@ import { Slice } from './Slicer.js';
 
 function MenubarFile( editor ) {
 
-	const IP = "172.28.150.81";
-
-	var config = editor.config;
 	var strings = editor.strings;
 
 	var container = new UIPanel();
@@ -24,17 +21,6 @@ function MenubarFile( editor ) {
 	var options = new UIPanel();
 	options.setClass( 'options' );
 	container.add( options );
-
-	// Slice
-	var option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/slice' ) );
-	option.onClick( async function () {
-
-		Slice( editor, IP, saveString );
-			
-	})
-	options.add( option );
 
 	// New
 
@@ -82,10 +68,6 @@ function MenubarFile( editor ) {
 
 	} );
 	options.add( option );
-
-	//
-
-	options.add( new UIHorizontalRule() );
 
 	return container;
 

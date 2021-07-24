@@ -6,9 +6,12 @@ function Strings( config ) {
 
 		en: {
 
+			'menubar/slice': 'Slice',
+			'menubar/slice/slice': 'Slice',
+
 			'menubar/file': 'File',
 			'menubar/file/slice': 'Slice',
-			'menubar/file/new': 'New',
+			'menubar/file/new': 'New Project',
 			'menubar/file/import': 'Import',
 			'menubar/file/export/geometry': 'Export Geometry',
 			'menubar/file/export/object': 'Export Object',

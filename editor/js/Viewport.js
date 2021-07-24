@@ -17,7 +17,7 @@ import { SetScaleCommand } from './commands/SetScaleCommand.js';
 
 import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment.js';
 
-function Viewport( editor, size ) {
+function Viewport( editor, size, height ) {
 
 	var signals = editor.signals;
 
@@ -30,6 +30,7 @@ function Viewport( editor, size ) {
 
 	// Size of build plate x and y in mm
 	var sidelen = size;
+	var buildheight = height;
 
 	//
 
@@ -47,7 +48,7 @@ function Viewport( editor, size ) {
 
 	var grid = new THREE.Group();
 
-	var grid1 = new THREE.GridHelper( sidelen, sidelen, 0x888888 );
+	var grid1 = new THREE.GridHelper( sidelen, sidelen/5, 0x888888 );
 	grid1.rotateX(Math.PI / 2);  // Follow coordinate convention
 	grid1.material.color.setHex( 0x888888 );
 	grid1.material.vertexColors = false;
@@ -366,21 +367,21 @@ function Viewport( editor, size ) {
 		renderer = newRenderer;
 
 		renderer.setAnimationLoop( animate );
-		renderer.setClearColor( 0xaaaaaa );
+		renderer.setClearColor( 0xffffff );
 
 		if ( window.matchMedia ) {
 
 			var mediaQuery = window.matchMedia( '(prefers-color-scheme: dark)' );
 			mediaQuery.addListener( function ( event ) {
 
-				renderer.setClearColor( event.matches ? 0x333333 : 0xaaaaaa );
+				renderer.setClearColor( event.matches ? 0x333333 : 0xffffff );
 				updateGridColors( grid1, grid2, event.matches ? [ 0x222222, 0x888888 ] : [ 0x888888, 0x282828 ] );
 
 				render();
 
 			} );
 
-			renderer.setClearColor( mediaQuery.matches ? 0x333333 : 0xaaaaaa );
+			renderer.setClearColor( mediaQuery.matches ? 0x333333 : 0xffffff );
 			updateGridColors( grid1, grid2, mediaQuery.matches ? [ 0x222222, 0x888888 ] : [ 0x888888, 0x282828 ] );
 
 		}

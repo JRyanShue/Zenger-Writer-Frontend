@@ -14,6 +14,12 @@ hr {
 	border-top: 1px solid #ccc;
 }
 
+vr {
+	/* border: 0; */
+	border-left: 2px solid #ccc;
+	height: var(--bar-height);
+}
+
 button {
 	position: relative;
 }
@@ -306,6 +312,7 @@ select {
 	left: 0;
 	right: 300px;
 	bottom: 0;
+	color: white;
 }
 
 	#viewport #info {
@@ -331,14 +338,18 @@ select {
 }
 
 #menubar {
-	--bar-height: 100px;
+	--bar-height: 60px;
 	--line-height: 16px; 
 	--padding-amount: 8px;
+
+	--home-icon-width: calc( 2*var(--padding-amount) + 40px );
+	--home-icon-height: calc( 2*var(--padding-amount) + 40px );
 
 	position: absolute;
 	width: 100%;
 	height: var(--bar-height);
-	background: #eee;
+	/* background: #eee; */
+	background: black;
 	padding: 0;
 	margin: 0;
 	right: 0;
@@ -351,6 +362,14 @@ select {
 		padding-right: var(--padding-amount);
 	}
 
+	#menubar .menubutton {
+		float: left;
+		background-image: url("../../files/favicon.ico");
+		background-size: contain;
+		width: var(--home-icon-width);
+		height: var(--home-icon-height);
+	}
+
 	#menubar .menu.right {
 		float: right;
 		cursor: auto;
@@ -360,7 +379,8 @@ select {
 
 		#menubar .menu .title {
 			display: inline-block;
-			color: rgb(43, 43, 43);
+			/* color: rgb(43, 43, 43); */
+			color: white;
 			margin: 0;
 			padding: var(--padding-amount);
 			line-height: var(--line-height);
@@ -445,6 +465,7 @@ select {
 
 	#tabs span {
 		color: #aaa;
+		/* color: white; */
 		border-right: 1px solid #ccc;
 		padding: 10px;
 	}
@@ -475,6 +496,7 @@ select {
 .Outliner {
 	color: #444;
 	background-color: #fff;
+	/* background-color: white; */
 	padding: 0;
 	width: 100%;
 	height: 140px;
@@ -507,6 +529,7 @@ select {
 
 	.TabbedPanel .Tab {
 		color: #aaa;
+		/* color: white; */
 		border-right: 1px solid #ccc;
 	}
 
@@ -576,6 +599,7 @@ select {
 
 	button {
 		color: #aaa;
+		/* color: white; */
 		background-color: #222;
 	}
 
@@ -597,6 +621,7 @@ select {
 
 	select {
 		color: #aaa;
+		/* color: white; */
 		background-color: #222;
 	}
 

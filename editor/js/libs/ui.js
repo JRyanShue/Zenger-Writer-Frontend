@@ -1,4 +1,4 @@
-class UIElement {
+class UIElement {  // Gives some important methods that allow easier object manipulation
 
 	constructor( dom ) {
 
@@ -970,6 +970,18 @@ class UIHorizontalRule extends UIElement {
 
 }
 
+class UIVerticalRule extends UIElement {
+
+	constructor() {
+
+		super( document.createElement( 'vr' ) );
+
+		this.dom.className = 'VerticalRule';
+
+	}
+
+}
+
 class UIButton extends UIElement {
 
 	constructor( value ) {
@@ -1267,4 +1279,4 @@ class ListboxItem extends UIDiv {
 
 }
 
-export { UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIButton, UIProgress, UITabbedPanel, UIListbox, ListboxItem };
+export { UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIVerticalRule, UIButton, UIProgress, UITabbedPanel, UIListbox, ListboxItem };
