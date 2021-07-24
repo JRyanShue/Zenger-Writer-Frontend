@@ -101,6 +101,9 @@
   },
   "homepage": "https://threejs.org/",
   "devDependencies": {
+    "@szhsin/react-menu": "^1.10.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.4",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
@@ -129,5 +132,10 @@
       "build/three.module.js"
     ],
     "directories": {}
+  },
+  "dependencies": {
+    "@szhsin/react-menu": "^1.10.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

@@ -80,6 +80,8 @@ function Strings( config ) {
 			'menubar/help/icons': 'Icon Pack',
 			'menubar/help/about': 'About',
 
+			'menubar/preferences': 'Preferences',
+
 			'sidebar/animations': 'Animations',
 			'sidebar/animations/play': 'Play',
 			'sidebar/animations/stop': 'Stop',
