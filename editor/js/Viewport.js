@@ -6,8 +6,8 @@ import { UIPanel } from './libs/ui.js';
 
 import { EditorControls } from './EditorControls.js';
 
-import { ViewportCamera } from './Viewport.Camera.js';
-import { ViewportInfo } from './Viewport.Info.js';
+// import { ViewportCamera } from './Viewport.Camera.js';
+// import { ViewportInfo } from './Viewport.Info.js';
 import { ViewHelper } from './Viewport.ViewHelper.js';
 import { VR } from './Viewport.VR.js';
 
@@ -25,8 +25,8 @@ function Viewport( editor, size, height ) {
 	container.setId( 'viewport' );
 	container.setPosition( 'absolute' );
 
-	container.add( new ViewportCamera( editor ) );
-	container.add( new ViewportInfo( editor ) );
+	// container.add( new ViewportCamera( editor ) );
+	// container.add( new ViewportInfo( editor ) );
 
 	// Size of build plate x and y in mm
 	var sidelen = size;
