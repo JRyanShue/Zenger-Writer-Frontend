@@ -62,8 +62,29 @@ function createForm( editor, settingCategory ) {
 
     }
 
+    // Newline
+    formContainer.appendChild( document.createElement("br") );
+
+    // Cancel Button
+    let formCancel = document.createElement("button");
+    formCancel.innerText = "Cancel";
+    formCancel.className = "setting-button"
+    formCancel.addEventListener("click", function() {
+
+        document.getElementById("screenBlock").style.display = "none";
+        document.getElementById(category + "Form").style.display = "none";
+
+        // Revert input to previous settings
+        for ( var setting in settings ) {
+            document.getElementById(setting + "_field").value = settings[setting];
+        }
+
+    })
+    formContainer.appendChild( formCancel );
+
     let formSubmit = document.createElement("button");
     formSubmit.innerText = "Apply";
+    formSubmit.className = "setting-button"
     formSubmit.addEventListener("click", function() {
 
         document.getElementById("screenBlock").style.display = "none";
@@ -78,8 +99,6 @@ function createForm( editor, settingCategory ) {
         }
         
     });
-
-    // Add to container
     formContainer.appendChild(formSubmit);
 
     // Add container

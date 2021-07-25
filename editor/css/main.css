@@ -269,6 +269,10 @@ button {
 		background-color: #fff;
 	}
 
+.setting-button {
+	margin: 4px;
+}
+
 input, textarea {
 	border: 1px solid transparent;
 	color: #444;
@@ -759,12 +763,13 @@ select {
   display: none;
   z-index: 9;
   position: fixed;
+  /* Center */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   bottom: 0;
   right: 15px;
-  border: 3px solid #f1f1f1;
+  /* border: 3px solid #f1f1f1; */
   
 }
 
@@ -772,16 +777,17 @@ select {
 .form-container {
   z-index: -1;
   position: relative;
-  max-width: 300px;
+  /* max-width: 300px; */
   padding: 10px;
   background-color: white;
+  border-radius: 8px;
 }
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password] {
-  width: 100%;
+  /* width: 100%; */
   padding: 15px;
-  margin: 5px 0 22px 0;
+  /* margin: 5px 0 22px 0; */
   border: none;
   background: #f1f1f1;
 }
