@@ -14,9 +14,9 @@ hr {
 	border-top: 1px solid #ccc;
 }
 
-vr {
+.vr {
 	/* border: 0; */
-	border-left: 2px solid #ccc;
+	border-left: 8px solid #fff;
 	height: var(--bar-height);
 }
 

@@ -974,9 +974,9 @@ class UIVerticalRule extends UIElement {
 
 	constructor() {
 
-		super( document.createElement( 'vr' ) );
+		super( document.createElement( 'div' ) );
 
-		this.dom.className = 'VerticalRule';
+		this.dom.className = 'vr';
 
 	}
 

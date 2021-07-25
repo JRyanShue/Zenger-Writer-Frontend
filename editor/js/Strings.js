@@ -83,6 +83,10 @@ function Strings( config ) {
 			'menubar/help/icons': 'Icon Pack',
 			'menubar/help/about': 'About',
 
+			'menubar/quality': 'Quality',
+			'settings/layer_height': 'Layer Height',
+			'settings/line_width': 'Line Width',
+
 			'sidebar/animations': 'Animations',
 			'sidebar/animations/play': 'Play',
 			'sidebar/animations/stop': 'Stop',

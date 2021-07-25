@@ -12,6 +12,8 @@ import { MenubarHelp } from './Menubar.Help.js';
 import { MenubarPlay } from './Menubar.Play.js';
 import { MenubarStatus } from './Menubar.Status.js';
 
+import { MenubarQuality } from './Menubar.Quality.js';
+
 function Menubar( editor ) {
 
 	var container = new UIPanel();
@@ -29,6 +31,8 @@ function Menubar( editor ) {
 	container.add( new MenubarHelp( editor ) );
 
 	container.add( new MenubarDivider( editor ) );
+
+	container.add( new MenubarQuality( editor ) );
 
 	container.add( new MenubarStatus( editor ) );
 

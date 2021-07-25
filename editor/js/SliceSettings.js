@@ -11,7 +11,7 @@ class SliceSettings {
         this.dict = {
 
             // QUALITY
-            "layer_height" : 1.4,
+            "layer_height" : 0.2,
             "line_width" : 0.4,
             
             // SHELL
