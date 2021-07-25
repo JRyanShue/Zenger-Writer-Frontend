@@ -1,7 +1,9 @@
 
 import * as THREE from '../../build/three.module.js';
 
-function snapDown( editor ) {
+import { SetPositionCommand } from './commands/SetPositionCommand.js';
+
+function SnapDown( editor ) {
 
     const absoluteBounds = new THREE.Box3();
 
@@ -17,3 +19,5 @@ function snapDown( editor ) {
     editor.execute( new SetPositionCommand( editor, object, newPosition ) );
 
 }
+
+export { SnapDown };

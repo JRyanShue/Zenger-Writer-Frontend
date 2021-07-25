@@ -15,9 +15,11 @@ import { SetPositionCommand } from './commands/SetPositionCommand.js';
 import { SetRotationCommand } from './commands/SetRotationCommand.js';
 import { SetScaleCommand } from './commands/SetScaleCommand.js';
 
+import { SnapDown } from './ObjectUtils.js';
+
 import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment.js';
 
-import { SidebarProjectRenderer } from './Sidebar.Project.Renderer.js';
+// import { SidebarProjectRenderer } from './Sidebar.Project.Renderer.js';
 
 function Viewport( editor, size, height ) {
 
@@ -166,6 +168,9 @@ function Viewport( editor, size, height ) {
 					break;
 
 			}
+
+			// Automatically snap to build plate
+			SnapDown( editor );
 
 		}
 
@@ -797,7 +802,7 @@ function Viewport( editor, size, height ) {
 
 	}
 
-	container.add( new SidebarProjectRenderer( editor ) );
+	// container.add( new SidebarProjectRenderer( editor ) );
 
 	return container;
 
