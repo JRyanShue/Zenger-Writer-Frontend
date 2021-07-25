@@ -77,6 +77,13 @@
 			window.THREE = THREE; // Expose THREE to APP Scripts and Console
 			window.VRButton = VRButton; // Expose VRButton to APP Scripts
 
+			// dynamically block the screen
+			var screenBlock = document.createElement("div");
+			screenBlock.className = "screen-block";
+			screenBlock.id = "screenBlock";
+			screenBlock.style.display = "none"
+			document.body.appendChild(screenBlock);
+
 			var viewport = new Viewport( editor, 235, 200 );
 			document.body.appendChild( viewport.dom );
 

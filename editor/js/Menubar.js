@@ -12,7 +12,7 @@ import { MenubarHelp } from './Menubar.Help.js';
 import { MenubarPlay } from './Menubar.Play.js';
 import { MenubarStatus } from './Menubar.Status.js';
 
-import { MenubarQuality } from './Menubar.Quality.js';
+import { MenubarSettingCategory } from './Menubar.SettingCategory.js';
 
 function Menubar( editor ) {
 
@@ -32,7 +32,11 @@ function Menubar( editor ) {
 
 	container.add( new MenubarDivider( editor ) );
 
-	container.add( new MenubarQuality( editor ) );
+	// Add setting menus
+	for ( const setting in editor.settings.dict ) {
+		container.add( new MenubarSettingCategory( editor, editor.strings.getKey('menubar/' + setting) ) );
+	}
+	
 
 	container.add( new MenubarStatus( editor ) );
 
