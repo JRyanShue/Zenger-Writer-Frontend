@@ -83,9 +83,64 @@ function Strings( config ) {
 			'menubar/help/icons': 'Icon Pack',
 			'menubar/help/about': 'About',
 
+			// QUALITY
 			'menubar/quality': 'Quality',
 			'settings/layer_height': 'Layer Height',
 			'settings/line_width': 'Line Width',
+
+			// SHELL
+			'menubar/shell': 'Shell',
+			'settings/wall_thickness': 'Wall Thickness',
+        	'settings/top_bottom_thickness' : 'Top/Bottom Thickness',
+            'settings/top_bottom_pattern' : 'Top/Bottom Pattern',
+            'settings/xy_offset' : 'Horizontal Expansion Modifier',
+            'settings/xy_offset_layer_0' : 'Initial Layer Horizontal Expansion',
+
+			// INFILL
+			'menubar/infill': 'Infill',
+			'settings/infill_sparse_density' : 'Infill Density',
+            'settings/infill_pattern' : 'Infill Pattern',
+            
+            // MATERIAL
+			'menubar/material': 'Material',
+            'settings/material_print_temperature' : 'Print Temperature',
+            'settings/material_bed_temperature' : 'Bed Temperature',
+            'settings/material_flow' : 'Flow',
+
+            // SPEED 
+			'menubar/speed': 'Speed',
+            'settings/speed_print' : 'Print Speed',
+            'settings/speed_wall' : 'Wall Speed',
+            'settings/speed_topbottom' : 'Top/Bottom Speed',
+            'settings/speed_travel' : 'Travel Speed',
+            'settings/speed_layer_0' : 'Initial Layer Speed',
+            'settings/speed_travel_layer_0' : 'Initial Layer Travel Speed',
+
+            // TRAVEL
+			'menubar/travel': 'Travel',
+            'settings/retraction_enable' : 'Enable Retraction',
+            'settings/retraction_amount' : 'Retraction Distance',
+            'settings/retraction_speed' : 'Retraction Speed',
+            'settings/retraction_combing' : 'Combing Mode',
+
+            // COOLING
+			'menubar/cooling': 'Cooling',
+            'settings/cool_fan_speed' : 'Fan Speed',
+            'settings/cool_fan_speed_0' : 'Initial Layer Fan Speed',
+
+            // SUPPORT 
+			'menubar/support': 'Support',
+            'settings/support_enable' : 'Enable Support',
+            'settings/support_structure' : 'Support Structure',
+            'settings/support_type' : 'Support Placement',
+            'settings/support_angle' : 'Support Overhang Angle',
+            'settings/support_infill_rate' : 'Support Density',
+            'settings/support_z_distance' : 'Support Z Distance',
+            'settings/support_xy_distance' : 'Support X/Y Distance',
+
+            // BUILD PLATE ADHESION
+			'menubar/build plate adhesion': 'Build Plate Adhesion',
+            'settings/adhesion_type' : 'Build Plate Adhesion Type',
 
 			'sidebar/animations': 'Animations',
 			'sidebar/animations/play': 'Play',
