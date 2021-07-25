@@ -17,6 +17,8 @@ import { SetScaleCommand } from './commands/SetScaleCommand.js';
 
 import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment.js';
 
+import { SidebarProjectRenderer } from './Sidebar.Project.Renderer.js';
+
 function Viewport( editor, size, height ) {
 
 	var signals = editor.signals;
@@ -782,6 +784,8 @@ function Viewport( editor, size, height ) {
 		editor.signals.sceneRendered.dispatch( endTime - startTime );
 
 	}
+
+	container.add( new SidebarProjectRenderer( editor ) );
 
 	return container;
 
