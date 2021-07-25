@@ -40,8 +40,28 @@ function createForm( editor, settingCategory ) {
     let formTitle = document.createElement("h1");
     formTitle.innerHTML = "Modify " + settingCategory + " Settings";
 
+    // X button
+    var x = document.createElement("span");
+    x.innerText = "x";
+    x.className = "close";
+    x.addEventListener("click", function() {
+
+        document.getElementById("screenBlock").style.display = "none";
+        document.getElementById(category + "Form").style.display = "none";
+
+        // Revert input to previous settings
+        for ( var setting in settings ) {
+            document.getElementById(setting + "_field").value = settings[setting];
+        }
+
+    })
+    formTitle.append(x);
+
     // Add to container
     formContainer.appendChild(formTitle);
+
+    
+
 
     // Add all settings for given category
     var settings = editor.settings.dict[category];
@@ -78,7 +98,7 @@ function createForm( editor, settingCategory ) {
         for ( var setting in settings ) {
             document.getElementById(setting + "_field").value = settings[setting];
         }
-
+        
     })
     formContainer.appendChild( formCancel );
 
@@ -109,8 +129,14 @@ function createForm( editor, settingCategory ) {
 
 }
 
-function createBase() {
-    
+function cancel() {
+    document.getElementById("screenBlock").style.display = "none";
+    document.getElementById(category + "Form").style.display = "none";
+
+    // Revert input to previous settings
+    for ( var setting in settings ) {
+        document.getElementById(setting + "_field").value = settings[setting];
+    }
 }
 
 export { SettingButton };
