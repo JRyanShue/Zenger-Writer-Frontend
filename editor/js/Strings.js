@@ -10,6 +10,7 @@ function Strings( config ) {
 			'menubar/slice/slice': 'Slice',
 
 			'menubar/file': 'File',
+			'menubar/file/save': 'Save',
 			'menubar/file/slice': 'Slice',
 			'menubar/file/new': 'New Project',
 			'menubar/file/import': 'Import',

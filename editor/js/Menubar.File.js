@@ -4,8 +4,6 @@ import { zipSync, strToU8 } from '../../examples/jsm/libs/fflate.module.js';
 
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
-import { Slice } from './API.js';
-
 function MenubarFile( editor ) {
 
 	var strings = editor.strings;
@@ -22,52 +20,65 @@ function MenubarFile( editor ) {
 	options.setClass( 'options' );
 	container.add( options );
 
-	// New
+	// Save
 
 	var option = new UIRow();
 	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/new' ) );
+	option.setTextContent( strings.getKey( 'menubar/file/save' ) );
 	option.onClick( function () {
 
-		if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
-
-			editor.clear();
-
-		}
+		// Save
+		editor.signals.homeButtonClicked.dispatch();
 
 	} );
 	options.add( option );
 
-	//
+	// // New
 
-	options.add( new UIHorizontalRule() );
+	// var option = new UIRow();
+	// option.setClass( 'option' );
+	// option.setTextContent( strings.getKey( 'menubar/file/new' ) );
+	// option.onClick( function () {
 
-	// Import
+	// 	if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
 
-	var form = document.createElement( 'form' );
-	form.style.display = 'none';
-	document.body.appendChild( form );
+	// 		editor.clear();
 
-	var fileInput = document.createElement( 'input' );
-	fileInput.multiple = true;
-	fileInput.type = 'file';
-	fileInput.addEventListener( 'change', function () {
+	// 	}
 
-		editor.loader.loadFiles( fileInput.files );
-		form.reset();
+	// } );
+	// options.add( option );
 
-	} );
-	form.appendChild( fileInput );
+	// //
 
-	var option = new UIRow();
-	option.setClass( 'option' );
-	option.setTextContent( strings.getKey( 'menubar/file/import' ) );
-	option.onClick( function () {
+	// options.add( new UIHorizontalRule() );
 
-		fileInput.click();
+	// // Import
 
-	} );
-	options.add( option );
+	// var form = document.createElement( 'form' );
+	// form.style.display = 'none';
+	// document.body.appendChild( form );
+
+	// var fileInput = document.createElement( 'input' );
+	// fileInput.multiple = true;
+	// fileInput.type = 'file';
+	// fileInput.addEventListener( 'change', function () {
+
+	// 	editor.loader.loadFiles( fileInput.files );
+	// 	form.reset();
+
+	// } );
+	// form.appendChild( fileInput );
+
+	// var option = new UIRow();
+	// option.setClass( 'option' );
+	// option.setTextContent( strings.getKey( 'menubar/file/import' ) );
+	// option.onClick( function () {
+
+	// 	fileInput.click();
+
+	// } );
+	// options.add( option );
 
 	return container;
 

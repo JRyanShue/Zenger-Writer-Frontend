@@ -22,7 +22,7 @@ function Menubar( editor ) {
 	container.add( new MenubarHome( editor ) );
 
 	container.add( new MenubarSlice( editor ) );
-	// container.add( new MenubarFile( editor ) );
+	container.add( new MenubarFile( editor ) );
 	// container.add( new MenubarEdit( editor ) );
 	// container.add( new MenubarAdd( editor ) );
 	// container.add( new MenubarPlay( editor ) );

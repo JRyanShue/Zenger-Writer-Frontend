@@ -1,5 +1,8 @@
 
-async function Save ( editor, data ) {  // Saves to cloud
+
+async function Save ( editor ) {  // Saves to cloud
+
+    var data = editor.toJSON();
     
     // Build FormData object from data
     let formData = new FormData();

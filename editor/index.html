@@ -15,7 +15,7 @@
 		<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.9.6/dist/ffmpeg.min.js" defer></script>
 
 		<script src="../examples/js/libs/draco/draco_encoder.js"></script>
-		<script src="../examples/js/controls/OrbitControls.js"></script>
+		<!-- <script src="../examples/js/controls/OrbitControls.js"></script> -->
 
 		<link rel="stylesheet" href="js/libs/codemirror/codemirror.css">
 		<link rel="stylesheet" href="js/libs/codemirror/theme/monokai.css">
@@ -59,6 +59,8 @@
 			import { Menubar } from './js/Menubar.js';
 			import { Resizer } from './js/Resizer.js';
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js';
+
+			import { Save } from './js/API.js';
 
 			window.URL = window.URL || window.webkitURL;
 			window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
@@ -129,7 +131,7 @@
 
 				var timeout;
 
-				function saveState() {
+				function autoSave() {
 
 					if ( editor.config.getKey( 'autosave' ) === false ) {
 
@@ -155,18 +157,47 @@
 
 				}
 
+
+				async function saveState( editor ) {
+
+					clearTimeout( timeout );
+
+					timeout = setTimeout( function () {
+
+						editor.signals.savingStarted.dispatch();
+
+						timeout = setTimeout( async function () {
+
+							// Save locally first
+							await editor.storage.set( editor.toJSON() );
+
+							// Save to cloud
+							Save( editor );
+
+							editor.signals.savingFinished.dispatch();
+
+						}, 0.01 ); // 100
+
+					}, 0.01 ); // 1000
+
+				}
+
+
 				var signals = editor.signals;
 
-				signals.geometryChanged.add( saveState );
-				signals.objectAdded.add( saveState );
-				signals.objectChanged.add( saveState );
-				signals.objectRemoved.add( saveState );
-				signals.materialChanged.add( saveState );
-				signals.sceneBackgroundChanged.add( saveState );
-				signals.sceneFogChanged.add( saveState );
-				signals.sceneGraphChanged.add( saveState );
-				signals.scriptChanged.add( saveState );
-				signals.historyChanged.add( saveState );
+				signals.geometryChanged.add( autoSave );
+				signals.objectAdded.add( autoSave );
+				signals.objectChanged.add( autoSave );
+				signals.objectRemoved.add( autoSave );
+				signals.materialChanged.add( autoSave );
+				signals.sceneBackgroundChanged.add( autoSave );
+				signals.sceneFogChanged.add( autoSave );
+				signals.sceneGraphChanged.add( autoSave );
+				signals.scriptChanged.add( autoSave );
+				signals.historyChanged.add( autoSave );
+
+				// force save even if not autosaving when the home button is clicked
+				signals.homeButtonClicked.add( saveState );
 
 			} );
 

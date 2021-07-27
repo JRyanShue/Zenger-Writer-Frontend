@@ -99,7 +99,9 @@ function Editor() {
 
 		viewportCameraChanged: new Signal(),
 
-		animationStopped: new Signal()
+		animationStopped: new Signal(),
+
+		homeButtonClicked: new Signal()
 
 	};
 
