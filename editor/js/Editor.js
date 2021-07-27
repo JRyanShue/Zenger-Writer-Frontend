@@ -7,6 +7,8 @@ import { Strings } from './Strings.js';
 import { Storage as _Storage } from './Storage.js';
 import { SliceSettings } from './SliceSettings.js';
 
+import { AddObjectCommand } from './commands/AddObjectCommand.js';
+
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
 _DEFAULT_CAMERA.position.set( 0, 5, 10 );
@@ -17,6 +19,12 @@ _DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 THREE.Object3D.DefaultUp = new THREE.Vector3(0,0,1);
 
 function Editor() {
+
+	// current user and project no.
+	this.username = "testman";
+	this.projectNumber = 1;
+
+	this.IP = "172.28.150.81";
 
 	var Signal = signals.Signal;
 
@@ -107,6 +115,11 @@ function Editor() {
 	this.scene = new THREE.Scene();
 	this.scene.name = 'Scene';
 
+	// Clear scene of previous objects (Doesn't work)
+	// while(this.scene.children.length > 0){ 
+	// 	this.scene.remove(this.scene.children[0]); 
+	// }
+
 	this.sceneHelpers = new THREE.Scene();
 
 	this.object = {};
@@ -128,6 +141,13 @@ function Editor() {
 	this.addCamera( this.camera );
 
 	this.settings = new SliceSettings(); 
+
+	// Add lights if they don't already exist from autosave
+
+	this.execute( new AddObjectCommand( this, new THREE.AmbientLight( 0x222222 ) ) );
+	var light = new THREE.DirectionalLight( 0xffffff, 1 );
+	light.position.set( 5, 10, 7.5 );
+	this.execute( new AddObjectCommand( this, light ) )
 
 }
 

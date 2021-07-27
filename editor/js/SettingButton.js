@@ -10,9 +10,6 @@ function SettingButton ( editor, settingCategory ) {
 	button.setClass( 'option' );
     button.setTextContent( settingCategory + ' Settings' );
 
-    // Create referenced form
-    createForm( editor, settingCategory );
-
     // button toggles form on/off
     button.onClick( function () {
 
@@ -24,110 +21,7 @@ function SettingButton ( editor, settingCategory ) {
     return button;
 }
 
-function createForm( editor, settingCategory ) {
 
-    var category = settingCategory.toLowerCase();  // Lowercase version for indexing
-
-    // createBase();
-    let settingsForm = document.createElement("div");
-    settingsForm.className = "settings-form";
-    settingsForm.id = category + "Form";
-
-    let formContainer = document.createElement("div");
-    formContainer.className = "form-container"
-
-    // Relies on the setting category being modified
-    let formTitle = document.createElement("h1");
-    formTitle.innerHTML = "Modify " + settingCategory + " Settings";
-
-    // X button
-    var x = document.createElement("span");
-    x.innerText = "x";
-    x.className = "close";
-    x.addEventListener("click", function() {
-
-        document.getElementById("screenBlock").style.display = "none";
-        document.getElementById(category + "Form").style.display = "none";
-
-        // Revert input to previous settings
-        for ( var setting in settings ) {
-            document.getElementById(setting + "_field").value = settings[setting];
-        }
-
-    })
-    formTitle.append(x);
-
-    // Add to container
-    formContainer.appendChild(formTitle);
-
-    
-
-
-    // Add all settings for given category
-    var settings = editor.settings.dict[category];
-
-    for ( var setting in settings ) {
-
-        let settingTitle = document.createElement("label");
-        settingTitle.id = setting + "_label";
-        settingTitle.innerText = editor.strings.getKey("settings/" + setting);
-        let settingField = document.createElement("input");
-        settingField.id = setting + "_field";
-        settingField.type = "text";
-        settingField.value = settings[setting];
-
-        // Add to container
-        formContainer.appendChild(settingTitle);
-        formContainer.appendChild(settingField);
-
-    }
-
-    // Newline
-    formContainer.appendChild( document.createElement("br") );
-
-    // Cancel Button
-    let formCancel = document.createElement("button");
-    formCancel.innerText = "Cancel";
-    formCancel.className = "setting-button"
-    formCancel.addEventListener("click", function() {
-
-        document.getElementById("screenBlock").style.display = "none";
-        document.getElementById(category + "Form").style.display = "none";
-
-        // Revert input to previous settings
-        for ( var setting in settings ) {
-            document.getElementById(setting + "_field").value = settings[setting];
-        }
-        
-    })
-    formContainer.appendChild( formCancel );
-
-    let formSubmit = document.createElement("button");
-    formSubmit.innerText = "Apply";
-    formSubmit.className = "setting-button"
-    formSubmit.addEventListener("click", function() {
-
-        document.getElementById("screenBlock").style.display = "none";
-        document.getElementById(category + "Form").style.display = "none";
-
-        // Set variables
-        for ( var setting in settings ) {
-            settings[setting] = document.getElementById(setting + "_field").value;
-
-            // Update display values
-            document.getElementById( setting + '_display' ).innerText = editor.strings.getKey( 'settings/' + setting ) + ": " + settings[setting];
-        }
-        
-    });
-    formContainer.appendChild(formSubmit);
-
-    // Add container
-    settingsForm.appendChild(formContainer);
-
-    // Add complete form
-    document.body.append(settingsForm);
-
-}
 
 function cancel() {
     document.getElementById("screenBlock").style.display = "none";

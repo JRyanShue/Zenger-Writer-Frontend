@@ -1,11 +1,11 @@
 
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
-import { Slice } from './Slicer.js';
+import { Slice } from './API.js';
 
 function MenubarSlice( editor ) {
 
-	const IP = "172.28.150.81";
+	const IP = editor.IP;
 
 	var config = editor.config;
 	var strings = editor.strings;

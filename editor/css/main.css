@@ -374,6 +374,10 @@ select {
 		height: var(--home-icon-height);
 	}
 
+	#menubar .menubutton:hover {
+		background-color: gray;
+	}
+
 	#menubar .menu.right {
 		float: right;
 		cursor: auto;
@@ -388,7 +392,7 @@ select {
 			margin: 0;
 			padding: var(--padding-amount);
 			line-height: var(--line-height);
-			padding-top: calc( var(--bar-height) - var(--line-height) - var(--padding-amount) );
+			margin-top: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) );
 		}
 
 		#menubar .menu .setting {
@@ -398,6 +402,10 @@ select {
 			background-color: transparent;
 			padding: 5px 10px;
 			margin: 0 !important;
+		}
+
+		#menubar .title:hover{
+			background: gray;
 		}
 
 		#menubar .menu .options {
@@ -450,6 +458,7 @@ select {
 	width: 300px;
 	background: #eee;
 	overflow: auto;
+	display: none;
 }
 
 	#sidebar .Panel {
@@ -491,10 +500,11 @@ select {
 #toolbar {
 	position: absolute;
 	left: 10px;
-	top: 42px;
 	width: 32px;
 	background: #eee;
 	text-align: center;
+	top: 50%;
+  	margin-top: -64px;
 }
 
 	#toolbar button, #toolbar input {

@@ -62,7 +62,7 @@ function Strings( config ) {
 			'menubar/add/perspectivecamera': 'PerspectiveCamera',
 			'menubar/add/orthographiccamera': 'OrthographicCamera',
 
-			'menubar/status/autosave': 'autosave',
+			'menubar/status/autosave': 'Save Offline',
 
 			'menubar/play': 'Play',
 			'menubar/play/stop': 'Stop',

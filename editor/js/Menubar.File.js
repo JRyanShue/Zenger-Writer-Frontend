@@ -4,7 +4,7 @@ import { zipSync, strToU8 } from '../../examples/jsm/libs/fflate.module.js';
 
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
-import { Slice } from './Slicer.js';
+import { Slice } from './API.js';
 
 function MenubarFile( editor ) {
 
