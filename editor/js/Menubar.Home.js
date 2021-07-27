@@ -13,7 +13,7 @@ function MenubarHome ( editor ) {
     container.onClick( function() {
         // Save the configuration to S3 and return to home page
         Save( editor, editor.toJSON() );
-        // window.location='http://www.example.com';
+        window.location='/';
     })
 
     // var title = new UIPanel();
