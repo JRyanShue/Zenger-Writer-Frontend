@@ -158,7 +158,7 @@
 				}
 
 
-				async function saveState( editor ) {
+				async function saveState() {
 
 					clearTimeout( timeout );
 
@@ -169,7 +169,7 @@
 						timeout = setTimeout( async function () {
 
 							// Save locally first
-							await editor.storage.set( editor.toJSON() );
+							editor.storage.set( editor.toJSON() );
 
 							// Save to cloud
 							Save( editor );

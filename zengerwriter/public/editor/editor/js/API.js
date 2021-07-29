@@ -1,4 +1,9 @@
 
+async function GetEditorPreview (  ) {
+
+    var
+
+}
 
 async function Save ( editor ) {  // Saves to cloud
 
@@ -23,7 +28,9 @@ async function Save ( editor ) {  // Saves to cloud
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
+    }).then(
+        (response) => { console.log(response); }
+    );
 
     // Send FormData to backend (which will send to S3)
     // const response = await fetch( 'http://' + editor.IP + '/put_object',
