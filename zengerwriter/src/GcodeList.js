@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { test } from './test.js';
 import { GetEditorPreview, GetEditors } from './API.js';
@@ -18,24 +18,35 @@ class GcodeList extends React.Component {
         this.listItems = <li></li>;
 
         this.state = {
-            numbersList: <li></li>
+            numbersList: <li></li>,
+            mounted: false
         }
 
         this.getEditorNumbers().then(
             response =>
             {
                 
-                console.log(this.editorNumbers);
+                console.log('Editor numbers pulled:', this.editorNumbers);
+
                 // After promise has been resolved:
-                // var numbers = this.editorNumbers;
-                var numbers = [0, 1, 2, 3, 4];
+                var numbers = this.editorNumbers;
                 this.listItems = numbers.map((numbers) =>
                     <li key="{numbers}">{numbers}</li>  //  key="{numbers}"
                 );
                 console.log(this.listItems);
-                this.setState({
-                    numbersList: this.listItems
-                });
+                this.state = {
+                    numbersList: this.listItems,
+                    mounted: this.state.mounted
+                };
+
+                // Prevent setState before component is mounted
+                console.log('mounted?', this.state.mounted)
+                if (this.state.mounted) {
+                    this.setState({
+                        numbersList: this.listItems,
+                        mounted: this.state.mounted
+                    });
+                }
 
             }
         );
@@ -44,7 +55,8 @@ class GcodeList extends React.Component {
 
     componentDidMount() {
         this.setState({
-            numbersList: this.listItems
+            numbersList: this.listItems,
+            mounted: true
         });
     }
 
