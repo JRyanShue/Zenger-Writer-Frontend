@@ -1,10 +1,4 @@
 
-async function GetEditorPreview (  ) {
-
-    var
-
-}
-
 async function Save ( editor ) {  // Saves to cloud
 
     var data = editor.toJSON();

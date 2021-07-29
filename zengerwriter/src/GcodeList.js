@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
+import { GetEditorPreview } from './API.js';
+import { EditorPreview } from './EditorPreview.js';
 
 class GcodeList extends React.Component {
 
     constructor (props) {
 
         super(props);
+        this.IP = props.IP;
         this.name = props.name; 
 
     }
@@ -14,25 +17,25 @@ class GcodeList extends React.Component {
 
         return (
             <div className="App">
-              <header className="App-header">
-                <p>
-                  Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="/editor/editor"
-                  target="_self"  // _blank for new tab
-                  rel="noopener noreferrer"
-                >
-                  Learn {this.name}
-                </a>
-              </header>
+                <EditorPreview /> 
+                <header className="App-header">
+                
+                    <a
+                        className="App-link"
+                        href="/editor/editor"
+                        target="_self"  // _blank for new tab
+                        rel="noopener noreferrer"
+                    >
+                        New Project. 
+                    </a>
+
+                </header>
             </div>
         );
-        
+
     }
 
   
 }
 
-export default GcodeList;
+export { GcodeList };

@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GcodeList name="Ryan"/>
+    <App name="Ryan"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

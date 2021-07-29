@@ -1,27 +1,40 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { GcodeList } from './GcodeList.js';
 
-function App() {
+class App extends React.Component {
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="/editor/editor"
-          target="_self"  // _blank for new tab
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  constructor( props ) {
+
+    this.IP = "172.28.150.81";
+
+  }
+
+  render() {
+
+    return (
+      
+      <div className="App">
+        <GcodeList IP={this.IP} name="Ryan"/>
+        <header className="App-header">
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="/editor/editor"
+            target="_self"  // _blank for new tab
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    );
+
+  }
   
+
 }
 
 export default App;
