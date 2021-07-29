@@ -15,6 +15,8 @@ class GcodeList extends React.Component {
         
         this.editorNumbers = [];
 
+        this.listItems = <li></li>;
+
         this.state = {
             numbersList: <li></li>
         }
@@ -23,19 +25,27 @@ class GcodeList extends React.Component {
             response =>
             {
                 
+                console.log(this.editorNumbers);
                 // After promise has been resolved:
-                var numbers = this.editorNumbers;
+                // var numbers = this.editorNumbers;
+                var numbers = [0, 1, 2, 3, 4];
                 this.listItems = numbers.map((numbers) =>
-                    <li key="{numbers}">{numbers}</li>
+                    <li key="{numbers}">{numbers}</li>  //  key="{numbers}"
                 );
                 console.log(this.listItems);
-                this.state = {
+                this.setState({
                     numbersList: this.listItems
-                };
+                });
 
             }
         );
 
+    }
+
+    componentDidMount() {
+        this.setState({
+            numbersList: this.listItems
+        });
     }
 
     update () {

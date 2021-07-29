@@ -35,11 +35,10 @@ async function GetEditors ( IP, username ) {
     ).then(
         data => {
 
-            data_ = data;
             var project_numbers = data['project_numbers'];
             console.log('keys:', project_numbers);
             for (var i = 0; i < project_numbers.length; i++){
-                console.log(project_numbers[i]);
+                console.log('at i:', project_numbers[i]);
                 values.push(project_numbers[i]);
             }
             
@@ -48,7 +47,6 @@ async function GetEditors ( IP, username ) {
         console.log('error');
     });
 
-    console.log("type:", typeof values);
     console.log("values:", values);
     return values;
     // return response;
