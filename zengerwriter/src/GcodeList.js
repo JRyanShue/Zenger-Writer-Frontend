@@ -8,95 +8,65 @@ class GcodeList extends React.Component {
 
     constructor (props) {
 
+        // Initialize
         super(props);
         this.IP = props.IP;
         this.username = props.username;
-
-        // console.log(test());
-
-        // console.log(GetEditors);
-
-        console.log("project numbers:", GetEditors(this.IP, "testman"));
         
         this.editorNumbers = [];
+
+        this.state = {
+            numbersList: <li></li>
+        }
+
         this.getEditorNumbers().then(
             response =>
             {
-                console.log("editorNumbers:", this.editorNumbers);
-                console.log("ed0", this.editorNumbers[0]);
-                console.log('lenn', this.editorNumbers.length);
-                for (var i = 0; i < this.editorNumbers.length; i++) {
-                    console.log("a");
-                    console.log("item", this.editorNumbers[i]);
-                }
-                this.editors = "editors";  // editorNumbers || 
+                
+                // After promise has been resolved:
+                var numbers = this.editorNumbers;
+                this.listItems = numbers.map((numbers) =>
+                    <li key="{numbers}">{numbers}</li>
+                );
+                console.log(this.listItems);
+                this.state = {
+                    numbersList: this.listItems
+                };
+
             }
         );
-        // this.getEditorNumbers().then(
-        //     // data_ => JSON.stringify(data_)
-        //     // response => response.json()
-        //     // data_ => console.log(data_)
-        //     response => console.log(response)
-        //     // values => console.log(values)
-        // ).then(
-        //     data => 
-        //     {
-        //         for (var i in data) {
-        //             editorNumbers.push(i);
-        //         }
-        //     }
-        // );
-        
-        // this.array = [1, 2, 3];
-        // this.editors = "editors";
 
     }
 
+    update () {
+        
+    }
+
     async getEditorNumbers() {
-        console.log('asgd');
-        var editors = await GetEditors(this.IP, this.username)
+        
+        await GetEditors(this.IP, this.username)  // API.js functoin to pull from S3
         .then(
-            editors => {
-                console.log(editors);
-                console.log("0", editors[0]);
-                console.log("len:", editors.length);
+            editors => {  // push S3 response into this.editorNumbers
+
                 for (var i = 0; i < editors.length; i++) {
                     console.log(editors[i]);
                     this.editorNumbers.push(editors[i]);
                 }
-                // console.log("type:", typeof editors)
-                // for (var i in editors) {
-                //     this.editorNumbers.push(i);
-                // }
+
             }
         );
-        console.log("editors:", this.editorNumbers);
-        // console.log(typeof editors);
-        // // return JSON.parse(editors)
-        // return editors.toString();
-        return this.editorNumbers;
+        
+        return this.editorNumbers;  // Return to resolve promise
+
     }
 
     render () {
 
         return (
             <div className="App">
-                <EditorPreview />
-                <p>
-                    {this.editors}
-                </p>
-                <header className="App-header">
-
-                    <a
-                        className="App-link"
-                        href="/editor/editor"
-                        target="_self"  // _blank for new tab
-                        rel="noopener noreferrer"
-                    >
-                        New Project. 
-                    </a>
-
-                </header>
+                <ul>
+                    {this.state.numbersList}
+                </ul>
             </div>
         );
 
