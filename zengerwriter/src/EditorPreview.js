@@ -4,12 +4,16 @@ import React from 'react';
 class EditorPreview extends React.Component {
 
     constructor() {
-
+        super();
     }
 
     render() {
 
-        return 
+        return(
+            <div>
+                Editor Preview
+            </div>
+        )
 
     }
 

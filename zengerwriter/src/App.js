@@ -6,6 +6,7 @@ class App extends React.Component {
 
   constructor( props ) {
 
+    super(props);
     this.IP = "172.28.150.81";
 
   }
@@ -15,7 +16,7 @@ class App extends React.Component {
     return (
       
       <div className="App">
-        <GcodeList IP={this.IP} name="Ryan"/>
+        <GcodeList IP={this.IP} username="testman"/>
         <header className="App-header">
           <p>
             Edit <code>src/App.js</code> and save to reload.
