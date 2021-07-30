@@ -1,4 +1,4 @@
-function Storage() {
+function Storage( editorJSON ) {
 
 	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
@@ -18,7 +18,7 @@ function Storage() {
 
 		init: function ( callback ) {
 
-			var request = indexedDB.open( name, version );
+			var request = editorJSON || indexedDB.open( name, version );  // Try to pull configuration from the cloud
 			request.onupgradeneeded = function ( event ) {
 
 				var db = event.target.result;

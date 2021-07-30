@@ -17,19 +17,6 @@ class App extends React.Component {
       
       <div className="App">
         <GcodePreview IP={this.IP} username="testman"/>
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="/editor/editor"
-            target="_self"  // _blank for new tab
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
       </div>
     );
 

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { GetEditorData } from './API.js';
+import { GetEditorData, GetEditorURL } from './API.js';
 
 class Preview extends React.Component {
 
@@ -21,8 +21,15 @@ class Preview extends React.Component {
 
         this.gcodelist = props.gcodelist;
 
-        this.handleClick = function (  ) {
-            GetEditorData( this.gcodelist, this.id );
+        this.handleClick = function () {
+
+            console.log("loading..."); // replace with loading screen
+            // GetEditorData( this.gcodelist, this.id );
+
+            // Callback is within function
+            GetEditorURL( this.gcodelist, this.id );
+            // this.gcodelist.enterEditor();
+
         };
         
     }

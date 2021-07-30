@@ -33,6 +33,10 @@ class GcodePreview extends React.Component {
 
         }
 
+        this.enterEditor = function ( editorURL ) {
+            window.location = "/editor/editor?editorURL=" + editorURL;
+        }
+
         this.getEditorNumbers().then(
             response =>
             {

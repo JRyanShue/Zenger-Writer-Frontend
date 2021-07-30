@@ -118,4 +118,41 @@ async function GetEditorData ( gcodelist, EditorID ) {
 
 }
 
-export { GetEditorPreviewUrl, GetEditors, GetEditorData }
+
+async function GetEditorURL ( gcodelist, EditorID ) {
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + gcodelist.username + '/projects/' + EditorID + '/editor.json');
+    headers.append('Content-Type', 'application/json');
+
+    await fetch( 'http://' + gcodelist.IP + '/pull_object_url', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: headers,
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer', 
+    }).then(
+        (response) => response.json()
+    ).then(
+        data => {
+            
+            // console.log("data from API:", data);
+            var url = data['url'];
+            console.log("editor url:", url);
+
+            gcodelist.enterEditor( url ); 
+            return "OK";
+            setTimeout(function(){ 
+                
+            }, 3000);
+
+        }
+    );
+
+}
+
+
+export { GetEditorPreviewUrl, GetEditors, GetEditorData, GetEditorURL }
