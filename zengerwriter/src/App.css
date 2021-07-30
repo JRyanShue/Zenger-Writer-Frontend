@@ -1,3 +1,10 @@
+li {  
+  /* .preview-img */
+  height: 100px;
+  background-size: contain;
+  width: 100px;
+}
+
 .App {
   text-align: center;
 }

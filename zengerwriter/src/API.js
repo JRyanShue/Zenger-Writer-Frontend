@@ -54,7 +54,7 @@ async function GetEditors ( IP, username ) {
 
 }
 
-async function GetEditorPreview ( IP, User, EditorID ) {
+async function GetEditorPreviewUrl ( IP, User, EditorID, gcodelist ) {
 
     // Build FormData object from data
     let formData = new FormData();
@@ -64,21 +64,42 @@ async function GetEditorPreview ( IP, User, EditorID ) {
 
     console.log("form:", formData);
 
-    const response = await fetch( 'http://' + IP + '/get_object', {
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + User + '/projects/' + EditorID + '/preview.png');
+    headers.append('Content-Type', 'application/json');
+
+    await fetch( 'http://' + IP + '/get_object', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
-        // headers: {
-        //     'Content-Type': 'application/json'
-        // },
+        headers: headers,
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
         // body: JSON.stringify(data) // body data type must match "Content-Type" header
     }).then(
-        (response) => { console.log(response); }
+        (response) => response.json()
+    ).then(
+        data => {
+            var resp = new Response(); 
+            // resp.url = data['url']
+            console.log("data from API:", data['url']);
+            var img_url = data['url'];
+
+            // Important callback call
+            gcodelist.setPreview(EditorID, img_url, gcodelist);
+
+            // console.log("resp:", resp.url);
+
+            // Return response when done
+            // return resp; 
+            return "OK";
+
+            // return img_url;
+        }
     );
 
 }
 
-export { GetEditorPreview, GetEditors }
+export { GetEditorPreviewUrl, GetEditors }

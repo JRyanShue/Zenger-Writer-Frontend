@@ -1,22 +1,22 @@
 
 import React from 'react';
+import { GetEditorPreviewUrl } from './API.js';
 
-class EditorPreview extends React.Component {
+async function SetEditorPreview( IP, User, EditorID, gcodelist ) {
 
-    constructor() {
-        super();
-    }
+    // Get the preview of the specified editor ID
+    var url;
+    url = await GetEditorPreviewUrl( IP, User, EditorID, gcodelist ).then(response => {
+        // console.log(url);
 
-    render() {
-
-        return(
-            <div>
-                Editor Preview
-            </div>
-        )
-
-    }
+        // return calls next action in sequence
+        return "OK";
+    })
+    // .catch(err => {
+    //     console.log("Failed to connect");
+    // });
 
 }
 
-export { EditorPreview }
+
+export { SetEditorPreview }

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import { test } from './test.js';
-import { GetEditorPreview, GetEditors } from './API.js';
-import { EditorPreview } from './EditorPreview.js';
+import { GetEditorPreviewUrl, GetEditors } from './API.js';
+import { SetEditorPreview } from './EditorPreview.js';
 
 class GcodeList extends React.Component {
 
@@ -15,11 +15,19 @@ class GcodeList extends React.Component {
         
         this.editorNumbers = [];
 
+        this.previews = {};
+
         this.listItems = <li></li>;
 
         this.state = {
             numbersList: <li></li>,
             mounted: false
+        }
+
+        // setPreview method gets passed into callbacks
+        this.setPreview = function(id, url, gcodelist) {
+            gcodelist.previews[id] = url;
+            console.log("URL set:", gcodelist.previews[id])
         }
 
         this.getEditorNumbers().then(
@@ -30,23 +38,46 @@ class GcodeList extends React.Component {
 
                 // After promise has been resolved:
                 var numbers = this.editorNumbers;
-                this.listItems = numbers.map((numbers) =>
-                    <li key="{numbers}">{numbers}</li>  //  key="{numbers}"
-                );
-                console.log(this.listItems);
-                this.state = {
-                    numbersList: this.listItems,
-                    mounted: this.state.mounted
-                };
 
-                // Prevent setState before component is mounted
-                console.log('mounted?', this.state.mounted)
-                if (this.state.mounted) {
-                    this.setState({
+                // Object with preview URLs
+                for (var i = 0; i < numbers.length; i++) {
+                    this.previews[numbers[i]] = SetEditorPreview(this.IP, this.username, numbers[i], this);
+                }
+
+                // Wait for all editor previews to be obtained
+                console.log("All promises:", Object.values(this.previews));
+                Promise.all( Object.values(this.previews) ).then( (values) => {
+
+                    // Create elements with preview URLs
+                    this.listItems = numbers.map((numbers) =>
+                        // set component
+                        {
+                            let url = this.previews[numbers];
+                            return (
+                                <li key={numbers.toString()} style={{
+                                    color:"blue", 
+                                    margin:0, 
+                                    "backgroundImage": "url(" + url + ")"
+                                }}>  
+                                    {numbers}
+                                </li>  // className="preview-img"
+                        )}
+                    );
+                    console.log('items:', this.listItems);
+                    this.state = {
                         numbersList: this.listItems,
                         mounted: this.state.mounted
-                    });
-                }
+                    };
+
+                    // Prevent setState before component is mounted
+                    console.log('mounted?', this.state.mounted)
+                    if (this.state.mounted) {
+                        this.setState({
+                            numbersList: this.listItems,
+                            mounted: this.state.mounted
+                        });
+                    }
+                });
 
             }
         );
