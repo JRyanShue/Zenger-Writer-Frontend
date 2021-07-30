@@ -83,4 +83,39 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
 
 }
 
-export { GetEditorPreviewUrl, GetEditors }
+
+async function GetEditorData ( gcodelist, EditorID ) {
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + gcodelist.username + '/projects/' + EditorID + '/editor.json');
+    headers.append('Content-Type', 'application/json');
+
+    await fetch( 'http://' + gcodelist.IP + '/pull_object', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: headers,
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer', 
+    }).then(
+        (response) => response.json()
+    ).then(
+        data => {
+            
+            // console.log("data from API:", data);
+            var editor = data['body'];
+            console.log("editor:", editor);
+
+            // Important callback call
+            // gcodepreviews.setPreview(EditorID, name, img_url, gcodepreviews);
+
+            return "OK";
+
+        }
+    );
+
+}
+
+export { GetEditorPreviewUrl, GetEditors, GetEditorData }

@@ -61,6 +61,7 @@ class GcodePreview extends React.Component {
                             return (
 
                                 <Preview 
+                                gcodelist={this} 
                                 key={numbers.toString()} 
                                 backgroundImage={url}
                                 id = {numbers}

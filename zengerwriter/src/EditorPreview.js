@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { GetEditorData } from './API.js';
 
 class Preview extends React.Component {
 
@@ -12,23 +13,30 @@ class Preview extends React.Component {
         super( props );
         this.key = props.key;
         this.backgroundImage = props.backgroundImage;
-        this.onClick = props.onClick;
+
         this.id = props.id;
         this.name = props.name;
 
         this.className="preview-img";
 
+        this.gcodelist = props.gcodelist;
+
+        this.handleClick = function (  ) {
+            GetEditorData( this.gcodelist, this.id );
+        };
+        
     }
 
     render() {
-//className="preview-img-box"
-        return( //style={{border:"1px solid red", height:"100px", width:"100px"}}
+
+        return( 
+
             <div className="preview-img-box">
                 <div 
                     className={this.className}
                     key={this.key}
                     style={{backgroundImage: this.backgroundImage}}
-                    onClick={this.onClick}
+                    onClick={this.handleClick.bind(this)}
                 >
                     {this.name}
                 </div>
