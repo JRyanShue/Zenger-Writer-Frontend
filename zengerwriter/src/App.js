@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { GcodeList } from './GcodeList.js';
+import { GcodePreview } from './GcodeList.js';
 
 class App extends React.Component {
 
@@ -16,7 +16,7 @@ class App extends React.Component {
     return (
       
       <div className="App">
-        <GcodeList IP={this.IP} username="testman"/>
+        <GcodePreview IP={this.IP} username="testman"/>
         <header className="App-header">
           <p>
             Edit <code>src/App.js</code> and save to reload.

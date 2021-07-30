@@ -7,15 +7,12 @@ async function GetEditors ( IP, username ) {
         Projects are then sorted by date last used, and another request is sent to get their contents. 
     */
 
-    // let formData = new FormData();
     console.log("Getting project list from username:", username);
 
     // Headers
     var headers = new Headers(); 
     headers.append('Content-Type', 'application/json');
     headers.append('username', username);
-
-    // formData.append("username", username);
 
     console.log("headers:", headers);
 
@@ -49,20 +46,10 @@ async function GetEditors ( IP, username ) {
 
     console.log("values:", values);
     return values;
-    // return response;
-    // return data_
 
 }
 
-async function GetEditorPreviewUrl ( IP, User, EditorID, gcodelist ) {
-
-    // Build FormData object from data
-    let formData = new FormData();
-    // console.log("User:", User);
-    formData.append("User:", User);
-    formData.append( 'EditorID', EditorID );
-
-    console.log("form:", formData);
+async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
 
     // Headers
     var headers = new Headers(); 
@@ -77,26 +64,19 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodelist ) {
         headers: headers,
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
-        // body: JSON.stringify(data) // body data type must match "Content-Type" header
     }).then(
         (response) => response.json()
     ).then(
         data => {
-            var resp = new Response(); 
-            // resp.url = data['url']
+            
             console.log("data from API:", data['url']);
             var img_url = data['url'];
 
             // Important callback call
-            gcodelist.setPreview(EditorID, img_url, gcodelist);
+            gcodepreviews.setPreview(EditorID, img_url, gcodepreviews);
 
-            // console.log("resp:", resp.url);
-
-            // Return response when done
-            // return resp; 
             return "OK";
 
-            // return img_url;
         }
     );
 

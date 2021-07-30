@@ -1,22 +1,39 @@
 
 import React from 'react';
-import { GetEditorPreviewUrl } from './API.js';
 
-async function SetEditorPreview( IP, User, EditorID, gcodelist ) {
+class Preview extends React.Component {
 
-    // Get the preview of the specified editor ID
-    var url;
-    url = await GetEditorPreviewUrl( IP, User, EditorID, gcodelist ).then(response => {
-        // console.log(url);
+    /*
+        Returns a component with a preview of an editor.
+    */
 
-        // return calls next action in sequence
-        return "OK";
-    })
-    // .catch(err => {
-    //     console.log("Failed to connect");
-    // });
+    constructor( props ) {
+        
+        super( props );
+        this.key = props.key;
+        this.backgroundImage = props.backgroundImage;
+        this.onClick = props.onClick;
+        this.id = props.id;
+
+        this.className="preview-img";
+
+    }
+
+    render() {
+
+        return(
+            <div 
+                className={this.className}
+                key={this.key}
+                style={{backgroundImage: this.backgroundImage}}
+                onClick={this.onClick}
+            >
+                {this.id}
+            </div>
+        )
+
+    }
 
 }
 
-
-export { SetEditorPreview }
+export { Preview }

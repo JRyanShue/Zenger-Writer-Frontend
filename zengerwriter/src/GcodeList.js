@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import { test } from './test.js';
 import { GetEditorPreviewUrl, GetEditors } from './API.js';
-import { SetEditorPreview } from './EditorPreview.js';
+import { Preview } from './EditorPreview.js';
 
-class GcodeList extends React.Component {
+class GcodePreview extends React.Component {
 
     constructor (props) {
 
@@ -17,17 +16,21 @@ class GcodeList extends React.Component {
 
         this.previews = {};
 
-        this.listItems = <li></li>;
+        this.listItems = <div>Loading...</div>;
 
         this.state = {
-            numbersList: <li></li>,
+
+            numbersList: <div></div>,
             mounted: false
+
         }
 
         // setPreview method gets passed into callbacks
-        this.setPreview = function(id, url, gcodelist) {
-            gcodelist.previews[id] = url;
-            console.log("URL set:", gcodelist.previews[id])
+        this.setPreview = function(id, url, gcodepreviews) {
+
+            gcodepreviews.previews[id] = url;
+            console.log("URL set:", gcodepreviews.previews[id])
+
         }
 
         this.getEditorNumbers().then(
@@ -50,32 +53,40 @@ class GcodeList extends React.Component {
 
                     // Create elements with preview URLs
                     this.listItems = numbers.map((numbers) =>
+
                         // set component
                         {
-                            let url = this.previews[numbers];
+                            let url = "url(" + this.previews[numbers] + ")";
                             return (
-                                <li key={numbers.toString()} style={{
-                                    color:"blue", 
-                                    margin:0, 
-                                    "backgroundImage": "url(" + url + ")"
-                                }}>  
-                                    {numbers}
-                                </li>  // className="preview-img"
+
+                                <Preview 
+                                key={numbers.toString()} 
+                                backgroundImage={url}
+                                id = {numbers}
+                                onClick={function(){console.log("click")}}
+                                />
+
                         )}
+
                     );
+
                     console.log('items:', this.listItems);
                     this.state = {
+
                         numbersList: this.listItems,
                         mounted: this.state.mounted
+
                     };
 
                     // Prevent setState before component is mounted
                     console.log('mounted?', this.state.mounted)
                     if (this.state.mounted) {
+
                         this.setState({
                             numbersList: this.listItems,
                             mounted: this.state.mounted
                         });
+
                     }
                 });
 
@@ -85,10 +96,14 @@ class GcodeList extends React.Component {
     }
 
     componentDidMount() {
+
         this.setState({
+
             numbersList: this.listItems,
             mounted: true
+
         });
+
     }
 
     update () {
@@ -99,6 +114,7 @@ class GcodeList extends React.Component {
         
         await GetEditors(this.IP, this.username)  // API.js functoin to pull from S3
         .then(
+
             editors => {  // push S3 response into this.editorNumbers
 
                 for (var i = 0; i < editors.length; i++) {
@@ -107,6 +123,7 @@ class GcodeList extends React.Component {
                 }
 
             }
+
         );
         
         return this.editorNumbers;  // Return to resolve promise
@@ -116,16 +133,27 @@ class GcodeList extends React.Component {
     render () {
 
         return (
+
             <div className="App">
-                <ul>
-                    {this.state.numbersList}
-                </ul>
+
+                {this.state.numbersList}
+
             </div>
+
         );
 
     }
-
   
 }
 
-export { GcodeList };
+async function SetEditorPreview( IP, User, EditorID, gcodepreviews ) {
+
+    // Get the preview of the specified editor ID
+    var url;
+    url = await GetEditorPreviewUrl( IP, User, EditorID, gcodepreviews ).then(response => {
+        return "OK";
+    })
+
+}
+
+export { GcodePreview };
