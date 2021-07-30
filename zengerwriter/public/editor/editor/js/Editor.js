@@ -146,10 +146,10 @@ function Editor() {
 
 	// Add lights if they don't already exist from autosave
 
-	this.execute( new AddObjectCommand( this, new THREE.AmbientLight( 0x222222 ) ) );
-	var light = new THREE.DirectionalLight( 0xffffff, 1 );
-	light.position.set( 5, 10, 7.5 );
-	this.execute( new AddObjectCommand( this, light ) )
+	// this.execute( new AddObjectCommand( this, new THREE.AmbientLight( 0x222222 ) ) );
+	// var light = new THREE.DirectionalLight( 0xffffff, 1 );
+	// light.position.set( 5, 10, 7.5 );
+	// this.execute( new AddObjectCommand( this, light ) )
 
 }
 
