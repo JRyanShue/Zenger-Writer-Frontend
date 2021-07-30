@@ -1,8 +1,41 @@
 .preview-img {  
+
   /* .preview-img */
-  height: 100px;
+  --image-height: 100px;
+  --image-width: 100px;
+  --border-width: 10;
+
+  /* height: calc( var(--image-height) - 2 * var(--border-width) ); */
+  height: 200px;
+  width: 200px;
   background-size: contain;
-  width: 100px;
+  /* width: calc( var(--image-width) - 2 * var(--border-width) ); */
+  /* margin: var(--border-width); */
+  
+  border-radius: 5px;
+  /* background-position: center; */
+
+}
+
+.preview-img-box {
+
+  float: left;
+
+  /* Creates a box around the preview image */
+  /* height: var(--image-height);
+  width: var(--image-width); */
+  height: 200px;
+  width: 200px;
+  /* border-width: calc( 2 * var(--border-width) ); */
+  /* border-width: 2px;
+  border-color: black; */
+  border-radius: 5px;
+  border: 2px solid gray;
+
+}
+
+.preview-img-box:hover {
+  border: 2px solid blue;
 }
 
 .App {

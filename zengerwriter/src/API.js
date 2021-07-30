@@ -53,7 +53,7 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
 
     // Headers
     var headers = new Headers(); 
-    headers.append('path', 'Users/' + User + '/projects/' + EditorID + '/preview.png');
+    headers.append('path', 'Users/' + User + '/projects/' + EditorID);
     headers.append('Content-Type', 'application/json');
 
     await fetch( 'http://' + IP + '/get_object', {
@@ -69,11 +69,12 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
     ).then(
         data => {
             
-            console.log("data from API:", data['url']);
+            console.log("data from API:", data);
             var img_url = data['url'];
+            var name = data['name'];
 
             // Important callback call
-            gcodepreviews.setPreview(EditorID, img_url, gcodepreviews);
+            gcodepreviews.setPreview(EditorID, name, img_url, gcodepreviews);
 
             return "OK";
 

@@ -26,9 +26,9 @@ class GcodePreview extends React.Component {
         }
 
         // setPreview method gets passed into callbacks
-        this.setPreview = function(id, url, gcodepreviews) {
+        this.setPreview = function(id, name, url, gcodepreviews) {
 
-            gcodepreviews.previews[id] = url;
+            gcodepreviews.previews[id] = {'name': name, 'url': url};
             console.log("URL set:", gcodepreviews.previews[id])
 
         }
@@ -56,13 +56,15 @@ class GcodePreview extends React.Component {
 
                         // set component
                         {
-                            let url = "url(" + this.previews[numbers] + ")";
+                            let url = "url(" + this.previews[numbers]['url'] + ")";
+                            let name = this.previews[numbers]['name'];
                             return (
 
                                 <Preview 
                                 key={numbers.toString()} 
                                 backgroundImage={url}
                                 id = {numbers}
+                                name = {name} 
                                 onClick={function(){console.log("click")}}
                                 />
 
@@ -151,7 +153,9 @@ async function SetEditorPreview( IP, User, EditorID, gcodepreviews ) {
     // Get the preview of the specified editor ID
     var url;
     url = await GetEditorPreviewUrl( IP, User, EditorID, gcodepreviews ).then(response => {
+
         return "OK";
+
     })
 
 }
