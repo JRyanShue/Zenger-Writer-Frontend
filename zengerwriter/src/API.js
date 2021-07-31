@@ -119,11 +119,11 @@ async function GetEditorData ( gcodelist, EditorID ) {
 }
 
 
-async function GetEditorURL ( gcodelist, EditorID ) {
+async function GoToEditor ( gcodelist, editorID ) {
 
     // Headers
     var headers = new Headers(); 
-    headers.append('path', 'Users/' + gcodelist.username + '/projects/' + EditorID + '/editor.json');
+    headers.append('path', 'Users/' + gcodelist.username + '/projects/' + editorID + '/editor.json');
     headers.append('Content-Type', 'application/json');
 
     await fetch( 'http://' + gcodelist.IP + '/pull_object_url', {
@@ -143,7 +143,7 @@ async function GetEditorURL ( gcodelist, EditorID ) {
             var url = data['url'];
             console.log("editor url:", url);
 
-            gcodelist.enterEditor( url ); 
+            gcodelist.enterEditor( url, gcodelist.username, editorID ); 
             return "OK";
             setTimeout(function(){ 
                 
@@ -155,4 +155,4 @@ async function GetEditorURL ( gcodelist, EditorID ) {
 }
 
 
-export { GetEditorPreviewUrl, GetEditors, GetEditorData, GetEditorURL }
+export { GetEditorPreviewUrl, GetEditors, GetEditorData, GoToEditor }

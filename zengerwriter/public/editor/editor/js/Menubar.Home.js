@@ -15,13 +15,18 @@ function MenubarHome ( editor ) {
         // Save synchronously, both locally and in the cloud
         // editor.storage.set( editor.toJSON() );
         // Cloud
-        Save( editor );
+        Save( editor, editor.username, editor.editorID )
+        .then( (response) => {
 
-        console.log("done saving");
+            console.log(response);
 
-        //Return to home page
-        console.log("going home");
-        window.location='/';
+            //Return to home page
+            console.log("going home");
+            window.location='/';
+
+        });
+
+        
 
     })
 

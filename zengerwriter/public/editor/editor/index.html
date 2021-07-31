@@ -50,9 +50,13 @@
 
 			// const urlParams = new URLSearchParams(window.location.search);
 			// var editorURL = urlParams.get('editorURL');
+			var queries = ["?editorURL=", "&username=", "&editorID="];
+
 			var urlVars = window.location.search.toString();
-			var editorURL = urlVars.slice("?editorURL=".length, urlVars.length);
-			console.log("URL:", editorURL, "|");
+			var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
+			var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
+			var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.length );
+			console.log("URL:", editorURL, "Username:", username, "editorID:", editorID);
 
 			import * as THREE from '../build/three.module.js';
 
@@ -80,6 +84,9 @@
 			//
 
 			var editor = new Editor();
+			editor.username = username;
+			editor.editorID = editorID
+
 
 			window.editor = editor; // Expose editor to Console
 			window.THREE = THREE; // Expose THREE to APP Scripts and Console
@@ -157,9 +164,15 @@
 							// editor.storage.set( editor.toJSON() );
 
 							// Save to cloud
-							Save( editor );
+							console.log("Saving to cloud.");
 
-							editor.signals.savingFinished.dispatch();
+							Save( editor, username, editorID )
+							.then( (response) => {
+
+								console.log(response);
+								setTimeout( function() { editor.signals.savingFinished.dispatch(); }, 2000);
+								
+							});
 
 						}, 0.01 ); // 100
 
@@ -170,7 +183,7 @@
 				var signals = editor.signals;
 
 				// force save even if not autosaving when the home button is clicked
-				signals.homeButtonClicked.add( saveState );
+				// signals.homeButtonClicked.add( saveState );
 
 				//
 
