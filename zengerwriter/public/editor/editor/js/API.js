@@ -18,6 +18,7 @@ async function Save ( editor, username, editorID ) {  // Saves to cloud
     headers.append('Content-Type', 'application/json');
 
     const response = await fetch( 'http://' + editor.IP + '/put_object', {
+
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -26,8 +27,16 @@ async function Save ( editor, username, editorID ) {  // Saves to cloud
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
+
     }).then(
-        (response) => { console.log(response); }
+        
+        (response) => { 
+
+            console.log(response);
+            editor.signals.savingFinished.dispatch();
+
+        }
+
     );
 
 }

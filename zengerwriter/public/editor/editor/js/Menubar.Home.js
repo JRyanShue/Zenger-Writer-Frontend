@@ -15,14 +15,22 @@ function MenubarHome ( editor ) {
         // Save synchronously, both locally and in the cloud
         // editor.storage.set( editor.toJSON() );
         // Cloud
-        Save( editor, editor.username, editor.editorID )
+        Save( editor, editor.username, editor.editorID ) // calls screenshot saving via signal
         .then( (response) => {
 
             console.log(response);
 
+            //
+            
+            //
+
             //Return to home page
             console.log("going home");
-            window.location='/';
+
+            setTimeout(() => {
+                window.location='/';
+            }, 5000);
+            
 
         });
 

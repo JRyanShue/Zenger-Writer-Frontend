@@ -108,7 +108,13 @@ function SidebarProjectRenderer( editor ) {
 
 	function createRenderer() {
 
-		currentRenderer = new THREE.WebGLRenderer( { antialias: antialiasBoolean.getValue() } );
+		currentRenderer = new THREE.WebGLRenderer( {
+
+			antialias: antialiasBoolean.getValue(),
+			preserveDrawingBuffer: true
+
+		} );
+
 		currentRenderer.outputEncoding = THREE.sRGBEncoding;
 		currentRenderer.physicallyCorrectLights = physicallyCorrectLightsBoolean.getValue();
 		currentRenderer.shadowMap.enabled = shadowsBoolean.getValue();
@@ -148,12 +154,14 @@ function SidebarProjectRenderer( editor ) {
 	signals.rendererUpdated.add( function () {
 
 		config.setKey(
+
 			'project/renderer/antialias', antialiasBoolean.getValue(),
 			'project/renderer/physicallyCorrectLights', physicallyCorrectLightsBoolean.getValue(),
 			'project/renderer/shadows', shadowsBoolean.getValue(),
 			'project/renderer/shadowType', parseFloat( shadowTypeSelect.getValue() ),
 			'project/renderer/toneMapping', parseFloat( toneMappingSelect.getValue() ),
 			'project/renderer/toneMappingExposure', toneMappingExposure.getValue()
+			
 		);
 
 	} );
