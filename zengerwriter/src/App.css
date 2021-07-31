@@ -39,7 +39,10 @@
 }
 
 .App {
+  margin-top: 100px;
+  margin-left: 50vw;
   text-align: center;
+  align-items: center;
 }
 
 .App-logo {

@@ -139,104 +139,38 @@
 
 				console.log("DATA:", data);
 
-				editor.storage.init( function () {  // This function is called after editor.storage.init successfully reads the db
+				editor.fromJSON( data );
 
-					// Three consecutive functions within callback
-					editor.storage.get( function ( state ) {
+				var timeout;
 
-						if ( isLoadingFromHash ) return;
+				async function saveState() {
 
-						if ( state !== undefined ) {
+					clearTimeout( timeout );
 
-							console.log( state );
-							// editor.fromJSON( state );
-							editor.fromJSON( data );
+					timeout = setTimeout( function () {
 
-						}
+						editor.signals.savingStarted.dispatch();
 
-						var selected = editor.config.getKey( 'selected' );
+						timeout = setTimeout( async function () {
 
-						if ( selected !== undefined ) {
+							// Save locally first
+							// editor.storage.set( editor.toJSON() );
 
-							editor.selectByUuid( selected );
+							// Save to cloud
+							Save( editor );
 
-						}
+							editor.signals.savingFinished.dispatch();
 
-					} );
+						}, 0.01 ); // 100
 
-					//
+					}, 0.01 ); // 1000
 
-					var timeout;
+				}
 
-					function autoSave() {
+				var signals = editor.signals;
 
-						if ( editor.config.getKey( 'autosave' ) === false ) {
-
-							return;
-
-						}
-
-						clearTimeout( timeout );
-
-						timeout = setTimeout( function () {
-
-							editor.signals.savingStarted.dispatch();
-
-							timeout = setTimeout( function () {
-
-								editor.storage.set( editor.toJSON() );
-
-								editor.signals.savingFinished.dispatch();
-
-							}, 0.01 ); // 100
-
-						}, 0.01 ); // 1000
-
-					}
-
-
-					async function saveState() {
-
-						clearTimeout( timeout );
-
-						timeout = setTimeout( function () {
-
-							editor.signals.savingStarted.dispatch();
-
-							timeout = setTimeout( async function () {
-
-								// Save locally first
-								editor.storage.set( editor.toJSON() );
-
-								// Save to cloud
-								Save( editor );
-
-								editor.signals.savingFinished.dispatch();
-
-							}, 0.01 ); // 100
-
-						}, 0.01 ); // 1000
-
-					}
-
-
-					var signals = editor.signals;
-
-					signals.geometryChanged.add( autoSave );
-					signals.objectAdded.add( autoSave );
-					signals.objectChanged.add( autoSave );
-					signals.objectRemoved.add( autoSave );
-					signals.materialChanged.add( autoSave );
-					signals.sceneBackgroundChanged.add( autoSave );
-					signals.sceneFogChanged.add( autoSave );
-					signals.sceneGraphChanged.add( autoSave );
-					signals.scriptChanged.add( autoSave );
-					signals.historyChanged.add( autoSave );
-
-					// force save even if not autosaving when the home button is clicked
-					signals.homeButtonClicked.add( saveState );
-
-				} );
+				// force save even if not autosaving when the home button is clicked
+				signals.homeButtonClicked.add( saveState );
 
 				//
 
@@ -277,46 +211,6 @@
 				window.addEventListener( 'resize', onWindowResize, false );
 
 				onWindowResize();
-
-				//
-
-				var isLoadingFromHash = false;
-				var hash = window.location.hash;
-
-				if ( hash.substr( 1, 5 ) === 'file=' ) {
-
-					var file = hash.substr( 6 );
-
-					if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
-
-						var loader = new THREE.FileLoader();
-						loader.crossOrigin = '';
-						loader.load( file, function ( text ) {
-
-							editor.clear();
-							editor.fromJSON( JSON.parse( text ) );
-
-						} );
-
-						isLoadingFromHash = true;
-
-					}
-
-				}
-
-				// ServiceWorker
-
-				if ( 'serviceWorker' in navigator ) {
-
-					try {
-
-						navigator.serviceWorker.register( 'sw.js' );
-
-					} catch ( error ) {
-
-					}
-
-				}
 
 				// Allow access to screen
 				document.getElementById("screenBlock").style.display = "none";

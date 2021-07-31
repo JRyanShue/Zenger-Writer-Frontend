@@ -15,8 +15,8 @@ class App extends React.Component {
 
     return (
       
-      <div className="App">
-        <GcodePreview IP={this.IP} username="testman"/>
+      <div>
+        <GcodePreview IP={this.IP} username="testman" />
       </div>
     );
 

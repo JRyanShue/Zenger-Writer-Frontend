@@ -574,6 +574,7 @@ Editor.prototype = {
 		this.selected = object;
 
 		this.config.setKey( 'selected', uuid );
+		this.config.setKey( 'autosave', false );
 		this.signals.objectSelected.dispatch( object );
 
 	},

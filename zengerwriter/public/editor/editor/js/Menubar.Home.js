@@ -13,7 +13,7 @@ function MenubarHome ( editor ) {
     container.onClick( function() {
 
         // Save synchronously, both locally and in the cloud
-        editor.storage.set( editor.toJSON() );
+        // editor.storage.set( editor.toJSON() );
         // Cloud
         Save( editor );
 
