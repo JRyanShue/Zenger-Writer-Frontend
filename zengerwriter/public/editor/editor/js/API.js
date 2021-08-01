@@ -1,5 +1,5 @@
 
-async function Save ( editor, username, editorID ) {  // Saves to cloud
+async function Save ( editor ) {  // Saves editor to cloud
 
     var data = editor.toJSON();
     
@@ -10,11 +10,12 @@ async function Save ( editor, username, editorID ) {  // Saves to cloud
 
     console.log("form:", formData);
 
-    console.log("username:", username);
+    console.log("username:", editor.username);
 
     // Headers
     var headers = new Headers(); 
-    headers.append('path', 'Users/' + username + '/projects/' + editorID + '/editor.json');
+    headers.append('path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/editor.json');
+    headers.append('isfile', 'false');
     headers.append('Content-Type', 'application/json');
 
     const response = await fetch( 'http://' + editor.IP + '/put_object', {
@@ -29,7 +30,7 @@ async function Save ( editor, username, editorID ) {  // Saves to cloud
         body: JSON.stringify(data) // body data type must match "Content-Type" header
 
     }).then(
-        
+
         (response) => { 
 
             console.log(response);
@@ -38,6 +39,40 @@ async function Save ( editor, username, editorID ) {  // Saves to cloud
         }
 
     );
+
+}
+
+// Saves file to preview path for given editor
+async function SavePreview( file, editor ) {
+
+    // Build FormData object from data
+    let formData = new FormData();
+    console.log("FILE:", file);
+    // File is appended
+    var blob = new Blob([file], {type:"image/png"});
+    console.log('BLOB::', blob)
+    formData.append( 'file', blob, "preview.png" );
+    console.log("FORM:", formData);
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/preview.png');
+    headers.append('isfile', 'true');
+    // headers.append('Content-Type', 'application/octet-stream');
+    // headers.append('Content-Type', 'image/png');
+
+    const response = await fetch( 'http://' + editor.IP + '/put_object', {
+
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: headers,
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: formData  // JSON.stringify(data) // body data type must match "Content-Type" header
+
+    });
 
 }
 
@@ -97,4 +132,4 @@ function returnGcode( gcode, saveString ) {
 
 }
 
-export { Save, Slice };
+export { Save, SavePreview, Slice };

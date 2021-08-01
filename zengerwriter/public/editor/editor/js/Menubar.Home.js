@@ -12,9 +12,8 @@ function MenubarHome ( editor ) {
 
     container.onClick( function() {
 
-        // Save synchronously, both locally and in the cloud
-        // editor.storage.set( editor.toJSON() );
-        // Cloud
+        // Save to the cloud
+        editor.signals.save.dispatch();
         Save( editor, editor.username, editor.editorID ) // calls screenshot saving via signal
         .then( (response) => {
 
@@ -29,7 +28,7 @@ function MenubarHome ( editor ) {
 
             setTimeout(() => {
                 window.location='/';
-            }, 5000);
+            }, 15000);
             
 
         });

@@ -50,6 +50,7 @@ function Editor() {
 
 		savingStarted: new Signal(),
 		savingFinished: new Signal(),
+		save: new Signal(),
 
 		transformModeChanged: new Signal(),
 		snapChanged: new Signal(),

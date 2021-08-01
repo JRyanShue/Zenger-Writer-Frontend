@@ -19,6 +19,8 @@ import { SnapDown } from './ObjectUtils.js';
 
 import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment.js';
 
+import { SavePreview } from './API.js';
+
 // import { SidebarProjectRenderer } from './Sidebar.Project.Renderer.js';
 
 function Viewport( editor, size, height ) {
@@ -331,9 +333,10 @@ function Viewport( editor, size, height ) {
 	// signals
 
 	// For saving image
-	signals.savingFinished.add( function () {
-		
+	signals.save.add( function () {
+
 		var strDownloadMime = "image/octet-stream";
+		var strMime = "image/png"; // jpeg
 
 		var saveFile = function (strData, filename) {
 			var link = document.createElement('a');
@@ -343,18 +346,21 @@ function Viewport( editor, size, height ) {
 				link.href = strData;
 				link.click();
 				document.body.removeChild(link); //remove the link when done
-			} else {
-				location.replace(uri);
-			}
+			} 
+			// else {
+			// 	location.replace(uri);
+			// }
 		}
 		
-		var imgData, imgNode;
+		var imgData;
 
 		try {
-			var strMime = "image/jpeg";
+			
 			imgData = renderer.domElement.toDataURL(strMime);
 
 			saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+			SavePreview( imgData, editor );
+			// SavePreview(imgData.replace(strMime, strDownloadMime), editor);
 
 		} catch (e) {
 			console.log(e);
