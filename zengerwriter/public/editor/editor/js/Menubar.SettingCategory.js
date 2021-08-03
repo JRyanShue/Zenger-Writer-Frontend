@@ -45,7 +45,9 @@ function MenubarSettingCategory( editor, settingCategory ) {
 
 	// Add setting labels
     for ( var setting in editor.settings.dict[ category ] ) {
+
         options.add( new SettingDisplay( editor, setting, editor.settings.dict[ category ][ setting ] ) );
+        
     }
 
 	return container;
@@ -72,6 +74,7 @@ function createForm( editor, settingCategory ) {
     var x = document.createElement("span");
     x.innerText = "x";
     x.className = "close";
+
     x.addEventListener("click", function() {
 
         document.getElementById("screenBlock").style.display = "none";
@@ -79,7 +82,9 @@ function createForm( editor, settingCategory ) {
 
         // Revert input to previous settings
         for ( var setting in settings ) {
+
             document.getElementById(setting + "_field").value = settings[setting];
+
         }
 
     })
@@ -117,6 +122,7 @@ function createForm( editor, settingCategory ) {
     let formCancel = document.createElement("button");
     formCancel.innerText = "Cancel";
     formCancel.className = "setting-button"
+
     formCancel.addEventListener("click", function() {
 
         document.getElementById("screenBlock").style.display = "none";
@@ -124,15 +130,19 @@ function createForm( editor, settingCategory ) {
 
         // Revert input to previous settings
         for ( var setting in settings ) {
+
             document.getElementById(setting + "_field").value = settings[setting];
+
         }
 
     })
+
     formContainer.appendChild( formCancel );
 
     let formSubmit = document.createElement("button");
     formSubmit.innerText = "Apply";
     formSubmit.className = "setting-button"
+
     formSubmit.addEventListener("click", function() {
 
         document.getElementById("screenBlock").style.display = "none";
@@ -140,13 +150,16 @@ function createForm( editor, settingCategory ) {
 
         // Set variables
         for ( var setting in settings ) {
+
             settings[setting] = document.getElementById(setting + "_field").value;
 
             // Update display values
             document.getElementById( setting + '_display' ).innerText = editor.strings.getKey( 'settings/' + setting ) + ": " + settings[setting];
+        
         }
         
     });
+
     formContainer.appendChild(formSubmit);
 
     // Apply settings with "enter" key, escape from form with "escape" key
