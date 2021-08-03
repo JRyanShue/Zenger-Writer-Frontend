@@ -356,11 +356,33 @@ function Viewport( editor, size, height ) {
 
 		try {
 			
-			imgData = renderer.domElement.toDataURL(strMime);
+			// var outputCanvas = document.createElement('canvas');
+			// outputCanvas.width = 500;
+            // outputCanvas.height = 500;
+			// outputCanvas.position = 'fixed';
+			// html2canvas(document.querySelector("canvas"))  // document.body
+			// .then(
+			// 	(canvas) => {
+			// 		imgData = canvas.toDataURL(strMime);
+			// 		// imgData = document.querySelector("canvas");
+			// 		saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+			// 	}
+			// );
+			// var canvas = document.querySelector("canvas");
+			// canvas.style.position = "fixed";
+			// canvas.style.border = "200px";
+			// imgData = document.querySelector("canvas").toDataURL(strMime);
+			// renderer.setSize(500, 500);
+			// imgData = renderer.domElement.toDataURL(strMime);
+			// saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
 
-			saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
-			SavePreview( imgData, editor );
-			// SavePreview(imgData.replace(strMime, strDownloadMime), editor);
+			// Convert scene image into blob and send to REST API
+			renderer.domElement.toBlob( function( blob ) {
+
+				SavePreview( blob, editor );
+
+			} )
+			
 
 		} catch (e) {
 			console.log(e);

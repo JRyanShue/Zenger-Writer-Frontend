@@ -26,9 +26,7 @@ function MenubarHome ( editor ) {
             //Return to home page
             console.log("going home");
 
-            setTimeout(() => {
-                window.location='/';
-            }, 15000);
+            window.location='/';
             
 
         });

@@ -104,12 +104,8 @@ async function GetEditorData ( gcodelist, EditorID ) {
     ).then(
         data => {
             
-            // console.log("data from API:", data);
             var editor = data['body'];
             console.log("editor:", editor);
-
-            // Important callback call
-            // gcodepreviews.setPreview(EditorID, name, img_url, gcodepreviews);
 
             return "OK";
 
@@ -119,11 +115,11 @@ async function GetEditorData ( gcodelist, EditorID ) {
 }
 
 
-async function GoToEditor ( gcodelist, editorID ) {
+async function GetEditorURL ( gcodelist, editorID ) {
 
     // Headers
     var headers = new Headers(); 
-    headers.append('path', 'Users/' + gcodelist.username + '/projects/' + editorID + '/editor.json');
+    headers.append('path', 'Users/' + gcodelist.username + '/projects/' + editorID);
     headers.append('Content-Type', 'application/json');
 
     await fetch( 'http://' + gcodelist.IP + '/pull_object_url', {
@@ -145,14 +141,56 @@ async function GoToEditor ( gcodelist, editorID ) {
 
             gcodelist.enterEditor( url, gcodelist.username, editorID ); 
             return "OK";
-            setTimeout(function(){ 
-                
-            }, 3000);
 
         }
     );
-
 }
 
 
-export { GetEditorPreviewUrl, GetEditors, GetEditorData, GoToEditor }
+async function SetEditorURL ( username, IP, editorID, setURL ) {
+
+    // Only sets URL with callback ( no action otherwise )
+
+    // If requested editor doesn't exist, initialize a new one with the specified path. 
+
+    // Headers
+    console.log("SetEditorURL")
+
+    setTimeout(() => {
+        
+    }, 1000);
+
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + username + '/projects/' + editorID);
+    headers.append('Content-Type', 'application/json');
+
+    await fetch( 'http://' + IP + '/pull_object_url', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: headers,
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer', 
+    }).then(
+        (response) => response.json()
+    ).then(
+        data => {
+            
+            // console.log("data from API:", data);
+            var url = data['url'];
+
+            console.log("GOT URL::", url)
+
+            setURL( url );
+
+            return "OK";
+            
+            
+
+        }
+    );
+}
+
+
+export { GetEditorPreviewUrl, GetEditors, GetEditorData, GetEditorURL, SetEditorURL }

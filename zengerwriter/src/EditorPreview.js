@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { GetEditorData, GoToEditor } from './API.js';
+import { GetEditorData, GetEditorURL } from './API.js';
 
 class Preview extends React.Component {
 
@@ -13,6 +13,7 @@ class Preview extends React.Component {
         super( props );
         this.key = props.key;
         this.backgroundImage = props.backgroundImage;
+        console.log(this.backgroundImage)
 
         this.id = props.id;
         this.name = props.name;
@@ -23,12 +24,8 @@ class Preview extends React.Component {
 
         this.handleClick = function () {
 
-            console.log("loading..."); // replace with loading screen
-            // GetEditorData( this.gcodelist, this.id );
-
             // Callback is within function
-            GoToEditor( this.gcodelist, this.id );
-            // this.gcodelist.enterEditor();
+            GetEditorURL( this.gcodelist, this.id );
 
         };
         
@@ -42,7 +39,7 @@ class Preview extends React.Component {
                 <div 
                     className={this.className}
                     key={this.key}
-                    style={{backgroundImage: this.backgroundImage}}
+                    style={{background: this.backgroundImage, backgroundRepeat: "no-repeat", backgroundPosition: "50% 50%", backgroundSize: "500px"}}
                     onClick={this.handleClick.bind(this)}
                 >
                     {this.name}

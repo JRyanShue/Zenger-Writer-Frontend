@@ -24,7 +24,7 @@ function Editor() {
 	this.username = "testman";
 	this.projectNumber = 1;
 
-	this.IP = "172.28.150.81";
+	this.IP = "172.31.103.234";
 
 	var Signal = signals.Signal;
 

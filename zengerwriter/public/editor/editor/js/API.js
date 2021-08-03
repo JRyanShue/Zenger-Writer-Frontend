@@ -42,15 +42,13 @@ async function Save ( editor ) {  // Saves editor to cloud
 
 }
 
-// Saves file to preview path for given editor
-async function SavePreview( file, editor ) {
+// Saves file ( in blob format ) to preview path for given editor
+async function SavePreview( blob, editor ) {
 
     // Build FormData object from data
     let formData = new FormData();
-    console.log("FILE:", file);
+    console.log("BLOB:", blob);
     // File is appended
-    var blob = new Blob([file], {type:"image/png"});
-    console.log('BLOB::', blob)
     formData.append( 'file', blob, "preview.png" );
     console.log("FORM:", formData);
 
@@ -61,7 +59,7 @@ async function SavePreview( file, editor ) {
     // headers.append('Content-Type', 'application/octet-stream');
     // headers.append('Content-Type', 'image/png');
 
-    const response = await fetch( 'http://' + editor.IP + '/put_object', {
+    const response = await fetch( 'http://' + editor.IP + '/put_image', {
 
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin

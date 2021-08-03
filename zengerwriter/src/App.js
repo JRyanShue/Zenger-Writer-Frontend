@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
-import { GcodePreview } from './GcodeList.js';
+import { GcodePreview } from './EditorList.js';
+import { EditorHeader } from './EditorHeader.js';
 
 class App extends React.Component {
 
   constructor( props ) {
 
     super(props);
-    this.IP = "172.28.150.81";
+    this.IP = props.serverIP;
+    this.username = props.username;
 
   }
 
@@ -16,8 +18,13 @@ class App extends React.Component {
     return (
       
       <div>
-        <GcodePreview IP={this.IP} username="testman" />
+
+        <EditorHeader IP={this.IP} username={this.username} />
+        <div className="vr"/>
+        <GcodePreview IP={this.IP} username={this.username} />
+
       </div>
+
     );
 
   }

@@ -65,7 +65,7 @@ class GcodePreview extends React.Component {
                             return (
 
                                 <Preview 
-                                gcodelist={this} 
+                                gcodelist={this}
                                 key={numbers.toString()} 
                                 backgroundImage={url}
                                 id = {numbers}
@@ -73,7 +73,8 @@ class GcodePreview extends React.Component {
                                 onClick={function(){console.log("click")}}
                                 />
 
-                        )}
+                            )
+                        }
 
                     );
 
@@ -141,7 +142,7 @@ class GcodePreview extends React.Component {
 
         return (
 
-            <div className="App">
+            <div id="EditorList">
 
                 {this.state.numbersList}
 

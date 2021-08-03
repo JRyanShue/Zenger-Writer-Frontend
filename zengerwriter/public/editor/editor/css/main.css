@@ -1,5 +1,11 @@
 :root {
 	color-scheme: light dark;
+	--bar-height: 60px;
+	--line-height: 16px; 
+	--padding-amount: 8px;
+
+	--home-icon-width: calc( 2*var(--padding-amount) + 40px );
+	--home-icon-height: calc( 2*var(--padding-amount) + 40px );
 }
 
 body {
@@ -16,6 +22,8 @@ hr {
 
 .vr {
 	/* border: 0; */
+	position: fixed;
+	top: 0px;
 	border-left: 2px solid #fff;
 	height: var(--bar-height);
 }
@@ -342,13 +350,7 @@ select {
 }
 
 #menubar {
-	--bar-height: 60px;
-	--line-height: 16px; 
-	--padding-amount: 8px;
-
-	--home-icon-width: calc( 2*var(--padding-amount) + 40px );
-	--home-icon-height: calc( 2*var(--padding-amount) + 40px );
-
+	
 	position: absolute;
 	width: 100%;
 	height: var(--bar-height);
@@ -364,6 +366,7 @@ select {
 		float: left;
 		cursor: pointer;
 		padding-right: var(--padding-amount);
+		margin-top: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) );
 	}
 
 	#menubar .menubutton {
@@ -391,8 +394,8 @@ select {
 			color: white;
 			margin: 0;
 			padding: var(--padding-amount);
-			line-height: var(--line-height);
-			margin-top: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) );
+			/* line-height: var(--line-height); */
+			/* margin-top: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) ); */
 		}
 
 		#menubar .menu .setting {

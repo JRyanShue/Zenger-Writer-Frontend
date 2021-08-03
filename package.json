@@ -129,5 +129,8 @@
       "build/three.module.js"
     ],
     "directories": {}
+  },
+  "dependencies": {
+    "html2canvas": "^1.1.4"
   }
 }

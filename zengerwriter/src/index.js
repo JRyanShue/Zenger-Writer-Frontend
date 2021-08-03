@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App name="Ryan"/>
+    <App username="testman" serverIP="172.31.103.234"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

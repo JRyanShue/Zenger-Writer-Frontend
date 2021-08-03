@@ -1,20 +1,6 @@
-.preview-img {  
 
-  /* .preview-img */
-  --image-height: 100px;
-  --image-width: 100px;
-  --border-width: 10;
-
-  /* height: calc( var(--image-height) - 2 * var(--border-width) ); */
-  height: 200px;
-  width: 200px;
-  background-size: contain;
-  /* width: calc( var(--image-width) - 2 * var(--border-width) ); */
-  /* margin: var(--border-width); */
-  
-  border-radius: 5px;
-  /* background-position: center; */
-
+:root {
+  --gray-color: rgb(189, 189, 189);
 }
 
 .preview-img-box {
@@ -30,12 +16,103 @@
   /* border-width: 2px;
   border-color: black; */
   border-radius: 5px;
-  border: 2px solid gray;
+  border: 1px solid var(--gray-color);
+
+  margin: 5px;
+
+}
+
+.preview-img {  
+
+  /* .preview-img */
+  --image-height: 100px;
+  --image-width: 100px;
+  --border-width: 1;
+
+  /* height: calc( var(--image-height) - 2 * var(--border-width) ); */
+  height: 200px;
+  width: 200px;
+  
+  background-size: contain;
+  /* width: calc( var(--image-width) - 2 * var(--border-width) ); */
+  /* margin: var(--border-width); */
+  
+  border-radius: 5px;
+  /* background-position: center; */
+
+  /* margin: 5px; */
 
 }
 
 .preview-img-box:hover {
-  border: 2px solid blue;
+  border: 1px solid purple;
+}
+
+.vr {
+  position: fixed;
+  bottom: 0px;
+	border-left: 1px solid var(--gray-color);
+	height: 100vh;
+  margin-left: calc(50vw);
+}
+
+#EditorHeader {
+  margin-left: calc(50vw);
+  margin-top: 0px;
+  height: 100px;
+  background-color: rgb(241, 241, 241);
+}
+
+  #EditorHeader .neweditorlabel {
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 80%; 
+    width: 50%;
+  }
+
+    #EditorHeader .neweditorlabel p {
+      position: absolute;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+      margin: 0;
+    }
+  
+  #EditorHeader .neweditorbutton {
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid var(--gray-color);
+    height: 80%; 
+    width: 40%;
+  }
+
+    #EditorHeader .neweditorbutton:hover {
+      border: 1px solid purple;
+    }
+    
+    #EditorHeader .neweditorbutton p {
+      position: absolute;
+      font-weight: bold;
+      font-size: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because "+" is not centered by default */
+      margin: 0;
+    }
+
+#EditorList {
+  margin-top: 0px;
+  margin-left: calc(50vw);
+  text-align: center;
+  align-items: center;
 }
 
 .App {
