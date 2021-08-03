@@ -149,6 +149,25 @@ function createForm( editor, settingCategory ) {
     });
     formContainer.appendChild(formSubmit);
 
+    // Apply settings with "enter" key, escape from form with "escape" key
+    document.addEventListener( 'keydown', ( e ) => { 
+
+        if ( document.getElementById(category + "Form").style.display == 'block' ) {
+
+            if ( e.key == "Enter" ) {
+
+                formSubmit.click();
+
+            }
+            else if ( e.key == "Escape" ) {
+
+                formCancel.click();
+            }
+
+        }
+        
+    } )
+
     // Add container
     settingsForm.appendChild(formContainer);
 
