@@ -47,7 +47,7 @@ function MenubarSettingCategory( editor, settingCategory ) {
     for ( var setting in editor.settings.dict[ category ] ) {
 
         options.add( new SettingDisplay( editor, setting, editor.settings.dict[ category ][ setting ] ) );
-        
+
     }
 
 	return container;

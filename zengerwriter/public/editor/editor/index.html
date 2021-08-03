@@ -73,7 +73,8 @@
 			import { Resizer } from './js/Resizer.js';
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js';
 
-			import { Save } from './js/API.js';
+			import { Save, Move, Delete } from './js/API.js';
+			import { CreateID } from './js/libs/ID.js'
 
 			window.URL = window.URL || window.webkitURL;
 			window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
@@ -88,9 +89,9 @@
 
 			var editor = new Editor();
 			editor.username = username;
-			editor.editorID = editorID
+			editor.editorID = editorID;
+			editor.oldID = editorID;  // for removing old editor once saving updates it
 			editor.editorName = editorName;
-
 
 			window.editor = editor; // Expose editor to Console
 			window.THREE = THREE; // Expose THREE to APP Scripts and Console
@@ -231,6 +232,22 @@
 
 				// Allow access to screen
 				document.getElementById("screenBlock").style.display = "none";
+				
+				signals.save.add( function() {
+
+					// Create new ID to update "timestamp"
+					editor.editorID = CreateID();
+
+					// Move old info into new path
+					let origin_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/info.json';
+					let destination_path = 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json';
+					Move( origin_path, destination_path, editor );
+
+					// Delete old info
+					let old_folder_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/';
+					Delete( old_folder_path, editor );
+
+				})
 			
 			});
 

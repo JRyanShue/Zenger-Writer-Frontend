@@ -38,7 +38,9 @@ function Menubar( editor ) {
 
 	// Add setting menus
 	for ( const setting in editor.settings.dict ) {
+
 		container.add( new MenubarSettingCategory( editor, editor.strings.getKey('menubar/' + setting) ) );
+		
 	}
 	
 

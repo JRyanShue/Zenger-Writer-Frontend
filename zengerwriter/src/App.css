@@ -100,7 +100,7 @@
     
     #EditorHeader .neweditorbutton p {
       position: absolute;
-      font-weight: bold;
+      /* font-weight: bold; */
       font-size: 40px;
       top: 50%;
       left: 50%;

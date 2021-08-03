@@ -9,6 +9,8 @@ import { SliceSettings } from './SliceSettings.js';
 
 import { AddObjectCommand } from './commands/AddObjectCommand.js';
 
+import { CreateID } from './libs/ID.js';
+
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
 _DEFAULT_CAMERA.position.set( 0, 5, 10 );
@@ -143,14 +145,7 @@ function Editor() {
 
 	this.addCamera( this.camera );
 
-	this.settings = new SliceSettings(); 
-
-	// Add lights if they don't already exist from autosave
-
-	// this.execute( new AddObjectCommand( this, new THREE.AmbientLight( 0x222222 ) ) );
-	// var light = new THREE.DirectionalLight( 0xffffff, 1 );
-	// light.position.set( 5, 10, 7.5 );
-	// this.execute( new AddObjectCommand( this, light ) )
+	this.settings = new SliceSettings(); 	
 
 }
 
@@ -158,7 +153,7 @@ Editor.prototype = {
 
 	setScene: function ( scene ) {
 
-		this.scene.uuid = scene.uuid;
+	this.scene.uuid = scene.uuid;
 		this.scene.name = scene.name;
 
 		this.scene.background = scene.background;

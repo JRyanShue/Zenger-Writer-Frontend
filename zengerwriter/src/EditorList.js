@@ -43,6 +43,10 @@ class GcodePreview extends React.Component {
                 
                 console.log('Editor numbers pulled:', this.editorNumbers);
 
+                // Sort editor ID's backwards to get the most recent documents first
+                this.editorNumbers.sort();
+                this.editorNumbers.reverse();
+
                 // After promise has been resolved:
                 var numbers = this.editorNumbers;
 
@@ -65,12 +69,12 @@ class GcodePreview extends React.Component {
                             return (
 
                                 <Preview 
-                                gcodelist={this}
-                                key={numbers.toString()} 
-                                backgroundImage={url}
-                                id = {numbers}
-                                name = {name} 
-                                onClick={function(){console.log("click")}}
+                                    gcodelist={this}
+                                    key={numbers.toString()} 
+                                    backgroundImage={url}
+                                    id = {numbers}
+                                    name = {name} 
+                                    onClick={function(){console.log("click")}}
                                 />
 
                             )

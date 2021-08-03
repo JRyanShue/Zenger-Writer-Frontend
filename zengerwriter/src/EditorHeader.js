@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { SetEditorURL } from './API.js';
+import { CreateID } from './ID.js';
 // import { NewEditorButton } from './NewEditorButton.js';
 
 class EditorHeader extends React.Component {
@@ -20,23 +21,19 @@ class EditorHeader extends React.Component {
 
         var username = this.username;
         var IP = this.IP;
+
+        // New, blank, editor
         this.newEditor = function() {
             
-            // New, blank, editor
-
-            // Create ID from date
-            if (!Date.now) {
-                Date.now = function() { return new Date().getTime(); }
-            }
-            var editorID = (Math.floor(Date.now() / 1000));
+            // Create new ID
+            var editorID = CreateID();
 
             // Get standard editor template URL
             SetEditorURL( username, IP, editorID, this.setURL.bind(this) )
             .then( () => { 
+
                 console.log("URL::", this.editorURL)
-                // setTimeout(() => {
                 window.location = "/editor/editor?editorURL=" + this.editorURL + "&username=" + this.username + "&editorID=" + editorID + "&editorName=" + this.editorName;
-                // }, 2000);
                 
             } );
 

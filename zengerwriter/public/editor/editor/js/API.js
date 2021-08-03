@@ -1,16 +1,9 @@
 
+import { CreateID } from './libs/ID.js';
+
 async function Save ( editor ) {  // Saves editor to cloud
 
     var data = editor.toJSON();
-    
-    // Build FormData object from data
-    // let formData = new FormData();
-    // console.log("saving data:", data);
-    // formData.append( 'editor', data );
-
-    // console.log("form:", formData);
-
-    console.log("username:", editor.username);
 
     // Headers
     var headers = new Headers(); 
@@ -35,6 +28,53 @@ async function Save ( editor ) {  // Saves editor to cloud
 
             console.log(response);
             editor.signals.savingFinished.dispatch();
+
+        }
+
+    );
+
+}
+
+async function Move ( origin_path, destination_path, editor ) {  // Move object from one path to another
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('origin_path', origin_path);
+    headers.append('destination_path', destination_path);
+
+    await fetch( 'http://' + editor.IP + '/move', {
+        
+        method: "POST",
+        headers: headers,
+
+    }).then(
+
+        (response) => { 
+
+            console.log(response);
+
+        }
+
+    );
+
+}
+
+async function Delete ( path, editor ) {  // Move object from one path to another
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', path);
+
+    await fetch( 'http://' + editor.IP + '/delete', {
+        
+        method: "POST",
+        headers: headers,
+
+    }).then(
+
+        (response) => { 
+
+            console.log(response);
 
         }
 
@@ -156,4 +196,4 @@ function returnGcode( gcode, saveString ) {
 
 }
 
-export { Save, SavePreview, Slice, SaveInfo };
+export { Save, Move, Delete, SavePreview, Slice, SaveInfo };
