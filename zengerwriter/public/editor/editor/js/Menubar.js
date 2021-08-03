@@ -11,6 +11,7 @@ import { MenubarView } from './Menubar.View.js';
 import { MenubarHelp } from './Menubar.Help.js';
 // import { MenubarPlay } from './Menubar.Play.js';
 // import { MenubarStatus } from './Menubar.Status.js';
+import { MenubarNameRename } from './Menubar.NameRename.js';
 
 import { MenubarSettingCategory } from './Menubar.SettingCategory.js';
 
@@ -20,6 +21,9 @@ function Menubar( editor ) {
 	container.setId( 'menubar' );
 
 	container.add( new MenubarHome( editor ) );
+
+	// Name/rename textfield
+	container.add( new MenubarNameRename( editor ) )
 
 	container.add( new MenubarSlice( editor ) );
 	container.add( new MenubarFile( editor ) );

@@ -12,6 +12,8 @@ class EditorHeader extends React.Component {
         this.IP = props.IP;
         this.username = props.username;
 
+        this.editorName = "Untitled Plate"
+
         this.setURL = function( editorURL ) {
             this.editorURL = editorURL;
         }
@@ -33,7 +35,7 @@ class EditorHeader extends React.Component {
             .then( () => { 
                 console.log("URL::", this.editorURL)
                 // setTimeout(() => {
-                window.location = "/editor/editor?editorURL=" + this.editorURL + "&username=" + this.username + "&editorID=" + editorID;
+                window.location = "/editor/editor?editorURL=" + this.editorURL + "&username=" + this.username + "&editorID=" + editorID + "&editorName=" + this.editorName;
                 // }, 2000);
                 
             } );

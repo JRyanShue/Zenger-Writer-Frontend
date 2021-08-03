@@ -982,6 +982,25 @@ class UIVerticalRule extends UIElement {
 
 }
 
+class UINameRename extends UIElement {
+
+	constructor( value, editor, SaveInfo ) {
+
+		super( document.createElement( 'input' ) );
+
+		this.dom.className = 'platefield';
+		this.dom.type = 'text';
+		this.dom.value = value;
+
+		this.dom.addEventListener( "change", () => {
+			console.log("change");
+			SaveInfo( { "name": this.dom.value }, editor )
+		})
+
+	}
+
+}
+
 class UIButton extends UIElement {
 
 	constructor( value ) {
@@ -1279,4 +1298,4 @@ class ListboxItem extends UIDiv {
 
 }
 
-export { UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIVerticalRule, UIButton, UIProgress, UITabbedPanel, UIListbox, ListboxItem };
+export { UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIVerticalRule, UIButton, UIProgress, UITabbedPanel, UIListbox, ListboxItem, UINameRename };

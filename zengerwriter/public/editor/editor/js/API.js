@@ -4,11 +4,11 @@ async function Save ( editor ) {  // Saves editor to cloud
     var data = editor.toJSON();
     
     // Build FormData object from data
-    let formData = new FormData();
-    console.log("saving data:", data);
-    formData.append( 'editor', data );
+    // let formData = new FormData();
+    // console.log("saving data:", data);
+    // formData.append( 'editor', data );
 
-    console.log("form:", formData);
+    // console.log("form:", formData);
 
     console.log("username:", editor.username);
 
@@ -74,6 +74,32 @@ async function SavePreview( blob, editor ) {
 
 }
 
+// Saves name to json to path for given editor
+async function SaveInfo( info_json, editor ) {
+
+    // let formData = new FormData();
+    // formData.append( 'json', info_json );
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json');
+    headers.append('Content-Type', 'application/json');
+
+    const response = await fetch( 'http://' + editor.IP + '/put_json', {
+
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: headers,
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(info_json)  // JSON.stringify(data) // body data type must match "Content-Type" header
+
+    });
+
+}
+
 async function Slice( editor, IP, saveString ) {
 
     // Use to ensure changes register
@@ -130,4 +156,4 @@ function returnGcode( gcode, saveString ) {
 
 }
 
-export { Save, SavePreview, Slice };
+export { Save, SavePreview, Slice, SaveInfo };

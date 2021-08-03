@@ -25,7 +25,7 @@ class Preview extends React.Component {
         this.handleClick = function () {
 
             // Callback is within function
-            GetEditorURL( this.gcodelist, this.id );
+            GetEditorURL( this.gcodelist, this.id, this.name );
 
         };
         

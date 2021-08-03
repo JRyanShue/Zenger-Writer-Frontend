@@ -362,6 +362,44 @@ select {
 	top: 0;
 }
 
+	#menubar .platetitle {
+		float: left;
+		position: fixed;
+		top: 0px;
+		left: var(--home-icon-width);
+		margin-bottom: calc( var(--line-height) - 2*var(--padding-amount));
+		margin-top: auto;
+
+		/* border: 2px solid rgb(170, 148, 148); */
+
+		height: calc( var(--bar-height) - var(--line-height) - 2*var(--padding-amount) );
+		width: 205px;
+
+		/* margin-left: 20px;
+		margin-top: 4px; */
+	}
+
+	#menubar .platetitle input {
+		--margin-amount: 2px;
+		width: 180px;
+
+		position: absolute;
+		font-size: 18px;
+		color: whitesmoke;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+		margin: var(--margin-amount);
+
+		border-radius: 5px;
+
+		background-color: black;
+	}
+
+	#menubar .platetitle input:hover {
+		border: 1px solid gray;
+	}
+
 	#menubar .menu {
 		float: left;
 		cursor: pointer;

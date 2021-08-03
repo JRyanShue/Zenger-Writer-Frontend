@@ -51,13 +51,15 @@
 
 			// const urlParams = new URLSearchParams(window.location.search);
 			// var editorURL = urlParams.get('editorURL');
-			var queries = ["?editorURL=", "&username=", "&editorID="];
+			var queries = ["?editorURL=", "&username=", "&editorID=", "&editorName="];
 
 			var urlVars = window.location.search.toString();
 			var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
 			var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
-			var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.length );
-			console.log("URL:", editorURL, "Username:", username, "editorID:", editorID);
+			var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.indexOf(queries[3]) );
+			var editorName = urlVars.slice( urlVars.indexOf(queries[3]) + queries[3].length, urlVars.length );
+			editorName = decodeURIComponent(editorName);  // Decode percent encoding
+			console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
 
 			import * as THREE from '../build/three.module.js';
 
@@ -87,6 +89,7 @@
 			var editor = new Editor();
 			editor.username = username;
 			editor.editorID = editorID
+			editor.editorName = editorName;
 
 
 			window.editor = editor; // Expose editor to Console

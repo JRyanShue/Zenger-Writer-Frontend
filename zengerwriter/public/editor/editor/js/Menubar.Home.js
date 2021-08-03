@@ -13,15 +13,11 @@ function MenubarHome ( editor ) {
     container.onClick( function() {
 
         // Save to the cloud
-        editor.signals.save.dispatch();
-        Save( editor, editor.username, editor.editorID ) // calls screenshot saving via signal
+        editor.signals.save.dispatch();  // calls screenshot and name saving via signal
+        Save( editor, editor.username, editor.editorID ) 
         .then( (response) => {
 
             console.log(response);
-
-            //
-            
-            //
 
             //Return to home page
             console.log("going home");

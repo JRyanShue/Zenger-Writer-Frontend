@@ -115,7 +115,7 @@ async function GetEditorData ( gcodelist, EditorID ) {
 }
 
 
-async function GetEditorURL ( gcodelist, editorID ) {
+async function GetEditorURL ( gcodelist, editorID, editorName ) {
 
     // Headers
     var headers = new Headers(); 
@@ -139,7 +139,7 @@ async function GetEditorURL ( gcodelist, editorID ) {
             var url = data['url'];
             console.log("editor url:", url);
 
-            gcodelist.enterEditor( url, gcodelist.username, editorID ); 
+            gcodelist.enterEditor( url, gcodelist.username, editorID, editorName ); 
             return "OK";
 
         }
@@ -155,10 +155,6 @@ async function SetEditorURL ( username, IP, editorID, setURL ) {
 
     // Headers
     console.log("SetEditorURL")
-
-    setTimeout(() => {
-        
-    }, 1000);
 
     var headers = new Headers(); 
     headers.append('path', 'Users/' + username + '/projects/' + editorID);
@@ -185,8 +181,6 @@ async function SetEditorURL ( username, IP, editorID, setURL ) {
             setURL( url );
 
             return "OK";
-            
-            
 
         }
     );
