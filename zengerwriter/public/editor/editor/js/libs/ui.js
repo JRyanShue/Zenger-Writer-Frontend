@@ -1,3 +1,6 @@
+
+import { addProgrammaticBackspace } from './ProgrammaticBackspace.js'
+
 class UIElement {  // Gives some important methods that allow easier object manipulation
 
 	constructor( dom ) {
@@ -996,6 +999,9 @@ class UINameRename extends UIElement {
 			console.log("change");
 			SaveInfo( { "name": this.dom.value }, editor )
 		})
+
+		// Programmatic backspace
+		addProgrammaticBackspace( this.dom );
 
 	}
 

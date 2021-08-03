@@ -2,6 +2,7 @@
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 import { SettingDisplay } from './SettingDisplay.js';
 import { SettingButton } from './SettingButton.js';
+import { addProgrammaticBackspace } from './libs/ProgrammaticBackspace.js';
 
 function MenubarSettingCategory( editor, settingCategory ) {
 
@@ -99,6 +100,9 @@ function createForm( editor, settingCategory ) {
         settingField.id = setting + "_field";
         settingField.type = "text";
         settingField.value = settings[setting];
+
+        // Programmatic Backspace
+		addProgrammaticBackspace( settingField );
 
         // Add to container
         formContainer.appendChild(settingTitle);
