@@ -1,6 +1,10 @@
 
 :root {
   --gray-color: rgb(189, 189, 189);
+
+  --prepare-space: 60vw;
+  --queue-space: 30vw;
+
 }
 
 .preview-img-box {
@@ -56,8 +60,21 @@
   margin-left: calc(50vw);
 }
 
+
+#QueueHeader {
+  margin-right: calc(var(--prepare-space));
+  margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
+  margin-top: 0px;
+  height: 100px;
+  background-color: rgb(241, 241, 241);
+  position: fixed;
+  width: var(--queue-space);
+}
+
+/**/
+
 #EditorHeader {
-  margin-left: calc(50vw);
+  margin-left: calc(100vw - var(--prepare-space));
   margin-top: 0px;
   height: 100px;
   background-color: rgb(241, 241, 241);

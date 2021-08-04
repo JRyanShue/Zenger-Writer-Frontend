@@ -145,12 +145,16 @@ class GcodePreview extends React.Component {
     render () {
 
         return (
-
+            
             <div id="EditorList">
+            
+                <p>
+                    Recent
+                </p>
 
                 {this.state.numbersList}
 
-            </div>
+            </div>            
 
         );
 

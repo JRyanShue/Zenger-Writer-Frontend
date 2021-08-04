@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Queue from './Queue';
+import Prepare from './Prepare';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App username="testman" serverIP="172.31.103.234"/>
+    <Queue username="testman" serverIP="172.31.103.234"/>
+    <Prepare username="testman" serverIP="172.31.103.234"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

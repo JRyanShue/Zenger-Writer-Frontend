@@ -3,7 +3,7 @@ import './App.css';
 import { GcodePreview } from './EditorList.js';
 import { EditorHeader } from './EditorHeader.js';
 
-class App extends React.Component {
+class Prepare extends React.Component {
 
   constructor( props ) {
 
@@ -32,4 +32,4 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default Prepare;
