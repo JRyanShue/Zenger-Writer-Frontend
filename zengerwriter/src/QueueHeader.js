@@ -22,9 +22,10 @@ class QueueHeader extends React.Component {
         var username = this.username;
         var IP = this.IP;
 
-        // New, blank, editor
+        // New, blank, queue
         this.newQueue = function() {
             
+
 
         }
 
@@ -47,19 +48,19 @@ class QueueHeader extends React.Component {
 
             <div id="QueueHeader">
 
-                <div className="neweditorlabel">
-                    <p>
-                        Production Queue
-                    </p>
-                </div>
-                <div className="neweditorbutton" onClick={this.newQueue.bind(this)}>
-                    <p>
-                        +
-                    </p>
-                </div>
-
+            <div className="newqueuelabel">
+                <p>
+                    Production Queue
+                </p>
+            </div>
+            <div className="newqueuebutton" onClick={this.newQueue.bind(this)}>
+                <p>
+                    +
+                </p>
             </div>
 
+            </div>
+            
         );
 
     }

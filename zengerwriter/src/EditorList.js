@@ -149,7 +149,7 @@ class GcodePreview extends React.Component {
             <div id="EditorList">
             
                 <p>
-                    Recent
+                    Ordered by last modified
                 </p>
 
                 {this.state.numbersList}

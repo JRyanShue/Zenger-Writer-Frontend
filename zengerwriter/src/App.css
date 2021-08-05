@@ -2,8 +2,8 @@
 :root {
   --gray-color: rgb(189, 189, 189);
 
-  --prepare-space: 60vw;
-  --queue-space: 30vw;
+  --prepare-space: 67vw;
+  --queue-space: 20vw;
 
 }
 
@@ -57,7 +57,7 @@
   bottom: 0px;
 	border-left: 1px solid var(--gray-color);
 	height: 100vh;
-  margin-left: calc(50vw);
+  margin-left: calc(100vw - var(--prepare-space));
 }
 
 
@@ -71,10 +71,59 @@
   width: var(--queue-space);
 }
 
+  #QueueHeader .newqueuelabel {
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 80%; 
+    width: 50%;
+  }
+
+    #QueueHeader .newqueuelabel p {
+      position: absolute;
+      font-size: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+      margin: 0;
+    }
+
+    #QueueHeader .newqueuebutton {
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid var(--gray-color);
+    height: 80%; 
+    width: 40%;
+  }
+
+    #QueueHeader .newqueuebutton:hover {
+      border: 1px solid purple;
+    }
+    
+    #QueueHeader .newqueuebutton p {
+      position: absolute;
+      /* font-weight: bold; */
+      font-size: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);  /* -60% for y because "+" is not centered by default */
+      margin: 0;
+    }
+
 /**/
 
 #EditorHeader {
   margin-left: calc(100vw - var(--prepare-space));
+  /* float: right; */
+  /* clear: both; */
+  /* float: top; */
+  width: var(--prepare-space);
   margin-top: 0px;
   height: 100px;
   background-color: rgb(241, 241, 241);
@@ -127,7 +176,7 @@
 
 #EditorList {
   margin-top: 0px;
-  margin-left: calc(50vw);
+  margin-left: calc(100vw - var(--prepare-space));
   text-align: center;
   align-items: center;
 }

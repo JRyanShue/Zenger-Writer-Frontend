@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { GcodePreview } from './EditorList.js';
 import { QueueHeader } from './QueueHeader.js';
+import { QueueList } from './QueueList.js';
 
 class Queue extends React.Component {
 
@@ -20,6 +21,7 @@ class Queue extends React.Component {
       <div>
 
         <QueueHeader />
+        <QueueList IP={this.IP} username={this.username}/>
 
       </div>
 

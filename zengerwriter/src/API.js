@@ -1,5 +1,94 @@
 
 
+async function GetQueueKeys ( IP, username ) {
+
+    /* 
+        Get all queues for a specified user
+        Queues are then sorted by date last used, and another request is sent to get their contents. 
+    */
+
+    console.log("Getting queue list from username:", username);
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('Content-Type', 'application/json');
+    headers.append('username', username);
+
+    console.log("headers:", headers);
+
+    var values = [];
+    var data_;
+
+    const response = await fetch( 'http://' + IP + '/get_queues', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: headers,
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer'
+    }).then(
+        response => response.json()
+    ).then(
+        data => {
+
+            var queue_numbers = data['queue_numbers'];
+            console.log('queue numbers:', queue_numbers);
+            for (var i = 0; i < queue_numbers.length; i++){
+                console.log('at i:', queue_numbers[i]);
+                values.push(queue_numbers[i]);
+            }
+            
+        }
+    ).catch( function () {
+        console.log('error');
+    });
+
+    console.log("values:", values);
+    return values;
+
+}
+
+
+async function GetQueueInfo ( IP, Username, QueueID, QueueList ) {
+
+    /* 
+        Using ID, get queue name
+    */
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + Username + '/queues/' + QueueID + '/info.json');
+    headers.append('Content-Type', 'application/json');
+
+    await fetch( 'http://' + IP + '/pull_object', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: headers,
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer', 
+    }).then(
+        (response) => response.json()
+    ).then(
+        data => {
+            
+            console.log("data from API:", data);
+            var info = data['body'];
+            console.log("INFO::", info)
+
+            // Important callback call
+            QueueList.setQueue(QueueID, info['name'], QueueList);
+
+            return "OK";
+
+        }
+    );
+
+}
+
+
 async function GetEditors ( IP, username ) {
 
     /* 
@@ -187,4 +276,4 @@ async function SetEditorURL ( username, IP, editorID, setURL ) {
 }
 
 
-export { GetEditorPreviewUrl, GetEditors, GetEditorData, GetEditorURL, SetEditorURL }
+export { GetEditorPreviewUrl, GetQueueInfo, GetEditors, GetQueueKeys, GetEditorData, GetEditorURL, SetEditorURL }
