@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { GetQueueInfo, GetQueueKeys } from './API.js';
 import { Preview } from './EditorPreview.js';
+import { QueueElement } from './QueueElement';
 
 class QueueList extends React.Component {
 
@@ -69,19 +70,16 @@ class QueueList extends React.Component {
                         // set component
                         {
                             let name = this.queues[keys]['name'];
+                            console.log("Creating element with name:", name);
                             return (
 
-                                // <Preview 
-                                //     gcodelist={this}
-                                //     key={keys.toString()} 
-                                //     backgroundImage={url}
-                                //     id = {keys}
-                                //     name = {name} 
-                                //     onClick={function(){console.log("click")}}
-                                // />
-                                <div>
-                                    {name}
-                                </div>
+                                <QueueElement 
+                                    queuelist={this}
+                                    key={keys.toString()} 
+                                    id = {keys}
+                                    name = {name} 
+                                    elements = {["2_Reservoir A", "5_Reservoir B", "3_Benchy"]}
+                                />
 
                             )
                         }
@@ -153,7 +151,7 @@ class QueueList extends React.Component {
 
         return (
             
-            <div>
+            <div id="QueueList">
             
                 <p>
                     Ordered by last modified

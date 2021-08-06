@@ -2,8 +2,42 @@
 :root {
   --gray-color: rgb(189, 189, 189);
 
-  --prepare-space: 67vw;
+  --prepare-space: 68vw;
   --queue-space: 20vw;
+
+  --header-height: 100px;
+
+}
+
+.queue-box {
+
+  position: relative;
+  float: left;
+  /* height: max-content; */
+  width: calc(var(--queue-space) - 10px);
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
+  /* right: var(--prepare-space); */
+  /* margin-right: var(--prepare-space); */
+  margin: 2px;
+
+}
+
+.queue {  
+
+  /* height: 200px; */
+  /* position: absolute; */
+  width: max-content;
+  
+  /* background-size: contain; */
+  /* width: calc( var(--image-width) - 2 * var(--border-width) ); */
+  /* margin: var(--border-width); */
+  
+  border-radius: 5px;
+  /* background-position: center; */
+
+  margin: 5px;
+  margin: 0;
 
 }
 
@@ -62,13 +96,14 @@
 
 
 #QueueHeader {
-  margin-right: calc(var(--prepare-space));
   margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
+  /* float: right; */
+  /* clear: both; */
+  /* float: top; */
+  width: var(--queue-space);
   margin-top: 0px;
   height: 100px;
   background-color: rgb(241, 241, 241);
-  position: fixed;
-  width: var(--queue-space);
 }
 
   #QueueHeader .newqueuelabel {
@@ -116,6 +151,15 @@
       margin: 0;
     }
 
+#QueueList {
+  width: var(--queue-space);
+  margin-top: 0px;
+  margin-right: calc(var(--prepare-space));
+  margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
+  text-align: center;
+  align-items: center;
+}
+
 /**/
 
 #EditorHeader {
@@ -123,9 +167,11 @@
   /* float: right; */
   /* clear: both; */
   /* float: top; */
+  position: absolute;
+  top: 0px;
   width: var(--prepare-space);
   margin-top: 0px;
-  height: 100px;
+  height: var(--header-height);
   background-color: rgb(241, 241, 241);
 }
 
@@ -152,7 +198,7 @@
     position: relative;
     float: right;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
     border-radius: 10px;
     background-color: white;
     border: 1px solid var(--gray-color);
@@ -175,7 +221,10 @@
     }
 
 #EditorList {
+  width: var(--prepare-space);
   margin-top: 0px;
+  position: absolute;
+  top: var(--header-height);
   margin-left: calc(100vw - var(--prepare-space));
   text-align: center;
   align-items: center;
@@ -188,37 +237,20 @@
   align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* For dropdown arrow */
+.arrow {
+  position: absolute;
+
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: block;
+  padding: 3px;
+
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+  float: right;
+  top: 4px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

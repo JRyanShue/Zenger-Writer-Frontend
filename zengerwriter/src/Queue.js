@@ -20,8 +20,8 @@ class Queue extends React.Component {
       
       <div>
 
-        <QueueHeader />
-        <QueueList IP={this.IP} username={this.username}/>
+        <QueueHeader IP={this.IP} username={this.username} />
+        <QueueList IP={this.IP} username={this.username} />
 
       </div>
 

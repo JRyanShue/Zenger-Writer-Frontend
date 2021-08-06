@@ -124,14 +124,16 @@ class GcodePreview extends React.Component {
 
     async getEditorNumbers() {
         
-        await GetEditors(this.IP, this.username)  // API.js functoin to pull from S3
+        await GetEditors(this.IP, this.username)  // API.js function to pull from S3
         .then(
 
             editors => {  // push S3 response into this.editorNumbers
 
                 for (var i = 0; i < editors.length; i++) {
+
                     console.log(editors[i]);
                     this.editorNumbers.push(editors[i]);
+
                 }
 
             }
