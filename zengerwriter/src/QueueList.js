@@ -20,7 +20,7 @@ class QueueList extends React.Component {
         this.queueKeys = [];
 
         // User's queues to display to the screen
-        this.queues = {};
+        this.queuesData = {};
 
         this.listItems = <div>Loading...</div>;
 
@@ -37,17 +37,11 @@ class QueueList extends React.Component {
         /*
             setQueue method gets passed into callbacks:
             This object is passed into a fetch() which, after pulling the info for the queue, adds a 
-            corresponding object to this.queues. 
+            corresponding object to this.queuesData. 
         */
-
         this.setQueue = function(id, info, queueList) {
 
-            console.log("id:", id)
-
-            console.log("INFO!", info)
-            // console.log("name:", info["0"]["name"])
-            // queueList.queues[id] = {'name': info[0]["plateName"]};
-            queueList.queues[id] = {'name': info["name"]};
+            queueList.queuesData[id] = info;
 
         }
 
@@ -57,18 +51,16 @@ class QueueList extends React.Component {
             let newID = CreateID();
             this.queueKeys.push( newID );
             this.setQueue( newID, queueInfo, this );
-            // console.log(this.listItems)
-            // this.listItems.append( this.createQueueElement( this, newID, QueueName ) )
 
-            this.listItems = this.queueKeys.map((keys) =>
+            this.listItems = this.queueKeys.map((key) =>
 
                 // set component
                 {
-                    let name = this.queues[keys]['name'];
-                    // console.log("Creating element with name:", name);
+                    let name = this.queuesData[key]['name'];
+                    let info = this.queuesData[key];
                     return (
 
-                        this.createQueueElement( this, keys, name )
+                        this.createQueueElement( this, key, info )
 
                     )
                 }
@@ -96,22 +88,22 @@ class QueueList extends React.Component {
                 // Object with preview URLs
                 var keys = this.queueKeys;  // queueKeys has been set by callback
                 for (var i = 0; i < keys.length; i++) {
-                    this.queues[keys[i]] = SetQueueInfo(this.IP, this.username, keys[i], this);
+                    this.queuesData[keys[i]] = SetQueueInfo(this.IP, this.username, keys[i], this);
                 }
 
                 // Wait for all Queues' info to be obtained
-                Promise.all( Object.values(this.queues) ).then( (values) => {
+                Promise.all( Object.values(this.queuesData) ).then( (values) => {
 
                     // Create elements
-                    this.listItems = keys.map((keys) =>
+                    this.listItems = keys.map((key) =>
 
                         // set component
                         {
-                            let name = this.queues[keys]['name'];
-                            // console.log("Creating element with name:", name);
+                            let name = this.queuesData[key]['name'];
+                            let info = this.queuesData[key];
                             return (
 
-                                this.createQueueElement( this, keys, name )
+                                this.createQueueElement( this, key, info )
 
                             )
                         }
@@ -172,7 +164,6 @@ class QueueList extends React.Component {
             queues => {  // push S3 response into this.queueKeys
 
                 for (var i = 0; i < queues.length; i++) {
-                    // console.log(queues[i]);
                     this.queueKeys.push(queues[i]);
                 }
 
@@ -184,15 +175,15 @@ class QueueList extends React.Component {
 
     }
 
-    createQueueElement( queuelist, key, name ) {
+    createQueueElement( queuelist, key, info ) {
 
         return (
             <QueueElement 
                 queuelist={queuelist}
                 key={key.toString()} 
                 id = {key}
-                name = {name} 
-                elements = {[]}  // "2_Reservoir A", "5_Reservoir B", "3_Benchy"
+                name = {info["name"]} 
+                elements = {info["queues"]}  // "2_Reservoir A", "5_Reservoir B", "3_Benchy"
             />
         )
         

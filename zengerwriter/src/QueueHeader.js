@@ -23,10 +23,6 @@ class QueueHeader extends React.Component {
         var username = this.username;
         var IP = this.IP;
 
-        // Contains all queue data
-        // this.queueList = props.queueList;
-        console.log("QU", this.queueList)
-
         this.state = {
 
             newQueue: () => { console.log("old") }

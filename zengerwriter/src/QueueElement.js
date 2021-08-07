@@ -22,7 +22,15 @@ class QueueElement extends React.Component {
 
         this.queuelist = props.queuelist;
 
-        this.elements = props.elements;
+        // convert object to array for mapping to React components
+        this.elements = [];
+        for (var element in props.elements) {
+
+            console.log("adding elem:",props.elements[element] )
+            this.elements.push(props.elements[element]);
+
+        }
+        console.log("ELEMS:", this.elements)
 
         // INFO ON ELEMENTS
         this.elementsInfo = {}
@@ -30,19 +38,16 @@ class QueueElement extends React.Component {
         // Create dropdown containing this.elements
         this.elementsDiv = this.elements.map((element) => {
 
-            var name = element;
-
-            var number = name.slice(0, name.indexOf("_"));
-            var plateName = name.slice(name.indexOf("_")+1);
-
             return (
 
                 <QueuePlateElement
                     gcodelist={this}
-                    key={element.toString()}
-                    id = {element + RandomID()}
-                    number = {number}
-                    plateName = {plateName}
+                    key={element["plateName"]} 
+                    id = {element["ID"]}  
+                    rootID = {element["rootID"]}  // ID of the element
+                    plateName = {element["plateName"]} 
+                    number = {element["number"]}
+                    setInfo = {this.setInfo} // Callback for changing number of item
                 />
 
             )
