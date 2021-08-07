@@ -179,6 +179,7 @@ class QueueElement extends React.Component {
     save() {
 
         // Convert all necessary data into JSON
+        var queueData = {};
         var data = {};
 
         for ( var key in this.elementsDiv ) {
@@ -200,13 +201,19 @@ class QueueElement extends React.Component {
             var rootID = this.elementsDiv[key]["props"]["rootID"];
 
             // add to data
-            data[order] = {
+            queueData[order] = {
                 "ID": ID,
                 "number": number,
                 "plateName": plateName,
                 "rootID": rootID
             }
 
+        }
+
+        data = {
+            "name": this.name,
+            "id": this.id,
+            "queues": queueData
         }
     
         // console.log( "IP:", this.queuelist.IP )

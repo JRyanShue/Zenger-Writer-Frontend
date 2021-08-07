@@ -59,9 +59,17 @@ class QueueHeader extends React.Component {
         this.setState({
 
             newQueue: () => { 
-                console.log("new function");
-                // console.log(this.queueList.addQueue);
-                this.queueList.addQueue("Ryan"); }
+                
+                // defaultData: data of new, untitled queue
+                var defaultData = {
+                    "name": "New Queue", 
+                    "id": 1628362074, 
+                    "queues": {}
+                }
+
+                this.queueList.addQueue( defaultData ); 
+            
+            }
 
         })
 

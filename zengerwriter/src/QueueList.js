@@ -40,19 +40,23 @@ class QueueList extends React.Component {
             corresponding object to this.queues. 
         */
 
-        this.setQueue = function(id, name, queueList) {
+        this.setQueue = function(id, info, queueList) {
 
-            queueList.queues[id] = {'name': name};
-            // console.log("Queue set:", queueList.queues[id])
+            console.log("id:", id)
+
+            console.log("INFO!", info)
+            // console.log("name:", info["0"]["name"])
+            // queueList.queues[id] = {'name': info[0]["plateName"]};
+            queueList.queues[id] = {'name': info["name"]};
 
         }
 
         // Create new queue for queue name
-        this.addQueue = ( QueueName ) => {
+        this.addQueue = ( queueInfo ) => {
     
             let newID = CreateID();
             this.queueKeys.push( newID );
-            this.setQueue( newID, QueueName, this );
+            this.setQueue( newID, queueInfo, this );
             // console.log(this.listItems)
             // this.listItems.append( this.createQueueElement( this, newID, QueueName ) )
 
@@ -81,6 +85,7 @@ class QueueList extends React.Component {
 
         // Pull the keys of all the queues; use them to pull every queue of the user
         this.getQueueKeys().then(
+
             response =>
             {
                 

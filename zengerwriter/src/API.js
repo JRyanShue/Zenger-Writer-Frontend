@@ -76,7 +76,7 @@ async function GetQueueKeys ( IP, username ) {
 async function GetQueueInfo ( IP, Username, QueueID, QueueList ) {
 
     /* 
-        Using ID, get queue name
+        Using ID, get queue name. Sets via callback
     */
 
     // Headers
@@ -102,7 +102,7 @@ async function GetQueueInfo ( IP, Username, QueueID, QueueList ) {
             console.log("INFO::", info)
 
             // Important callback call
-            QueueList.setQueue(QueueID, info['name'], QueueList);
+            QueueList.setQueue(QueueID, info, QueueList);
 
             return "OK";
 
