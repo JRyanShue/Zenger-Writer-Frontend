@@ -28,14 +28,28 @@ class Preview extends React.Component {
             GetEditorURL( this.gcodelist, this.id, this.name );
 
         };
+
+        this.startDrag = (ev) => {
+
+            console.log("name:", this.name, " id:", this.id);
+
+            let transferObject = {
+                "name": this.name,
+                "id": this.id
+            };
+            ev.dataTransfer.setData("application/json", JSON.stringify(transferObject));
+    
+        }
         
     }
+    
 
     render() {
 
         return( 
 
-            <div className="preview-img-box">
+            // Handle data transfer through drag and drop. 
+            <div draggable onDragStart={this.startDrag} className="preview-img-box">
                 <div 
                     className={this.className}
                     key={this.key}

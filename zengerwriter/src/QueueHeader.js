@@ -49,12 +49,12 @@ class QueueHeader extends React.Component {
             <div id="QueueHeader">
 
             <div className="newqueuelabel">
-                <p>
-                    Production Queue
+                <p className="noselect">
+                    Build Sequence
                 </p>
             </div>
             <div className="newqueuebutton" onClick={this.newQueue.bind(this)}>
-                <p>
+                <p className="noselect">
                     +
                 </p>
             </div>

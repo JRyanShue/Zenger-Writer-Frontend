@@ -23,6 +23,16 @@
 
 }
 
+  .queue-box:hover {
+    border: 1px solid purple;
+  }
+
+  .queue-box input {
+    text-align: center;
+    position: relative;
+    width: 30px;
+  }
+
 .queue {  
 
   /* height: 200px; */
@@ -253,4 +263,28 @@
   top: 4px;
 }
 
+.xbutton {
+  position: absolute;
+
+  display: block;
+  /* padding: 3px; */
+
+  float: right;
+  top: 2px;
+
+  font-weight: bold;
+
+  top: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 

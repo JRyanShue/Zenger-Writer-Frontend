@@ -39,7 +39,7 @@ class QueueList extends React.Component {
         this.setQueue = function(id, name, queueList) {
 
             queueList.queues[id] = {'name': name};
-            console.log("Queue set:", queueList.queues[id])
+            // console.log("Queue set:", queueList.queues[id])
 
         }
 
@@ -48,7 +48,7 @@ class QueueList extends React.Component {
             response =>
             {
                 
-                console.log('Queue keys pulled:', this.queueKeys);
+                // console.log('Queue keys pulled:', this.queueKeys);
 
                 // Sort Queue ID's backwards to get the most recent documents first
                 this.queueKeys.sort();
@@ -61,7 +61,7 @@ class QueueList extends React.Component {
                 }
 
                 // Wait for all Queues' info to be obtained
-                console.log( "All promises:", Object.values(this.queues) );
+                // console.log( "All promises:", Object.values(this.queues) );
                 Promise.all( Object.values(this.queues) ).then( (values) => {
 
                     // Create elements with preview URLs
@@ -70,7 +70,7 @@ class QueueList extends React.Component {
                         // set component
                         {
                             let name = this.queues[keys]['name'];
-                            console.log("Creating element with name:", name);
+                            // console.log("Creating element with name:", name);
                             return (
 
                                 <QueueElement 
@@ -86,7 +86,7 @@ class QueueList extends React.Component {
 
                     );
 
-                    console.log('items:', this.listItems);
+                    // console.log('items:', this.listItems);
                     this.state = {
 
                         queuesList: this.listItems,
@@ -95,7 +95,7 @@ class QueueList extends React.Component {
                     };
 
                     // Prevent setState before component is mounted
-                    console.log('mounted?', this.state.mounted)
+                    // console.log('mounted?', this.state.mounted)
                     if (this.state.mounted) {
 
                         this.setState({
@@ -135,7 +135,7 @@ class QueueList extends React.Component {
             queues => {  // push S3 response into this.queueKeys
 
                 for (var i = 0; i < queues.length; i++) {
-                    console.log(queues[i]);
+                    // console.log(queues[i]);
                     this.queueKeys.push(queues[i]);
                 }
 
@@ -153,7 +153,7 @@ class QueueList extends React.Component {
             
             <div id="QueueList">
             
-                <p>
+                <p className="noselect">
                     Ordered by last modified
                 </p>
 

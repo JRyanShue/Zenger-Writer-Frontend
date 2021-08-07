@@ -2,6 +2,7 @@
 import React from 'react';
 import { GetEditorData, GetEditorURL } from './API.js';
 import { QueuePlateElement } from './QueuePlateElement.js'
+import { PreciseID, RandomID } from './ID.js'
 
 class QueueElement extends React.Component {
 
@@ -31,7 +32,7 @@ class QueueElement extends React.Component {
                 <QueuePlateElement 
                     gcodelist={this}
                     key={element.toString()} 
-                    id = {element}
+                    id = {element + RandomID()}
                     name = {element} 
                 />
 
@@ -52,7 +53,11 @@ class QueueElement extends React.Component {
             // Toggle dropdown items on and off
             if (this.state.mounted) {
 
+                console.log(this.state.display)
+
                 if ( this.state.display == "none" ) {
+
+                    console.log(this.state.display)
 
                     this.setState({
 
@@ -77,10 +82,45 @@ class QueueElement extends React.Component {
 
             }
 
-            console.log(this.elements);
-            console.log("queue clicked.");
+            // console.log(this.elements);
+            // console.log("queue clicked.");
 
         };
+
+        this.dragOver = (ev) => {
+
+            ev.preventDefault();
+    
+        }
+          
+        this.drop = (ev) => {
+    
+            const droppedItem = ev.dataTransfer.getData("application/json");
+            if (droppedItem) {
+
+                // Update elements with dropped item's data
+                this.elementsDiv.push(
+
+                    <QueuePlateElement 
+                        gcodelist={this}
+                        key={JSON.parse(droppedItem)["name"].toString()} 
+                        id = {PreciseID()}  // Completely unique ID
+                        plateName = {JSON.parse(droppedItem)["name"]} 
+                        number = "1"
+                    />
+
+                )
+
+                // Update internal state
+                this.setState({
+
+                    numbersList: this.elementsDiv
+
+                })
+
+            }
+    
+        }
         
     }
 
@@ -98,18 +138,23 @@ class QueueElement extends React.Component {
     }
 
 
+    
+
+
     render() {
 
         return( 
 
             <div>
 
-                <div className="queue-box" onClick={this.handleClick.bind(this)}>
+                <div onDragOver={this.dragOver} onDrop={this.drop} className="queue-box" onClick={this.handleClick.bind(this)}>
                     <div 
                         className={this.className}
                         key={this.key}
                     >
-                        {this.name} 
+                        <div className="noselect">
+                            {this.name} 
+                        </div>
                     </div>
                     <div className="arrow" style={{marginBottom: "5px", right: "10px"}}></div>
                 </div>

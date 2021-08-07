@@ -59,12 +59,12 @@ class EditorHeader extends React.Component {
             <div id="EditorHeader">
 
                 <div className="neweditorlabel">
-                    <p>
+                    <p className="noselect">
                         Prepare Models
                     </p>
                 </div>
                 <div className="neweditorbutton" onClick={this.newEditor.bind(this)}>
-                    <p>
+                    <p className="noselect">
                         +
                     </p>
                 </div>

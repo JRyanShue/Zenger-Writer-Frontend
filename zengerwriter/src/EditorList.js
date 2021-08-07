@@ -150,7 +150,7 @@ class GcodePreview extends React.Component {
             
             <div id="EditorList">
             
-                <p>
+                <p className="noselect">
                     Ordered by last modified
                 </p>
 
