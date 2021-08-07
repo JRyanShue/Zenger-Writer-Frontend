@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { GetEditorData, GetEditorURL } from './API.js';
+import { SaveInfo } from './API.js';
 import { QueuePlateElement } from './QueuePlateElement.js'
 import { PreciseID, RandomID } from './ID.js'
 
@@ -24,16 +24,25 @@ class QueueElement extends React.Component {
 
         this.elements = props.elements;
 
+        // INFO ON ELEMENTS
+        this.elementsInfo = {}
+
         // Create dropdown containing this.elements
         this.elementsDiv = this.elements.map((element) => {
 
+            var name = element;
+
+            var number = name.slice(0, name.indexOf("_"));
+            var plateName = name.slice(name.indexOf("_")+1);
+
             return (
 
-                <QueuePlateElement 
+                <QueuePlateElement
                     gcodelist={this}
-                    key={element.toString()} 
+                    key={element.toString()}
                     id = {element + RandomID()}
-                    name = {element} 
+                    number = {number}
+                    plateName = {plateName}
                 />
 
             )
@@ -82,8 +91,29 @@ class QueueElement extends React.Component {
 
             }
 
-            // console.log(this.elements);
-            // console.log("queue clicked.");
+            console.log(this.elementsDiv);
+            for ( var key in this.elementsDiv ) {
+
+                var order = key; 
+
+                console.log("ID", this.elementsDiv[key]["props"]["id"]);
+
+                // Number can be changed
+                var number;
+                if (this.elementsInfo[this.elementsDiv[key]["props"]["id"]]) {
+                    number = this.elementsInfo[this.elementsDiv[key]["props"]["id"]]["number"];
+                }
+                else {
+                    number = this.elementsDiv[key]["props"]["number"];
+                }
+                console.log("Number", number);
+
+                console.log("plateName", this.elementsDiv[key]["props"]["plateName"]);
+                console.log("rootID", this.elementsDiv[key]["props"]["rootID"]);
+
+            }
+
+            this.save();
 
         };
 
@@ -91,6 +121,13 @@ class QueueElement extends React.Component {
 
             ev.preventDefault();
     
+        }
+
+        // CALLBACK FOR SETTING INFO. Needed to change the amount of an item in the queue, because props is static. 
+        this.setInfo = ( id, number ) => {
+
+            this.elementsInfo[id] = {"number": number};
+
         }
           
         this.drop = (ev) => {
@@ -105,8 +142,10 @@ class QueueElement extends React.Component {
                         gcodelist={this}
                         key={JSON.parse(droppedItem)["name"].toString()} 
                         id = {PreciseID()}  // Completely unique ID
+                        rootID = {JSON.parse(droppedItem)["id"].toString()}  // ID of the element
                         plateName = {JSON.parse(droppedItem)["name"]} 
                         number = "1"
+                        setInfo = {this.setInfo} // Callback for changing number of item
                     />
 
                 )
@@ -137,8 +176,43 @@ class QueueElement extends React.Component {
 
     }
 
+    save() {
 
+        // Convert all necessary data into JSON
+        var data = {};
+
+        for ( var key in this.elementsDiv ) {
+
+            var order = key; 
+
+            var ID = this.elementsDiv[key]["props"]["id"];
+
+            // Number can be changed
+            var number;
+            if (this.elementsInfo[this.elementsDiv[key]["props"]["id"]]) {
+                number = this.elementsInfo[this.elementsDiv[key]["props"]["id"]]["number"];
+            }
+            else {
+                number = this.elementsDiv[key]["props"]["number"];
+            }
+
+            var plateName = this.elementsDiv[key]["props"]["plateName"];
+            var rootID = this.elementsDiv[key]["props"]["rootID"];
+
+            // add to data
+            data[order] = {
+                "ID": ID,
+                "number": number,
+                "plateName": plateName,
+                "rootID": rootID
+            }
+
+        }
     
+        // console.log( "IP:", this.queuelist.IP )
+        SaveInfo( data, this.queuelist.username, this.id, this.queuelist.IP );
+        // console.log("SAVING:", this);
+    }
 
 
     render() {

@@ -1,4 +1,27 @@
 
+// Saves info.json for specified queue
+async function SaveInfo( info_json, username, queueID, IP ) {
+
+    // Headers
+    var headers = new Headers(); 
+    headers.append('path', 'Users/' + username + '/queues/' + queueID + '/info.json');
+    headers.append('Content-Type', 'application/json');
+
+    const response = await fetch( 'http://' + IP + '/put_json', {
+
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: headers,
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(info_json)  // JSON.stringify(data) // body data type must match "Content-Type" header
+
+    });
+
+}
+
 
 async function GetQueueKeys ( IP, username ) {
 
@@ -276,4 +299,4 @@ async function SetEditorURL ( username, IP, editorID, setURL ) {
 }
 
 
-export { GetEditorPreviewUrl, GetQueueInfo, GetEditors, GetQueueKeys, GetEditorData, GetEditorURL, SetEditorURL }
+export { SaveInfo, GetEditorPreviewUrl, GetQueueInfo, GetEditors, GetQueueKeys, GetEditorData, GetEditorURL, SetEditorURL }

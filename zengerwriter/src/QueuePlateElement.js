@@ -24,14 +24,16 @@ class QueuePlateElement extends React.Component {
         }
 
         // Separate number from plate name
-        this.number = props.number || this.name.slice(0, this.name.indexOf("_"));
-        this.plateName = props.plateName || this.name.slice(this.name.indexOf("_")+1)
+        this.number = props.number;
+        this.plateName = props.plateName;
 
         // console.log("NUMBER:", this.number, " PlateName:", this.plateName);
 
-        this.className="queue";
+        this.className = "queue";
 
         this.queuelist = props.queuelist;
+
+        this.setInfo = props.setInfo;
 
         this.handleClick = () => {
 
@@ -42,6 +44,7 @@ class QueuePlateElement extends React.Component {
         this.onChange = () => {
 
             // console.log("newvalue", document.getElementById("queueText" + this.id).value)
+            this.setInfo( this.id, document.getElementById("queueText" + this.id).value );
 
         }
         
@@ -51,14 +54,13 @@ class QueuePlateElement extends React.Component {
 
         // Use vanilla JS to control textField
         var textField = document.getElementById("queueText" + this.id);
-        textField.value = this.number; 
+        textField.value = this.number;
         // console.log("SET")
         textField.addEventListener( "change", () => {
 
 			this.onChange();
 
 		})
-        
 
     }
 

@@ -56,17 +56,6 @@ class QueueHeader extends React.Component {
         this.queueList = queueList;
         console.log("SETTTTttyt", this.queueList)
 
-        // New, blank queue
-        // console.log("S:", document.getElementsByClassName( "newqueuebutton" )[0]);
-        // console.log("QUQUQU:", document.getElementById( "newqueuebutton" ))
-        // document.getElementById( "newqueuebutton" ).addEventListener("click", function() {
-                
-        //     console.log("NEW FUNC")
-        //     this.queueList.addQueue("Ryan");
-
-        // })
-        // console.log(document.getElementById( "newqueuebutton" ))
-
         this.setState({
 
             newQueue: () => { 

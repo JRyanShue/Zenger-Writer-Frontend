@@ -84,8 +84,6 @@ class QueueList extends React.Component {
             response =>
             {
                 
-                // console.log('Queue keys pulled:', this.queueKeys);
-
                 // Sort Queue ID's backwards to get the most recent documents first
                 this.queueKeys.sort();
                 this.queueKeys.reverse();                
@@ -97,7 +95,6 @@ class QueueList extends React.Component {
                 }
 
                 // Wait for all Queues' info to be obtained
-                // console.log( "All promises:", Object.values(this.queues) );
                 Promise.all( Object.values(this.queues) ).then( (values) => {
 
                     // Create elements
@@ -190,7 +187,7 @@ class QueueList extends React.Component {
                 key={key.toString()} 
                 id = {key}
                 name = {name} 
-                elements = {["2_Reservoir A", "5_Reservoir B", "3_Benchy"]}
+                elements = {[]}  // "2_Reservoir A", "5_Reservoir B", "3_Benchy"
             />
         )
         
