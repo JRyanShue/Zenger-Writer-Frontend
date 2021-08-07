@@ -3,6 +3,7 @@ import './App.css';
 import { GetQueueInfo, GetQueueKeys } from './API.js';
 import { Preview } from './EditorPreview.js';
 import { QueueElement } from './QueueElement';
+import { CreateID } from './ID';
 
 class QueueList extends React.Component {
 
@@ -30,6 +31,9 @@ class QueueList extends React.Component {
 
         }
 
+        // for communication with the QueueHeader parent element
+        this.setQueueList = props.setQueueList;
+
         /*
             setQueue method gets passed into callbacks:
             This object is passed into a fetch() which, after pulling the info for the queue, adds a 
@@ -41,6 +45,38 @@ class QueueList extends React.Component {
             queueList.queues[id] = {'name': name};
             // console.log("Queue set:", queueList.queues[id])
 
+        }
+
+        // Create new queue for queue name
+        this.addQueue = ( QueueName ) => {
+    
+            let newID = CreateID();
+            this.queueKeys.push( newID );
+            this.setQueue( newID, QueueName, this );
+            // console.log(this.listItems)
+            // this.listItems.append( this.createQueueElement( this, newID, QueueName ) )
+
+            this.listItems = this.queueKeys.map((keys) =>
+
+                // set component
+                {
+                    let name = this.queues[keys]['name'];
+                    // console.log("Creating element with name:", name);
+                    return (
+
+                        this.createQueueElement( this, keys, name )
+
+                    )
+                }
+
+            );
+
+            this.setState({
+
+                queuesList: this.listItems
+
+            })
+    
         }
 
         // Pull the keys of all the queues; use them to pull every queue of the user
@@ -64,7 +100,7 @@ class QueueList extends React.Component {
                 // console.log( "All promises:", Object.values(this.queues) );
                 Promise.all( Object.values(this.queues) ).then( (values) => {
 
-                    // Create elements with preview URLs
+                    // Create elements
                     this.listItems = keys.map((keys) =>
 
                         // set component
@@ -73,18 +109,14 @@ class QueueList extends React.Component {
                             // console.log("Creating element with name:", name);
                             return (
 
-                                <QueueElement 
-                                    queuelist={this}
-                                    key={keys.toString()} 
-                                    id = {keys}
-                                    name = {name} 
-                                    elements = {["2_Reservoir A", "5_Reservoir B", "3_Benchy"]}
-                                />
+                                this.createQueueElement( this, keys, name )
 
                             )
                         }
 
                     );
+
+                    console.log("LISTITEMS:", this.listItems)
 
                     // console.log('items:', this.listItems);
                     this.state = {
@@ -108,6 +140,9 @@ class QueueList extends React.Component {
 
             }
         );
+
+        // Form connection with QueueHeader
+        this.setQueueList( this );
 
     }
 
@@ -146,6 +181,22 @@ class QueueList extends React.Component {
         return this.queueKeys;  // Return to resolve promise
 
     }
+
+    createQueueElement( queuelist, key, name ) {
+
+        return (
+            <QueueElement 
+                queuelist={queuelist}
+                key={key.toString()} 
+                id = {key}
+                name = {name} 
+                elements = {["2_Reservoir A", "5_Reservoir B", "3_Benchy"]}
+            />
+        )
+        
+    }
+
+    
 
     render () {
 

@@ -174,9 +174,6 @@
 
 #EditorHeader {
   margin-left: calc(100vw - var(--prepare-space));
-  /* float: right; */
-  /* clear: both; */
-  /* float: top; */
   position: absolute;
   top: 0px;
   width: var(--prepare-space);
