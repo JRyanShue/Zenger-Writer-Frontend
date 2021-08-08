@@ -9,6 +9,23 @@ class Slice extends React.Component {
     this.IP = props.serverIP;
     this.username = props.username;
 
+    this.drop = ( ev ) => {
+
+        const droppedItem = ev.dataTransfer.getData("application/json");
+        if (droppedItem) {
+
+            console.log( droppedItem );
+
+        }
+
+    }
+
+    this.dragOver = (ev) => {
+
+        ev.preventDefault();
+
+    }
+
   }
 
   render() {
@@ -24,11 +41,9 @@ class Slice extends React.Component {
                     SLICE
                 </p>
             </div>
-            {/* <div id="newqueuebutton" className="newqueuebutton">
-                <p className="noselect">
-                    +
-                </p>
-            </div> */}
+            <div id="sliceBucket" className="sliceBucket" onDragOver={this.dragOver} onDrop={this.drop}>
+
+            </div>
 
         </div>        
 
