@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Queue from './Queue';
 import Prepare from './Prepare';
+import Slice from './Slice';
 
 import reportWebVitals from './reportWebVitals';
 
+var username = "testman";
+
 ReactDOM.render(
   <React.StrictMode>
-    <Queue username="testman" serverIP="172.31.103.234"/>
-    <Prepare username="testman" serverIP="172.31.103.234"/>
+    <Slice username={username} serverIP="172.31.103.234"/>
+    <Queue username={username} serverIP="172.31.103.234"/>
+    <Prepare username={username} serverIP="172.31.103.234"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

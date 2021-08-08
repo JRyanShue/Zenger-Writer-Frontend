@@ -31,7 +31,7 @@ class Preview extends React.Component {
 
         this.startDrag = (ev) => {
 
-            console.log("name:", this.name, " id:", this.id);
+            // console.log("name:", this.name, " id:", this.id);
 
             let transferObject = {
                 "name": this.name,

@@ -26,11 +26,9 @@ class QueueElement extends React.Component {
         this.elements = [];
         for (var element in props.elements) {
 
-            console.log("adding elem:",props.elements[element] )
             this.elements.push(props.elements[element]);
 
         }
-        console.log("ELEMS:", this.elements)
 
         // INFO ON ELEMENTS
         this.elementsInfo = {}
@@ -165,6 +163,16 @@ class QueueElement extends React.Component {
             }
     
         }
+
+        this.startDrag = ( ev ) => {
+
+            let transferObject = {
+                "queueName": this.name,
+                "queueID": this.id
+            };
+            ev.dataTransfer.setData("application/json", JSON.stringify(transferObject));
+    
+        }
         
     }
 
@@ -178,6 +186,10 @@ class QueueElement extends React.Component {
             display: "none"
 
         });
+
+        // Use vanilla JS to control textField
+        var titleField = document.getElementById("titleField" + this.id);
+        titleField.value = this.name;
 
     }
 
@@ -226,6 +238,7 @@ class QueueElement extends React.Component {
         // console.log("SAVING:", this);
     }
 
+    
 
     render() {
 
@@ -233,16 +246,15 @@ class QueueElement extends React.Component {
 
             <div>
 
-                <div onDragOver={this.dragOver} onDrop={this.drop} className="queue-box" onClick={this.handleClick.bind(this)}>
+                <div draggable onDragStart={this.startDrag} onDragOver={this.dragOver} onDrop={this.drop} className="queue-box" onClick={this.handleClick.bind(this)}>
                     <div 
                         className={this.className}
                         key={this.key}
                     >
-                        <div className="noselect">
-                            {this.name} 
-                        </div>
+                        <input id={"titleField" + this.id} type="text" className="" defaultValue/>
+                        {/* <i className="arrow" style={{marginBottom: "5px", right: "10px"}}></i> */}
                     </div>
-                    <div className="arrow" style={{marginBottom: "5px", right: "10px"}}></div>
+                    {/* <div className="arrow" style={{marginBottom: "5px", right: "10px"}}></div> */}
                 </div>
 
                 <div style={{display: this.state.display}}>

@@ -55,7 +55,6 @@ class QueuePlateElement extends React.Component {
         // Use vanilla JS to control textField
         var textField = document.getElementById("queueText" + this.id);
         textField.value = this.number;
-        // console.log("SET")
         textField.addEventListener( "change", () => {
 
 			this.onChange();

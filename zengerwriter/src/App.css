@@ -9,16 +9,46 @@
 
 }
 
+.sliceBox {
+
+  position: absolute;
+  margin-left: 0px;
+  top: 0px;
+  left: 0px;
+  width: calc(100vw - var(--queue-space) - var(--prepare-space));
+  margin-top: 0px;
+  height: 100px;
+  background-color: rgb(241, 241, 241);
+
+}
+
+  .sliceBox .sliceText {
+    /* color: orange; */
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 80%; 
+    width: 50%;
+  }
+
+  .sliceBox .sliceText p {
+    position: absolute;
+    font-size: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);  /* -60% for y because letters are not centered by default */
+    margin: 0;
+  }
+
 .queue-box {
 
-  position: relative;
+  /* position: relative; */
   float: left;
-  /* height: max-content; */
   width: calc(var(--queue-space) - 10px);
   border-radius: 5px;
   border: 1px solid var(--gray-color);
-  /* right: var(--prepare-space); */
-  /* margin-right: var(--prepare-space); */
   margin: 2px;
 
 }
@@ -35,17 +65,8 @@
 
 .queue {  
 
-  /* height: 200px; */
-  /* position: absolute; */
   width: max-content;
-  
-  /* background-size: contain; */
-  /* width: calc( var(--image-width) - 2 * var(--border-width) ); */
-  /* margin: var(--border-width); */
-  
   border-radius: 5px;
-  /* background-position: center; */
-
   margin: 5px;
   margin: 0;
 
@@ -54,15 +75,8 @@
 .preview-img-box {
 
   float: left;
-
-  /* Creates a box around the preview image */
-  /* height: var(--image-height);
-  width: var(--image-width); */
   height: 200px;
   width: 200px;
-  /* border-width: calc( 2 * var(--border-width) ); */
-  /* border-width: 2px;
-  border-color: black; */
   border-radius: 5px;
   border: 1px solid var(--gray-color);
 
@@ -106,10 +120,9 @@
 
 
 #QueueHeader {
+  position: absolute;
   margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
-  /* float: right; */
-  /* clear: both; */
-  /* float: top; */
+  top: 0px;
   width: var(--queue-space);
   margin-top: 0px;
   height: 100px;
@@ -164,6 +177,8 @@
 #QueueList {
   width: var(--queue-space);
   margin-top: 0px;
+  position: absolute;
+  top: var(--header-height);
   margin-right: calc(var(--prepare-space));
   margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
   text-align: center;
@@ -257,7 +272,8 @@
   -webkit-transform: rotate(45deg);
 
   float: right;
-  top: 4px;
+  top: 0px;
+
 }
 
 .xbutton {
