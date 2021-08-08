@@ -15,6 +15,8 @@ class QueuePlateElement extends React.Component {
 
         this.id = props.id;
 
+        this.queueOrder = props.queueOrder;
+
         // console.log("IDID:", this.id)
 
         if (props.name){
@@ -35,6 +37,8 @@ class QueuePlateElement extends React.Component {
 
         this.setInfo = props.setInfo;
 
+        console.log("SETINFO:", this.setInfo)
+
         this.handleClick = () => {
 
             // console.log("queue plate clicked.");
@@ -44,7 +48,7 @@ class QueuePlateElement extends React.Component {
         this.onChange = () => {
 
             // console.log("newvalue", document.getElementById("queueText" + this.id).value)
-            this.setInfo( this.id, document.getElementById("queueText" + this.id).value );
+            this.setInfo( this.queueOrder, document.getElementById("queueText" + this.id).value );
 
         }
         

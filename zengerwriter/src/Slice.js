@@ -14,9 +14,9 @@ class Slice extends React.Component {
         const droppedItem = ev.dataTransfer.getData("application/json");
         if (droppedItem) {
 
-            console.log( droppedItem );
+            sliceItem( droppedItem );
 
-        }
+        }        
 
     }
 
@@ -53,6 +53,13 @@ class Slice extends React.Component {
 
   }
   
+}
+
+function sliceItem( item ) {
+
+    console.log("Slicing item:", item)
+
+    
 
 }
 

@@ -22,23 +22,30 @@ class QueueElement extends React.Component {
 
         this.queuelist = props.queuelist;
 
-        // convert object to array for mapping to React components
-        this.elements = [];
-        for (var element in props.elements) {
+        this.elements = props.elements;
 
-            this.elements.push(props.elements[element]);
-
-        }
+        console.log("this.elements:", this.elements)
 
         // INFO ON ELEMENTS
         this.elementsInfo = {}
 
+        // CALLBACK FOR SETTING INFO. Needed to change the amount of an item in the queue, because props is static. 
+        this.setInfo = ( queueOrder, number ) => {
+
+            this.elements[queueOrder]["number"] = number;
+
+        }
+
+        
+
         // Create dropdown containing this.elements
-        this.elementsDiv = this.elements.map((element) => {
+        var elementsArr = this.elementsArray();
+        this.elementsDiv = elementsArr.map((element) => {
 
             return (
 
                 <QueuePlateElement
+                    queueOrder={elementsArr.indexOf( element )}
                     gcodelist={this}
                     key={element["plateName"]} 
                     id = {element["ID"]}  
@@ -124,29 +131,36 @@ class QueueElement extends React.Component {
 
             ev.preventDefault();
     
-        }
-
-        // CALLBACK FOR SETTING INFO. Needed to change the amount of an item in the queue, because props is static. 
-        this.setInfo = ( id, number ) => {
-
-            this.elementsInfo[id] = {"number": number};
-
-        }
+        }        
           
         this.drop = (ev) => {
     
             const droppedItem = ev.dataTransfer.getData("application/json");
             if (droppedItem) {
 
+                var newID = PreciseID();
+                var plateName = JSON.parse(droppedItem)["name"];
+                var rootID = JSON.parse(droppedItem)["id"].toString();
+
+                // Update elements info
+                ////////////
+                this.elements[Object.keys(this.elements).length] = {
+                    "ID": newID,
+                    "number": "1",
+                    "plateName": plateName,
+                    "rootID": rootID
+                };
+
                 // Update elements with dropped item's data
                 this.elementsDiv.push(
 
                     <QueuePlateElement 
+                        queueOrder={Object.keys(this.elementsDiv).length}
                         gcodelist={this}
-                        key={JSON.parse(droppedItem)["name"].toString()} 
-                        id = {PreciseID()}  // Completely unique ID
-                        rootID = {JSON.parse(droppedItem)["id"].toString()}  // ID of the element
-                        plateName = {JSON.parse(droppedItem)["name"]} 
+                        key={plateName.toString()} 
+                        id = {newID}  // Completely unique ID
+                        rootID = {rootID}  // ID of the element
+                        plateName = {plateName} 
                         number = "1"
                         setInfo = {this.setInfo} // Callback for changing number of item
                     />
@@ -168,12 +182,26 @@ class QueueElement extends React.Component {
 
             let transferObject = {
                 "queueName": this.name,
-                "queueID": this.id
+                "queueID": this.id,
+                "queueElements": this.elements
             };
             ev.dataTransfer.setData("application/json", JSON.stringify(transferObject));
     
         }
+
         
+        
+    }
+
+    elementsArray() {
+        // Convert elements object to array of same order
+        var elementsArr = [];
+        for (var element in this.elements) {
+
+            elementsArr.push(this.elements[element]);
+
+        }
+        return elementsArr;
     }
 
 
