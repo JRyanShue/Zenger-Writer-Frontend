@@ -238,14 +238,28 @@
 					// Create new ID to update "timestamp"
 					editor.editorID = CreateID();
 
+					// Array of promises ( only execute delete once objects are successfully copied to new location )
+					var copyPromises = [];
+
 					// Move old info into new path
 					let origin_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/info.json';
 					let destination_path = 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json';
-					Move( origin_path, destination_path, editor );
+					copyPromises.push( Move( origin_path, destination_path, editor ) );
 
-					// Delete old info
-					let old_folder_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/';
-					Delete( old_folder_path, editor );
+					// Move old gcode into new path
+					origin_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/plate.gcode';
+					destination_path = 'Users/' + editor.username + '/projects/' + editor.editorID + '/plate.gcode';
+					copyPromises.push( Move( origin_path, destination_path, editor ) );
+
+					console.log("copyPromises:", copyPromises);
+
+					Promise.all( copyPromises ).then( () => {
+
+						// Delete old info
+						let old_folder_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/';
+						Delete( old_folder_path, editor );
+
+					} )
 
 				})
 			

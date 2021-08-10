@@ -42,6 +42,8 @@ async function Move ( origin_path, destination_path, editor ) {  // Move object 
     headers.append('origin_path', origin_path);
     headers.append('destination_path', destination_path);
 
+    console.log( "moving object from", origin_path, "to", destination_path )
+
     await fetch( 'http://' + editor.IP + '/move', {
         
         method: "POST",
@@ -163,12 +165,15 @@ async function buildFormData ( editor, formData, blob ) {
 
     formData.append( 'stl', blob, 'modelSTL.stl' );
     formData.append( 'action', "slice" );
+    formData.append( 'path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/plate.gcode' );
 
     editor.settings.set( formData );
 
 }
 
 async function sliceSTL ( IP, formData ) {
+
+    console.log("sending to put_stl:", formData)
 
     // Send FormData to backend for slicing
     const response = await fetch( 'http://' + IP + '/put_stl',

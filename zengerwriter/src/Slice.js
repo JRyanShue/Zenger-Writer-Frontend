@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { SliceQueue, SliceItem } from './API_Slice.js'
+// import { SliceQueue, SliceItem } from './API_Slice.js'
 
 class Slice extends React.Component {
 
@@ -70,7 +70,7 @@ function sliceItem( item ) {
         queueArr.push( element );
 
     }
-    SliceQueue( JSON.stringify( queueArr ) );
+    // SliceQueue( JSON.stringify( queueArr ) );
 
 }
 
