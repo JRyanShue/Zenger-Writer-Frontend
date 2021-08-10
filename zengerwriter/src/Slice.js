@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { SliceQueue, SliceItem } from './API_Slice.js'
 
 class Slice extends React.Component {
 
@@ -16,7 +17,7 @@ class Slice extends React.Component {
 
             sliceItem( droppedItem );
 
-        }        
+        }
 
     }
 
@@ -57,9 +58,19 @@ class Slice extends React.Component {
 
 function sliceItem( item ) {
 
-    console.log("Slicing item:", item)
+    var queue = JSON.parse( item );
+    console.log("Slicing queue:", queue);
 
-    
+    // Create an array of pure elements to slice
+    var queueArr = []
+    for ( var index in queue["queueElements"] ) {
+
+        var element = queue["queueElements"][index];
+        console.log("Slicing item:", element);
+        queueArr.push( element );
+
+    }
+    SliceQueue( JSON.stringify( queueArr ) );
 
 }
 
