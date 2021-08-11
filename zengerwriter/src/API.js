@@ -11,7 +11,41 @@ async function SpliceQueue( data, IP ) {
         body: formData,
     } );
     
-    // Return gcode
+    // Pull completed gcode
+    await fetch( 'http://' + IP + '/get_gcode' ) // get_gcode
+        .then( response => response.text() )  // use .text() because it's a gcode file, not JSON
+        .then( value => {
+            returnGcode( value, saveString );
+        })  // callback for handling gcode value)
+
+}
+
+// Return gcode to user ( via download )
+function returnGcode( gcode ) {
+
+    var link = document.createElement( 'a' );
+    function save( blob, filename ) {
+
+		if ( link.href ) {
+
+			URL.revokeObjectURL( link.href );
+
+		}
+
+		link.href = URL.createObjectURL( blob );
+		link.download = filename || 'data.json';
+		link.dispatchEvent( new MouseEvent( 'click' ) );
+
+	}
+
+    function saveString( text, filename ) {
+
+		save( new Blob( [ text ], { type: 'text/plain' } ), filename );
+
+	}
+
+    console.log( gcode );
+    saveString( gcode, "queue.gcode" );
 
 }
 
