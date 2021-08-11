@@ -5,18 +5,18 @@ async function SpliceQueue( data, IP ) {
     let formData = new FormData();
     formData.append( 'data', JSON.stringify( data ) );
 
-    const response = await fetch( 'http://' + IP + '/splice_queue',
+    const response = fetch( 'http://' + IP + '/splice_queue',
     {
         method: 'POST',
         body: formData,
-    } );
-    
-    // Pull completed gcode
-    await fetch( 'http://' + IP + '/get_gcode' ) // get_gcode
-        .then( response => response.text() )  // use .text() because it's a gcode file, not JSON
-        .then( value => {
-            returnGcode( value, saveString );
-        })  // callback for handling gcode value)
+    } ).then( () => {
+        // Pull completed gcode
+        fetch( 'http://' + IP + '/get_gcode' ) // get_gcode
+            .then( response => response.text() )  // use .text() because it's a gcode file, not JSON
+            .then( value => {
+                returnGcode( value );
+            })  // callback for handling gcode value)
+    } );    
 
 }
 
@@ -24,7 +24,7 @@ async function SpliceQueue( data, IP ) {
 function returnGcode( gcode ) {
 
     var link = document.createElement( 'a' );
-    function save( blob, filename ) {
+    var save = ( blob, filename ) => {
 
 		if ( link.href ) {
 
@@ -38,7 +38,7 @@ function returnGcode( gcode ) {
 
 	}
 
-    function saveString( text, filename ) {
+    var saveString = ( text, filename ) => {
 
 		save( new Blob( [ text ], { type: 'text/plain' } ), filename );
 
