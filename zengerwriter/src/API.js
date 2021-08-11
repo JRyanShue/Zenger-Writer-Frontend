@@ -1,4 +1,21 @@
 
+async function SpliceQueue( data, IP ) {
+
+    // Build FormData object
+    let formData = new FormData();
+    formData.append( 'data', JSON.stringify( data ) );
+
+    const response = await fetch( 'http://' + IP + '/splice_queue',
+    {
+        method: 'POST',
+        body: formData,
+    } );
+    
+    // Return gcode
+
+}
+
+
 // Saves info.json for specified queue
 async function SaveInfo( info_json, username, queueID, IP ) {
 
@@ -299,4 +316,4 @@ async function SetEditorURL ( username, IP, editorID, setURL ) {
 }
 
 
-export { SaveInfo, GetEditorPreviewUrl, GetQueueInfo, GetEditors, GetQueueKeys, GetEditorData, GetEditorURL, SetEditorURL }
+export { SpliceQueue, SaveInfo, GetEditorPreviewUrl, GetQueueInfo, GetEditors, GetQueueKeys, GetEditorData, GetEditorURL, SetEditorURL }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 // import { SliceQueue, SliceItem } from './API_Slice.js'
+import { SpliceQueue } from './API.js'
 
 class Slice extends React.Component {
 
@@ -15,7 +16,7 @@ class Slice extends React.Component {
         const droppedItem = ev.dataTransfer.getData("application/json");
         if (droppedItem) {
 
-            sliceItem( droppedItem );
+            sliceItem( droppedItem, this.IP );
 
         }
 
@@ -56,7 +57,7 @@ class Slice extends React.Component {
   
 }
 
-function sliceItem( item ) {
+function sliceItem( item, IP ) {
 
     var queue = JSON.parse( item );
     console.log("Slicing queue:", queue);
@@ -71,6 +72,12 @@ function sliceItem( item ) {
 
     }
     // SliceQueue( JSON.stringify( queueArr ) );
+
+    var jsonQueue = JSON.stringify( {
+        "queue": queueArr
+    } )
+
+    SpliceQueue( jsonQueue, IP );
 
 }
 
