@@ -26,7 +26,10 @@ function Editor() {
 	this.username = "testman";
 	this.projectNumber = 1;
 
-	this.IP = "172.31.103.234";
+	// IP of EC2: 54.159.145.255
+	// IP of local Linux: 172.23.75.78
+
+	this.IP = "54.159.145.255";
 
 	var Signal = signals.Signal;
 

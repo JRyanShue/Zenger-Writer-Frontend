@@ -9,11 +9,14 @@ import reportWebVitals from './reportWebVitals';
 
 var username = "testman";
 
+// IP of EC2: 54.159.145.255
+// IP of local Linux: 172.23.75.78
+
 ReactDOM.render(
   <React.StrictMode>
-    <Slice username={username} serverIP="172.31.103.234"/>
-    <Queue username={username} serverIP="172.31.103.234"/>
-    <Prepare username={username} serverIP="172.31.103.234"/>
+    <Slice username={username} serverIP="54.159.145.255"/>
+    <Queue username={username} serverIP="54.159.145.255"/>
+    <Prepare username={username} serverIP="54.159.145.255"/>
   </React.StrictMode>,
   document.getElementById('root')
 );
