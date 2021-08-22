@@ -1,17 +1,19 @@
 
+const api_port = ":8080";
+
 async function SpliceQueue( data, IP ) {
 
     // Build FormData object
     let formData = new FormData();
     formData.append( 'data', JSON.stringify( data ) );
 
-    const response = fetch( 'http://' + IP + '/splice_queue',
+    const response = fetch( 'http://' + IP + api_port + '/splice_queue',
     {
         method: 'POST',
         body: formData,
     } ).then( () => {
         // Pull completed gcode
-        fetch( 'http://' + IP + '/get_gcode' ) // get_gcode
+        fetch( 'http://' + IP + api_port + '/get_gcode' ) // get_gcode
             .then( response => response.text() )  // use .text() because it's a gcode file, not JSON
             .then( value => {
                 returnGcode( value );
@@ -58,7 +60,7 @@ async function SaveInfo( info_json, username, queueID, IP ) {
     headers.append('path', 'Users/' + username + '/queues/' + queueID + '/info.json');
     headers.append('Content-Type', 'application/json');
 
-    const response = await fetch( 'http://' + IP + '/put_json', {
+    const response = await fetch( 'http://' + IP + api_port + '/put_json', {
 
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
@@ -93,7 +95,7 @@ async function GetQueueKeys ( IP, username ) {
     var values = [];
     var data_;
 
-    const response = await fetch( 'http://' + IP + '/get_queues', {
+    const response = await fetch( 'http://' + IP + api_port + '/get_queues', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -135,7 +137,7 @@ async function GetQueueInfo ( IP, Username, QueueID, QueueList ) {
     headers.append('path', 'Users/' + Username + '/queues/' + QueueID + '/info.json');
     headers.append('Content-Type', 'application/json');
 
-    await fetch( 'http://' + IP + '/pull_object', {
+    await fetch( 'http://' + IP + api_port + '/pull_object', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -182,7 +184,8 @@ async function GetEditors ( IP, username ) {
     var values = [];
     var data_;
 
-    const response = await fetch( 'http://' + IP + '/get_projects', {
+    console.log( 'http://' + IP + api_port + '/get_projects' )
+    const response = await fetch( 'http://' + IP + api_port + '/get_projects', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -219,7 +222,7 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
     headers.append('path', 'Users/' + User + '/projects/' + EditorID);
     headers.append('Content-Type', 'application/json');
 
-    await fetch( 'http://' + IP + '/get_object', {
+    await fetch( 'http://' + IP + api_port + '/get_object', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -254,7 +257,7 @@ async function GetEditorData ( gcodelist, EditorID ) {
     headers.append('path', 'Users/' + gcodelist.username + '/projects/' + EditorID + '/editor.json');
     headers.append('Content-Type', 'application/json');
 
-    await fetch( 'http://' + gcodelist.IP + '/pull_object', {
+    await fetch( 'http://' + gcodelist.IP + api_port + '/pull_object', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -285,7 +288,7 @@ async function GetEditorURL ( gcodelist, editorID, editorName ) {
     headers.append('path', 'Users/' + gcodelist.username + '/projects/' + editorID);
     headers.append('Content-Type', 'application/json');
 
-    await fetch( 'http://' + gcodelist.IP + '/pull_object_url', {
+    await fetch( 'http://' + gcodelist.IP + api_port + '/pull_object_url', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -323,7 +326,7 @@ async function SetEditorURL ( username, IP, editorID, setURL ) {
     headers.append('path', 'Users/' + username + '/projects/' + editorID);
     headers.append('Content-Type', 'application/json');
 
-    await fetch( 'http://' + IP + '/pull_object_url', {
+    await fetch( 'http://' + IP + api_port + '/pull_object_url', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',

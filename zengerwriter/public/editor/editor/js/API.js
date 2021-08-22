@@ -1,6 +1,8 @@
 
 import { CreateID } from './libs/ID.js';
 
+const api_port = ":8080";
+
 async function Save ( editor ) {  // Saves editor to cloud
 
     var data = editor.toJSON();
@@ -11,7 +13,7 @@ async function Save ( editor ) {  // Saves editor to cloud
     headers.append('isfile', 'false');
     headers.append('Content-Type', 'application/json');
 
-    const response = await fetch( 'http://' + editor.IP + '/put_object', {
+    const response = await fetch( 'http://' + editor.IP + api_port + '/put_object', {
 
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
@@ -44,7 +46,7 @@ async function Move ( origin_path, destination_path, editor ) {  // Move object 
 
     console.log( "moving object from", origin_path, "to", destination_path )
 
-    await fetch( 'http://' + editor.IP + '/move', {
+    await fetch( 'http://' + editor.IP + api_port + '/move', {
         
         method: "POST",
         headers: headers,
@@ -67,7 +69,7 @@ async function Delete ( path, editor ) {  // Move object from one path to anothe
     var headers = new Headers(); 
     headers.append('path', path);
 
-    await fetch( 'http://' + editor.IP + '/delete', {
+    await fetch( 'http://' + editor.IP + api_port + '/delete', {
         
         method: "POST",
         headers: headers,
@@ -101,7 +103,7 @@ async function SavePreview( blob, editor ) {
     // headers.append('Content-Type', 'application/octet-stream');
     // headers.append('Content-Type', 'image/png');
 
-    const response = await fetch( 'http://' + editor.IP + '/put_image', {
+    const response = await fetch( 'http://' + editor.IP + api_port + '/put_image', {
 
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
@@ -127,7 +129,7 @@ async function SaveInfo( info_json, editor ) {
     headers.append('path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json');
     headers.append('Content-Type', 'application/json');
 
-    const response = await fetch( 'http://' + editor.IP + '/put_json', {
+    const response = await fetch( 'http://' + editor.IP + api_port + '/put_json', {
 
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
