@@ -178,17 +178,18 @@ async function sliceSTL ( IP, formData ) {
     console.log("sending to put_stl:", formData)
 
     // Send FormData to backend for slicing
-    const response = await fetch( 'http://' + IP + '/put_stl',
+    console.log(IP);
+    const response = await fetch( 'http://' + IP + api_port + '/put_stl',
     {
         method: 'POST',
-        body: formData,
+        body: formData
     } );
 
 }
 
 async function fetchGcode( IP, saveString ) {
 
-    await fetch( 'http://' + IP + '/get_gcode' ) // get_gcode
+    await fetch( 'http://' + IP + api_port + '/get_gcode' ) // get_gcode
         .then( response => response.text() )  // use .text() because it's a gcode file, not JSON
         .then( value => {
             returnGcode( value, saveString );
