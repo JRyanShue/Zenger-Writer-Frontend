@@ -27,7 +27,7 @@ function Editor() {
 	this.projectNumber = 1;
 
 	// IP of EC2: 54.159.145.255
-	// IP of local Linux: 172.23.75.78
+	// IP of local Linux: 172.23.75.78 (doesn't matter anymore)
 
 	this.IP = "54.159.145.255";
 
@@ -148,7 +148,10 @@ function Editor() {
 
 	this.addCamera( this.camera );
 
-	this.settings = new SliceSettings(); 	
+	this.settings = new SliceSettings(); 
+	
+	this.delMoveFulfilled = false;  // Whether the API has responed after deleting and moving the editor's info
+	this.saveFulfilled = false;
 
 }
 

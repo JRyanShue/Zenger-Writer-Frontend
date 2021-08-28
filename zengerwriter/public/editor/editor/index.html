@@ -254,7 +254,17 @@
 
 						// Delete old info
 						let old_folder_path = 'Users/' + editor.username + '/projects/' + editor.oldID + '/';
-						Delete( old_folder_path, editor );
+						console.log(old_folder_path)
+						Delete( old_folder_path, editor ).then(
+							() => {
+								// Allow editor to be exited when Menubar.Home is ready
+								if (!editor.saveFulfilled) {
+									editor.delMoveFulfilled = true;
+								} else {
+									window.location='/';
+								}
+							}
+						);
 
 					} )
 

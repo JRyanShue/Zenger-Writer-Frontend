@@ -115,7 +115,7 @@ function Loader( editor ) {
 				reader.addEventListener( 'load', async function ( event ) {
 
 					var contents = event.target.result;
-					console.log("Loaded in:", contents);
+					console.log("Finished Loading.");
 
 					var { STLLoader } = await import( '../../examples/jsm/loaders/STLLoader.js' );
 
@@ -124,6 +124,7 @@ function Loader( editor ) {
 
 					var mesh = new THREE.Mesh( geometry, material );
 					mesh.name = filename;
+					console.log("Created Mesh.")
 
 					editor.execute( new AddObjectCommand( editor, mesh ) );
 

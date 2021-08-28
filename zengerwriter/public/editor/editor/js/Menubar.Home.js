@@ -23,8 +23,12 @@ function MenubarHome ( editor ) {
             console.log("going home");
 
             // setTimeout(() => {
-            window.location='/';
-            // }, 100000);
+            if (!editor.delMoveFulfilled) {
+                editor.saveFulfilled = true;
+            } else {
+                window.location='/';
+            }
+            // }, 3000);
 
         });
 
