@@ -68,7 +68,6 @@
 
   .nav-element:hover {
     background-color: gray;
-    cursor: pointer;
   }
 
   .nav-element p {
@@ -130,7 +129,6 @@
 
     .sliceBox .sliceBucket:hover {
       border: 1px solid purple;
-      cursor: pointer;
     }
     
     .sliceBox .sliceBucket p {
@@ -168,7 +166,6 @@
 
   .queue-box:hover {
     border: 1px solid purple;
-    cursor: pointer;
   }
 
   .queue-box input {
@@ -231,7 +228,6 @@
 
 .preview-img-box:hover {
   border: 1px solid purple;
-  cursor: pointer;
 }
 
 .vr {
@@ -287,7 +283,6 @@
 
     #QueueHeader .newqueuebutton:hover {
       border: 1px solid purple;
-      cursor: pointer;
     }
     
     #QueueHeader .newqueuebutton p {
@@ -356,7 +351,6 @@
 
     #EditorHeader .neweditorbutton:hover {
       border: 1px solid purple;
-      cursor: pointer;
     }
     
     #EditorHeader .neweditorbutton p {
