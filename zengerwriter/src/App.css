@@ -5,37 +5,15 @@
   --prepare-space: 68vw;
   --queue-space: 20vw;
 
-  --header-banner-height: 50px;
   --header-height: 100px;
 
-  --background-color: white;
-
 }
-
-.heading-banner {
-
-  height: var(--header-banner-height); 
-  /* background-color: rgb(15, 18, 46); */
-  /* background-color: rgb(27, 27, 27); */
-  background-image: linear-gradient(rgb(27, 27, 27), rgb(51, 51, 51));
-
-}
-
-  .heading-banner .title {
-
-    --margin: 10px;
-    color: white;
-    font-size: calc(var(--header-banner-height) - 2 * var(--margin));
-    margin-left: var(--margin);
-    font-weight: bold;
-
-  }
 
 .sliceBox {
 
   position: absolute;
   margin-left: 0px;
-  top: var(--header-banner-height);
+  top: 0px;
   left: 0px;
   width: calc(100vw - var(--queue-space) - var(--prepare-space));
   margin-top: 0px;
@@ -108,12 +86,11 @@
   }
 
   .queue-box input {
-    border-radius: 5px;
     text-align: center;
-    border: 1px solid var(--gray-color);
+    position: relative;
+    width: 30px;
   }
 
-  
 .queue {  
 
   width: max-content;
@@ -122,14 +99,6 @@
   margin: 0;
 
 }
-
-  .queue input {
-
-    text-align: center;
-    position: relative;
-    /* width: calc(max-content - 1); */
-    border: 1px white;
-  }
 
 .preview-img-box {
 
@@ -171,7 +140,6 @@
 
 .vr {
   position: fixed;
-  top: var(--header-banner-height);
   bottom: 0px;
 	border-left: 1px solid var(--gray-color);
 	height: 100vh;
@@ -182,7 +150,7 @@
 #QueueHeader {
   position: absolute;
   margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
-  top: var(--header-banner-height);
+  top: 0px;
   width: var(--queue-space);
   margin-top: 0px;
   height: 100px;
@@ -238,7 +206,7 @@
   width: var(--queue-space);
   margin-top: 0px;
   position: absolute;
-  top: calc(var(--header-height) + var(--header-banner-height));
+  top: var(--header-height);
   margin-right: calc(var(--prepare-space));
   margin-left: calc(100vw - var(--prepare-space) - var(--queue-space));
   text-align: center;
@@ -251,7 +219,6 @@
   margin-left: calc(100vw - var(--prepare-space));
   position: absolute;
   top: 0px;
-  /* top: var(--header-banner-height); */
   width: var(--prepare-space);
   margin-top: 0px;
   height: var(--header-height);
@@ -308,7 +275,6 @@
   margin-top: 0px;
   position: absolute;
   top: var(--header-height);
-  /* top: calc(var(--header-height) + var(--header-banner-height)); */
   margin-left: calc(100vw - var(--prepare-space));
   text-align: center;
   align-items: center;
