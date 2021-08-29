@@ -36,7 +36,7 @@ class Slice extends React.Component {
       
       <div>
 
-        {/* <div className="sliceBox">
+        <div className="sliceBox">
             
             <div className="sliceText">
                 <p className="noselect">
@@ -47,7 +47,7 @@ class Slice extends React.Component {
 
             </div>
 
-        </div>         */}
+        </div>        
 
       </div>
 
