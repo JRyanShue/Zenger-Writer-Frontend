@@ -191,7 +191,6 @@
 
     text-align: center;
     position: relative;
-    width: calc(max-content - 1);
     border: 1px white;
   }
 
