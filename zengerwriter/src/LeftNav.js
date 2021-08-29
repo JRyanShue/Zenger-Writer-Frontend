@@ -53,10 +53,6 @@ function LeftNav(props) {
         select('manage');
     }}/>;
 
-    // Select 'queue' by default
-    // var _select = useRef(select);
-    // _select.current('queue');
-
     useEffect(
         () => {
             updateNav();

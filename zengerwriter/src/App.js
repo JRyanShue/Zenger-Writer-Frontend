@@ -26,6 +26,7 @@ function App(props) {
     var ManageApp = useRef(
         <div>
             <Banner />
+            <Dividers />
         </div>
     )
     // Holds the entire page
