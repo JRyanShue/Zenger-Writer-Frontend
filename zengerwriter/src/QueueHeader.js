@@ -83,7 +83,7 @@ class QueueHeader extends React.Component {
 
                     <div className="newqueuelabel">
                         <p className="noselect">
-                            Printer Queues
+                            Build Sequence
                         </p>
                     </div>
                     <div id="newqueuebutton" className="newqueuebutton" onClick={this.state.newQueue}>

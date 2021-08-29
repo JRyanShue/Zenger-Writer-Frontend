@@ -217,7 +217,7 @@ class QueueElement extends React.Component {
 
         // Use vanilla JS to control textField
         var titleField = document.getElementById("titleField" + this.id);
-        titleField.innerHTML = this.name;
+        titleField.value = this.name;
 
     }
 
@@ -279,7 +279,7 @@ class QueueElement extends React.Component {
                         className={this.className}
                         key={this.key}
                     >
-                        <div id={"titleField" + this.id}></div>
+                        <input id={"titleField" + this.id} type="text" className="" defaultValue/>
                         {/* <i className="arrow" style={{marginBottom: "5px", right: "10px"}}></i> */}
                     </div>
                     {/* <div className="arrow" style={{marginBottom: "5px", right: "10px"}}></div> */}

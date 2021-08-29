@@ -3,7 +3,6 @@ import './App.css';
 import { GcodePreview } from './EditorList.js';
 import { EditorHeader } from './EditorHeader.js';
 
-
 class Prepare extends React.Component {
 
   constructor( props ) {
@@ -21,6 +20,7 @@ class Prepare extends React.Component {
       <div>
 
         <EditorHeader IP={this.IP} username={this.username} />
+        <div className="vr"/>
         <GcodePreview IP={this.IP} username={this.username} />
 
       </div>
