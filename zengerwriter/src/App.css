@@ -17,7 +17,7 @@
   height: var(--header-banner-height); 
   /* background-color: rgb(15, 18, 46); */
   /* background-color: rgb(27, 27, 27); */
-  background-image: linear-gradient(rgb(27, 27, 27), rgb(58, 58, 58));
+  background-image: linear-gradient(rgb(27, 27, 27), rgb(51, 51, 51));
 
 }
 
@@ -91,19 +91,6 @@
       transform: translate(-50%, -60%);  /* -60% for y because "+" is not centered by default */
       margin: 0;
     }
-
-
-.leftNav {
-
-  position: absolute;
-  margin-left: 0px;
-  top: var(--header-banner-height);
-  left: 0px;
-  width: calc(100vw - var(--queue-space) - var(--prepare-space));
-  margin-top: 0px;
-  height: 100px;
-
-}
 
 .queue-box {
 
