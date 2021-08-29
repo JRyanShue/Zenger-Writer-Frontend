@@ -24,12 +24,60 @@
   .heading-banner .title {
 
     --margin: 10px;
+    
     color: white;
     font-size: calc(var(--header-banner-height) - 2 * var(--margin));
     margin-left: var(--margin);
     font-weight: bold;
 
   }
+
+.selected-nav-element {
+
+  --button-height: 30px;
+
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: blue;
+  border-radius: 5px;
+  color: black;
+  height: var(--button-height);
+  border: 1px solid white;
+  text-align: center;
+
+}
+
+  .selected-nav-element p {
+    color: white;
+  }
+
+.nav-element {
+
+  --button-height: 30px;
+
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  height: var(--button-height);
+  border: 1px solid white;
+  text-align: center;
+
+}
+
+  .nav-element:hover {
+    background-color: gray;
+  }
+
+  .nav-element p {
+    color: black;
+  }
+
+.child-text {
+  /* Place text in center */
+  transform: translate(0%, -60%);
+}
 
 .sliceBox {
 
@@ -97,7 +145,7 @@
 
   position: absolute;
   margin-left: 0px;
-  top: var(--header-banner-height);
+  top: calc(var(--header-banner-height) + 10px);
   left: 0px;
   width: calc(100vw - var(--queue-space) - var(--prepare-space));
   margin-top: 0px;
