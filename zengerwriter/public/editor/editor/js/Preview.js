@@ -1,5 +1,8 @@
 
+import * as THREE from '../../build/three.module.js';
 import { UIPanel, UIDiv } from './libs/ui.js';
+
+// Wrapper for g-code preview
 
 function Preview( editor ) {
 
@@ -8,6 +11,8 @@ function Preview( editor ) {
     this.preview = new UIDiv();
     this.preview.dom.className = 'Preview';
     this.preview.dom.style.display = 'none';
+
+    // For toggling layer view on/off
 
     var signals = editor.signals;
     signals.partView.add( () => {
@@ -20,6 +25,10 @@ function Preview( editor ) {
         this.preview.dom.style.display = 'block';
 
     } )
+
+    // Renderer 
+
+    var renderer = new THREE.WebGLRenderer(); 
 
     container.add( this.preview );
 

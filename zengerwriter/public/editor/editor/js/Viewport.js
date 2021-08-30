@@ -334,7 +334,22 @@ function Viewport( editor, size, height ) {
 
 	// signals
 
+	// Toggle editor on/off with the ViewSelection controls
+
+	signals.partView.add( () => {
+
+		container.dom.style.display = 'block';
+
+	} )
+	signals.layerView.add( () => {
+
+		container.dom.style.display = 'none';
+
+	} )
+
+
 	// For saving image
+
 	signals.save.add( function () {
 
 		// var strDownloadMime = "image/octet-stream";  // For downloading image directly (good for testing)
@@ -845,10 +860,7 @@ function Viewport( editor, size, height ) {
 		endTime = performance.now();
 		editor.signals.sceneRendered.dispatch( endTime - startTime );
 
-	}
-
-	// View button
-	container.add( new ViewSelection( editor ) );
+	}	
 
 	return container;
 

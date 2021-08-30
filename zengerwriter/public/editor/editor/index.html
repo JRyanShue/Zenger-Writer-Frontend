@@ -72,6 +72,7 @@
 			import { Menubar } from './js/Menubar.js';
 			import { Resizer } from './js/Resizer.js';
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js';
+			import { ViewSelection } from './js/ViewSelection.js';
 			import { Preview } from './js/Preview.js'
 
 			import { SetEditorInfo, Save, Move, Delete } from './js/API.js';
@@ -136,6 +137,9 @@
 
 			var resizer = new Resizer( editor );
 			document.body.appendChild( resizer.dom );
+
+			var viewSelection = new ViewSelection( editor );
+			document.body.appendChild( viewSelection.dom );
 
 			var preview = new Preview( editor );
 			document.body.appendChild( preview.dom );
