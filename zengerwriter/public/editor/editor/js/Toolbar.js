@@ -77,6 +77,19 @@ function Toolbar( editor ) {
 
 	} );
 
+	// Toggle on/off with ViewSelection
+
+	signals.partView.add( () => {
+
+		container.dom.style.display = 'block';
+
+	} )
+	signals.layerView.add( () => {
+
+		container.dom.style.display = 'none';
+
+	} )
+
 	return container;
 
 }

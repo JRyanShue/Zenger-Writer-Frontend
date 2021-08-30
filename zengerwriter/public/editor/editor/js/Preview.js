@@ -9,7 +9,7 @@ function Preview( editor ) {
     var container = new UIPanel();
 
     this.preview = new UIDiv();
-    this.preview.dom.className = 'Preview';
+    this.preview.dom.id = 'Preview';
     this.preview.dom.style.display = 'none';
 
     // For toggling layer view on/off
@@ -29,6 +29,7 @@ function Preview( editor ) {
     // Renderer 
 
     var renderer = new THREE.WebGLRenderer(); 
+    this.preview.dom.appendChild( renderer.domElement );
 
     container.add( this.preview );
 

@@ -32,11 +32,16 @@ function ViewSelection( editor ) {
 
     var signals = editor.signals;
 
+    // partView is always at index 0
     var partView = new ViewButton( editor, 'Part View', this, () => { signals.partView.dispatch() } );
     var layerView = new ViewButton( editor, 'Layer View', this, () => { signals.layerView.dispatch() } );
 
     container.add( partView );
     container.add( layerView );
+
+    // Select viewButtons index 0 (partView)
+    this.viewButtons[0].viewButtonInner.dom.click();
+
 
     return container;
 
