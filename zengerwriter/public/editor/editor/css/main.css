@@ -62,10 +62,7 @@ textarea {
 textarea, input { outline: none; } /* osx */
 
 
-.ViewButton {
-
-	--button-padding: 10px;
-	--border-radius: 5px;
+.ViewSelection {
 
 	position: absolute;
 	text-align: center;
@@ -78,6 +75,20 @@ textarea, input { outline: none; } /* osx */
 
 	/* Vertical location */
 	bottom: 10px;
+
+	/* Place children side by side in flexbox model */
+	display: flex;
+
+}
+
+.ViewButton {
+
+	--button-padding: 10px;
+	--border-radius: 5px;
+
+	/* position: absolute; */
+	text-align: center;
+	width: max-content;
 
 }
 
@@ -104,7 +115,7 @@ textarea, input { outline: none; } /* osx */
 		border-radius: var( --border-radius );
 
 	}
-	
+
 
 .Panel {
 	-moz-user-select: none;

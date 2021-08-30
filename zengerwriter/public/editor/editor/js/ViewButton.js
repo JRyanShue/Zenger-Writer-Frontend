@@ -1,9 +1,11 @@
 
-// Toggles the view between part view and layer view
-
 import { UIPanel, UIViewButton, UIViewButtonInner } from './libs/ui.js';
 
-function ViewButton( editor ) {
+// Toggles the view between part view and layer view
+
+function ViewButton( editor, name, viewSelection ) {
+
+    var select = viewSelection.select;
 
     // Panel: not selectable
     var container = new UIPanel();
@@ -12,15 +14,35 @@ function ViewButton( editor ) {
 	var viewButton = new UIViewButton();
 
     // ViewButtonInner: additional styles based on selected/unselected. 
-    var viewButtonInner = new UIViewButtonInner( false );
+    this.viewButtonInner = new UIViewButtonInner( false );
 
 
-	viewButtonInner.dom.innerHTML = "Layer View";
+	this.viewButtonInner.dom.innerHTML = name;
+    this.viewButtonInner.dom.onclick = () => {
+        
+        // Select this button ( highlight it on the screen )
+        select( this )
+
+    }
+
+    this.select = () => {
+
+        this.viewButtonInner.dom.className = 'selected';
+
+    }
+
+    this.deselect = () => {
+
+        this.viewButtonInner.dom.className = 'unselected';
+        
+    }
 
 
-    viewButton.add( viewButtonInner )
+    viewButton.add( this.viewButtonInner )
 	container.add( viewButton );
 
+    
+    viewSelection.viewButtons.push( this );
     return container;
 
 }

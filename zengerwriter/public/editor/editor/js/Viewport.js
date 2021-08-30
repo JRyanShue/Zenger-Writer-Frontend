@@ -21,7 +21,7 @@ import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment
 
 import { SavePreview } from './API.js';
 
-import { ViewButton } from './ViewButton.js';
+import { ViewSelection } from './ViewSelection.js';
 
 // import { SidebarProjectRenderer } from './Sidebar.Project.Renderer.js';
 
@@ -848,7 +848,7 @@ function Viewport( editor, size, height ) {
 	}
 
 	// View button
-	container.add( new ViewButton() );
+	container.add( new ViewSelection( editor ) );
 
 	return container;
 
