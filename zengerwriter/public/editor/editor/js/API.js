@@ -3,6 +3,43 @@ import { CreateID } from './libs/ID.js';
 
 const api_port = ":8080";
 
+async function SetEditorInfo ( editor ) {  // Get/set info of editor, including name and settings
+
+    var headers = new Headers();
+    headers.append('path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json');
+    headers.append('Content-Type', 'application/json');
+
+    const response = await fetch( 'http://' + editor.IP + api_port + '/get_info', {
+
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: headers,
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+
+    }).then(
+
+        (response) => response.json()
+
+    ).then(
+
+        data => {
+
+            // Set editor info
+            for (var item in data) {
+                editor.editorInfo[item] = data[item]
+            }
+            
+            return "OK"
+
+        }
+
+    );
+
+}
+
 async function Save ( editor ) {  // Saves editor to cloud
 
     var data = editor.toJSON();
@@ -119,14 +156,12 @@ async function SavePreview( blob, editor ) {
 }
 
 // Saves name to json to path for given editor
+// Saves to current (not new) editor ID because it will get moved later
 async function SaveInfo( info_json, editor ) {
-
-    // let formData = new FormData();
-    // formData.append( 'json', info_json );
 
     // Headers
     var headers = new Headers(); 
-    headers.append('path', 'Users/' + editor.username + '/projects/' + editor.editorID + '/info.json');
+    headers.append('path', 'Users/' + editor.username + '/projects/' + editor.oldID + '/info.json');
     headers.append('Content-Type', 'application/json');
 
     const response = await fetch( 'http://' + editor.IP + api_port + '/put_json', {
@@ -204,4 +239,4 @@ function returnGcode( gcode, saveString ) {
 
 }
 
-export { Save, Move, Delete, SavePreview, Slice, SaveInfo };
+export { SetEditorInfo, Save, Move, Delete, SavePreview, Slice, SaveInfo };

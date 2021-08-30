@@ -3,6 +3,7 @@ import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 import { SettingDisplay } from './SettingDisplay.js';
 import { SettingButton } from './SettingButton.js';
 import { addProgrammaticBackspace } from './libs/ProgrammaticBackspace.js';
+import { SaveInfo } from './API.js';
 
 function MenubarSettingCategory( editor, settingCategory ) {
 
@@ -35,13 +36,6 @@ function MenubarSettingCategory( editor, settingCategory ) {
         document.getElementById(category + "Form").style.display = "block"; 
 
 	})
-
-    // // Settings Button
-    // var settingButton = new SettingButton( editor, this.settingCategory );
-    // options.add( settingButton );
-
-    // // HR
-	// options.add( new UIHorizontalRule() );
 
 	// Add setting labels
     for ( var setting in editor.settings.dict[ category ] ) {
@@ -148,15 +142,22 @@ function createForm( editor, settingCategory ) {
         document.getElementById("screenBlock").style.display = "none";
         document.getElementById(category + "Form").style.display = "none";
 
+        // Initialize parent object if it doesn't already exist
+        editor.editorInfo[category] = editor.editorInfo[category] || {}
+
         // Set variables
         for ( var setting in settings ) {
 
-            settings[setting] = document.getElementById(setting + "_field").value;
-
+            editor.editorInfo[category][setting] = settings[setting] = document.getElementById(setting + "_field").value;
+            
             // Update display values
             document.getElementById( setting + '_display' ).innerText = editor.strings.getKey( 'settings/' + setting ) + ": " + settings[setting];
         
         }
+
+        SaveInfo( editor.editorInfo, editor );
+
+        console.log(editor.editorInfo)
         
     });
 

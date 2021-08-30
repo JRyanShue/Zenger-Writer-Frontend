@@ -73,7 +73,7 @@
 			import { Resizer } from './js/Resizer.js';
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js';
 
-			import { Save, Move, Delete } from './js/API.js';
+			import { SetEditorInfo, Save, Move, Delete } from './js/API.js';
 			import { CreateID } from './js/libs/ID.js'
 
 			window.URL = window.URL || window.webkitURL;
@@ -91,7 +91,22 @@
 			editor.username = username;
 			editor.editorID = editorID;
 			editor.oldID = editorID;  // for removing old editor once saving updates it
-			editor.editorName = editorName;
+
+
+			// Editor info: contains the name and settings. 
+			editor.editorInfo = {}
+			await SetEditorInfo( editor )
+			console.log(editor.editorInfo)
+
+			editor.editorName = editor.editorInfo['name']
+
+			// Update slice settings from editorInfo
+			const { name, ...settingsInfo } = editor.editorInfo  // Exclude 'name'
+			for ( var category in settingsInfo ) {
+				for ( var setting in settingsInfo[category] ) {
+					editor.settings.dict[category][setting] = settingsInfo[category][setting];
+				}
+			}
 
 			window.editor = editor; // Expose editor to Console
 			window.THREE = THREE; // Expose THREE to APP Scripts and Console

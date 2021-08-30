@@ -995,9 +995,13 @@ class UINameRename extends UIElement {
 		this.dom.type = 'text';
 		this.dom.value = value;
 
-		this.dom.addEventListener( "change", () => {
-			console.log("change");
-			SaveInfo( { "name": this.dom.value }, editor )
+		// Update editorInfo and S3 with the new name when the user clicks out of the name-changing box
+		this.dom.addEventListener( 'change', () => {
+
+			console.log(this.dom.value)
+			editor.editorInfo['name'] = this.dom.value;
+			SaveInfo( editor.editorInfo, editor );
+
 		})
 
 		// Programmatic backspace

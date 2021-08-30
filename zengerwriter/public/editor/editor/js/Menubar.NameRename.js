@@ -9,7 +9,7 @@ function MenubarNameRename ( editor ) {
 	var container = new UIPanel();
     container.setClass( 'platetitle' );
 
-    container.add( new UINameRename( editor.editorName, editor, SaveInfo ) );
+    container.add( new UINameRename( editor.editorInfo['name'], editor, SaveInfo ) );
 
     return container; 
 

@@ -223,6 +223,7 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
     headers.append('Content-Type', 'application/json');
 
     await fetch( 'http://' + IP + api_port + '/get_object', {
+
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -230,9 +231,13 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
         headers: headers,
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
+
     }).then(
+
         (response) => response.json()
+        
     ).then(
+
         data => {
             
             console.log("data from API:", data);
@@ -245,6 +250,7 @@ async function GetEditorPreviewUrl ( IP, User, EditorID, gcodepreviews ) {
             return "OK";
 
         }
+        
     );
 
 }
