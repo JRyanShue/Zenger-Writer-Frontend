@@ -3,7 +3,7 @@ import { UIPanel, UIViewButton, UIViewButtonInner } from './libs/ui.js';
 
 // Toggles the view between part view and layer view
 
-function ViewButton( editor, name, viewSelection ) {
+function ViewButton( editor, name, viewSelection, handleClick ) {
 
     var select = viewSelection.select;
 
@@ -21,7 +21,8 @@ function ViewButton( editor, name, viewSelection ) {
     this.viewButtonInner.dom.onclick = () => {
         
         // Select this button ( highlight it on the screen )
-        select( this )
+        select( this );
+        handleClick(); 
 
     }
 
@@ -41,7 +42,7 @@ function ViewButton( editor, name, viewSelection ) {
     viewButton.add( this.viewButtonInner )
 	container.add( viewButton );
 
-    
+
     viewSelection.viewButtons.push( this );
     return container;
 

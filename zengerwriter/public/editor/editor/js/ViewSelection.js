@@ -30,8 +30,10 @@ function ViewSelection( editor ) {
         }
     }
 
-    var partView = new ViewButton( editor, 'Part View', this );
-    var layerView = new ViewButton( editor, 'Layer View', this );
+    var signals = editor.signals;
+
+    var partView = new ViewButton( editor, 'Part View', this, () => {signals.partView.dispatch()} );
+    var layerView = new ViewButton( editor, 'Layer View', this, () => {signals.layerView.dispatch()} );
 
     container.add( partView );
     container.add( layerView );

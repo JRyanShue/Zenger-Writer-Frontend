@@ -38,7 +38,7 @@ function Menubar( editor ) {
 
 	container.add( new MenubarDivider( editor ) );
 
-	container.add( new PreviewButton( editor ) );
+	// container.add( new PreviewButton( editor ) );
 
 	// Add setting menus
 	for ( const setting in editor.settings.dict ) {

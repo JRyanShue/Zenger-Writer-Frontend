@@ -107,7 +107,10 @@ function Editor() {
 
 		animationStopped: new Signal(),
 
-		homeButtonClicked: new Signal()
+		homeButtonClicked: new Signal(),
+
+		partView: new Signal(),
+		layerView: new Signal()
 
 	};
 
