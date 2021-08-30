@@ -15,6 +15,8 @@ import { MenubarNameRename } from './Menubar.NameRename.js';
 
 import { MenubarSettingCategory } from './Menubar.SettingCategory.js';
 
+import { PreviewButton } from './PreviewButton.js';
+
 function Menubar( editor ) {
 
 	var container = new UIPanel();
@@ -35,6 +37,8 @@ function Menubar( editor ) {
 	container.add( new MenubarHelp( editor ) );
 
 	container.add( new MenubarDivider( editor ) );
+
+	container.add( new PreviewButton( editor ) );
 
 	// Add setting menus
 	for ( const setting in editor.settings.dict ) {

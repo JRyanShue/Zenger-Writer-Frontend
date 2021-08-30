@@ -195,7 +195,7 @@ class UIDiv extends UIElement {
 
 	constructor() {
 
-		super( document.createElement( 'div' ) );
+		super( document.createElement( 'div' ) );  // Initializes the dom to a div
 
 	}
 
@@ -220,6 +220,38 @@ class UIPanel extends UIDiv {
 		super();
 
 		this.dom.className = 'Panel';
+
+	}
+
+}
+
+class UIViewButton extends UIDiv {
+
+	constructor() {
+
+		super();
+
+		this.dom.className = 'ViewButton';
+
+	}
+
+}
+
+class UIViewButtonInner extends UIDiv {
+
+	constructor( selected ) {
+
+		super();
+
+		if ( selected ) {
+
+			this.dom.className = 'selected';
+
+		} else {
+
+			this.dom.className = 'unselected';
+
+		}
 
 	}
 
@@ -1308,4 +1340,4 @@ class ListboxItem extends UIDiv {
 
 }
 
-export { UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIVerticalRule, UIButton, UIProgress, UITabbedPanel, UIListbox, ListboxItem, UINameRename };
+export { UIViewButton, UIViewButtonInner, UIElement, UISpan, UIDiv, UIRow, UIPanel, UIText, UIInput, UITextArea, UISelect, UICheckbox, UIColor, UINumber, UIInteger, UIBreak, UIHorizontalRule, UIVerticalRule, UIButton, UIProgress, UITabbedPanel, UIListbox, ListboxItem, UINameRename };

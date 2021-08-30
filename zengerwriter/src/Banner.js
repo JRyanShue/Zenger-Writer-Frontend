@@ -1,7 +1,6 @@
 
 function Banner() {
 
-
     return (
         <div className="heading-banner">
             <div className="title">

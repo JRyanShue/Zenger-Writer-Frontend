@@ -1,5 +1,5 @@
 
-import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
+import { UIPanel, UIRow } from './libs/ui.js';
 
 import { Slice } from './API.js';
 
@@ -29,7 +29,7 @@ function MenubarSlice( editor ) {
 	option.onClick( async function () {
 
 		Slice( editor, IP, saveString );
-			
+		
 	})
 	options.add( option );
 
