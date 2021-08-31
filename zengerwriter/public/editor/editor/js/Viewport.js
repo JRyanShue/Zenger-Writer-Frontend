@@ -19,7 +19,7 @@ import { SnapDown } from './ObjectUtils.js';
 
 import { RoomEnvironment } from '../../examples/jsm/environments/RoomEnvironment.js';
 
-import { SavePreview } from './API.js';
+import { SavePreview, GetGcode } from './API.js';
 
 import { ViewSelection } from './ViewSelection.js';
 
@@ -343,6 +343,112 @@ function Viewport( editor, size, height ) {
 
 		container.dom.style.display = 'block';
 
+		removeLayerView( editor ); 
+		addObjects( editor ); 
+
+	} )
+	signals.layerView.add( async function() {
+
+		// Switch to layer view
+		await addLayerView( editor );
+		removeObjects( editor );
+		
+		render();
+
+	} )
+
+	
+	async function addLayerView( editor ) {
+
+		// Slice into editor.gcode
+		await GetGcode( editor, editor.IP );
+
+		// Parse
+		editor.gcodelines = editor.gcode.split( '\n' );
+		console.log( "Parsing gcode..." );
+		var layer = []; 
+		// var lastLoc = editor.gcodelines[0];
+
+		// Initialize z
+		var zVal = 0.2;
+
+		const material = new THREE.LineBasicMaterial( { color: 0x0000ff, transparent: true, opacity: 0.1 } );
+
+		for ( var index in editor.gcodelines ) {  // .slice( 1 )
+
+			var currentLine = editor.gcodelines[ index ];
+
+			// Extrusion commands. Assume lines are equal width
+			if ( currentLine.includes(" E") ) {
+
+				var xVal = getXVal( currentLine );
+				var yVal = getYVal( currentLine );
+				
+				layer.push( new THREE.Vector3( xVal - sidelen/2, yVal - sidelen/2, zVal ) );		
+				
+			}
+			// if layer is done (signaled by a change in z), flush the layer into the scene. 
+			else if ( currentLine.includes(" Z") && !currentLine.includes(";") ) {
+
+				const geometry = new THREE.BufferGeometry().setFromPoints( layer );
+				const line = new THREE.Line( geometry, material );
+				console.log( line )
+				editor.addObject( line )
+				render();
+
+				layer = [];
+				zVal += editor.settings.dict["quality"]["layer_height"];
+
+			}
+
+		}
+
+	}
+
+
+	function getXVal( line ) {
+
+		var xIndex = line.indexOf( "X" )
+		var firstSpaceIndex = xIndex + line.slice( xIndex ).indexOf( " " )
+		return line.slice( xIndex + 1, firstSpaceIndex );
+
+	}
+	function getYVal( line ) {
+
+		var yIndex = line.indexOf( "Y" )
+		var firstSpaceIndex = yIndex + line.slice( yIndex ).indexOf( " " )
+		return line.slice( yIndex + 1, firstSpaceIndex );
+
+	}
+
+
+	function removeLayerView( editor ) {
+
+		var removeObjects = [];
+		editor.scene.traverse( ( object ) => {
+
+			if ( object.type == "Line" ) {
+
+				removeObjects.push( object );
+
+			}
+			
+		} )
+		for ( var index in removeObjects ) {
+
+			removeObjects[ index ].geometry.dispose();
+			removeObjects[ index ].material.dispose();
+
+			editor.execute( new RemoveObjectCommand( editor, removeObjects[ index ] ) );
+
+		}
+
+	}
+
+
+	function addObjects( editor ) {
+
+		// Add back all objects in part view
 		for ( var index in editor.parts ) {
 
 			editor.execute( new AddObjectCommand( editor, editor.parts[ index ] ) );
@@ -350,10 +456,12 @@ function Viewport( editor, size, height ) {
 		}
 		editor.deselect();
 
-	} )
-	signals.layerView.add( () => {
+	}
 
-		// Switch to layer view
+
+	// Remove objects and save them to add back later. 
+	function removeObjects( editor ) {
+
 		var removeObjects = [];
 		editor.scene.traverse( ( object ) => {
 
@@ -375,9 +483,7 @@ function Viewport( editor, size, height ) {
 
 		}
 
-		render();
-
-	} )
+	}
 
 
 	// For saving image

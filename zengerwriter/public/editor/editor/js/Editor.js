@@ -157,6 +157,9 @@ function Editor() {
 	this.saveFulfilled = false;
 
 	this.parts = [];
+	this.gcode;
+	this.gcodelines;
+	this.layers = [];
 
 }
 

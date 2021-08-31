@@ -198,6 +198,27 @@ async function Slice( editor, IP, saveString ) {
 
 }
 
+// Sets variable
+async function GetGcode( editor, IP ) {
+
+    // Use to ensure changes register
+    console.log( "\(v1.1\) Slicing STL..." );
+
+    // Generate STL blob from build plate
+    var { STLExporter } = await import( '../../examples/jsm/exporters/STLExporter.js' );
+    var exporter = new STLExporter();
+    var buffer = exporter.parse( editor.scene, { binary: true } );
+    var blob = new Blob( [ buffer ], { type: 'application/octet-stream' } );
+
+    // Build FormData object
+    let formData = new FormData();
+    await buildFormData ( editor, formData, blob );
+    await sliceSTL( IP, formData );
+    await pullGcode( IP, editor );
+    return "OK"
+
+}
+
 async function buildFormData ( editor, formData, blob ) {
 
     formData.append( 'stl', blob, 'modelSTL.stl' );
@@ -222,6 +243,18 @@ async function sliceSTL ( IP, formData ) {
 
 }
 
+// Return gcode in variable
+async function pullGcode( IP, editor ) {
+
+    await fetch( 'http://' + IP + api_port + '/get_gcode' ) // get_gcode
+        .then( response => response.text() )  // use .text() because it's a gcode file, not JSON
+        .then( value => {
+            editor.gcode = value;
+        })  // callback for handling gcode value)
+
+}
+
+// Return gcode in download
 async function fetchGcode( IP, saveString ) {
 
     await fetch( 'http://' + IP + api_port + '/get_gcode' ) // get_gcode
@@ -239,4 +272,4 @@ function returnGcode( gcode, saveString ) {
 
 }
 
-export { SetEditorInfo, Save, Move, Delete, SavePreview, Slice, SaveInfo };
+export { GetGcode, SetEditorInfo, Save, Move, Delete, SavePreview, Slice, SaveInfo };
