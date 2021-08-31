@@ -23,6 +23,9 @@ import { SavePreview } from './API.js';
 
 import { ViewSelection } from './ViewSelection.js';
 
+import { AddObjectCommand } from './commands/AddObjectCommand.js';
+import { RemoveObjectCommand } from './commands/RemoveObjectCommand.js';
+
 // import { SidebarProjectRenderer } from './Sidebar.Project.Renderer.js';
 
 function Viewport( editor, size, height ) {
@@ -340,10 +343,39 @@ function Viewport( editor, size, height ) {
 
 		container.dom.style.display = 'block';
 
+		for ( var index in editor.parts ) {
+
+			editor.execute( new AddObjectCommand( editor, editor.parts[ index ] ) );
+
+		}
+		editor.deselect();
+
 	} )
 	signals.layerView.add( () => {
 
-		container.dom.style.display = 'none';
+		// Switch to layer view
+		var removeObjects = [];
+		editor.scene.traverse( ( object ) => {
+
+			if ( object.type == "Mesh" ) {
+
+				editor.parts.push( object );
+
+				removeObjects.push( object );
+
+			}
+			
+		} )
+		for ( var index in removeObjects ) {
+
+			removeObjects[ index ].geometry.dispose();
+			removeObjects[ index ].material.dispose();
+
+			editor.execute( new RemoveObjectCommand( editor, removeObjects[ index ] ) );
+
+		}
+
+		render();
 
 	} )
 

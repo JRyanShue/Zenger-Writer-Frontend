@@ -28,7 +28,12 @@ function Preview( editor ) {
 
     // Renderer 
 
-    var renderer = new THREE.WebGLRenderer(); 
+    var renderer = new THREE.WebGLRenderer( {
+
+        antialias: true,
+        preserveDrawingBuffer: true
+
+    } ); 
     renderer.setClearColor(0xffffff, 0);
     renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -71,7 +76,7 @@ function Preview( editor ) {
     spot1.position.set(10, 100, -50);
     scene.add(spot1);
 
-    renderer.render( scene, camera );
+    renderer.render( scene, editor.viewportCamera );
 
     this.preview.dom.appendChild( renderer.domElement );
     container.add( this.preview );

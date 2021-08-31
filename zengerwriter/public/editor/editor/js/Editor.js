@@ -156,6 +156,8 @@ function Editor() {
 	this.delMoveFulfilled = false;  // Whether the API has responed after deleting and moving the editor's info
 	this.saveFulfilled = false;
 
+	this.parts = [];
+
 }
 
 Editor.prototype = {

@@ -124,7 +124,7 @@ function Loader( editor ) {
 
 					var mesh = new THREE.Mesh( geometry, material );
 					mesh.name = filename;
-					console.log("Created Mesh.")
+					console.log("Created Mesh.");
 
 					editor.execute( new AddObjectCommand( editor, mesh ) );
 
