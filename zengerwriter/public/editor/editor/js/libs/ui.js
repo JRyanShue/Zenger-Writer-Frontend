@@ -53,6 +53,18 @@ class UIElement {  // Gives some important methods that allow easier object mani
 
 	}
 
+	show() {
+
+		this.dom.style.display = 'block';
+
+	}
+
+	hide() {
+
+		this.dom.style.display = 'none';
+
+	}
+
 	clear() {
 
 		while ( this.dom.children.length ) {

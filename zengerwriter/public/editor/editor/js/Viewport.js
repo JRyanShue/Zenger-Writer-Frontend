@@ -341,6 +341,7 @@ function Viewport( editor, size, height ) {
 
 	signals.partView.add( () => {
 
+		editor.viewMode = 'Part';
 		container.dom.style.display = 'block';
 
 		removeLayerView( editor ); 
@@ -350,10 +351,16 @@ function Viewport( editor, size, height ) {
 	signals.layerView.add( async function() {
 
 		// Switch to layer view
-		await addLayerView( editor );
-		removeObjects( editor );
-		
-		render();
+		if ( editor.viewMode = 'Part' ) {
+
+			editor.viewMode = 'Layer';
+
+			await addLayerView( editor );
+			removeObjects( editor );
+			
+			render();
+
+		}
 
 	} )
 
@@ -370,7 +377,7 @@ function Viewport( editor, size, height ) {
 		// var lastLoc = editor.gcodelines[0];
 
 		// Initialize z
-		var zVal = 0.2;
+		var zVal = editor.settings.dict["quality"]["initial_layer_height"] || 0.2;
 
 		const material = new THREE.LineBasicMaterial( { color: 0x0000ff, transparent: true, opacity: 0.1 } );
 
@@ -390,18 +397,26 @@ function Viewport( editor, size, height ) {
 			// if layer is done (signaled by a change in z), flush the layer into the scene. 
 			else if ( currentLine.includes(" Z") && !currentLine.includes(";") ) {
 
-				const geometry = new THREE.BufferGeometry().setFromPoints( layer );
-				const line = new THREE.Line( geometry, material );
-				console.log( line )
-				editor.addObject( line )
-				render();
-
-				layer = [];
 				zVal += editor.settings.dict["quality"]["layer_height"];
 
+				// Add z lift
+				var xVal = getXVal( currentLine );
+				var yVal = getYVal( currentLine );
+				
+				layer.push( new THREE.Vector3( xVal - sidelen/2, yVal - sidelen/2, zVal ) );	
+
+				const geometry = new THREE.BufferGeometry( { boundingSphere: null } ).setFromPoints( layer );
+				const line = new THREE.Line( geometry, material );
+				editor.layers.push( line );
+				editor.scene.add( line );
+				
+				layer = [];
+				
 			}
 
 		}
+
+		render();
 
 	}
 
@@ -436,12 +451,10 @@ function Viewport( editor, size, height ) {
 		} )
 		for ( var index in removeObjects ) {
 
-			removeObjects[ index ].geometry.dispose();
-			removeObjects[ index ].material.dispose();
-
-			editor.execute( new RemoveObjectCommand( editor, removeObjects[ index ] ) );
+			editor.removeObject(removeObjects[ index ] );
 
 		}
+		render();
 
 	}
 

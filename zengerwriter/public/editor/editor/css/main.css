@@ -62,6 +62,61 @@ textarea {
 textarea, input { outline: none; } /* osx */
 
 
+#LayerSlider {
+
+	--topbottom-distance: 50px;
+	--top-distance: calc(var(--bar-height) + var(--topbottom-distance));
+	--width: 10px;
+
+	position: absolute;
+
+	width: var(--width);
+
+	border-radius: calc(var(--width)/2);
+
+	top: calc(var(--top-distance) - var(--width)/2);
+	left: calc(30px - var(--width)/2);
+	bottom: calc(var(--topbottom-distance) - var(--width)/2);
+
+	z-index: 8;
+
+	background-color: black;
+
+}
+
+.Ball {
+
+	--diameter: 20px;
+
+	position: absolute;
+
+	width: var(--diameter);
+	height: var(--diameter);
+
+	border-radius: calc(var(--diameter)/2);
+
+	left: calc(30px - var(--diameter)/2);
+
+	z-index: 9;
+
+	background-color: blue;
+
+}
+
+	/* .Ball #TopBall {
+
+		top: calc(var(--bar-height) + var(--topbottom-distance) - var(--diameter)/2);
+		top: 100px;
+
+	}
+
+	.Ball #BottomBall {
+
+		bottom: calc(var(--topbottom-distance) - var(--diameter)/2);
+
+	} */
+
+
 #Preview {
 
 	position: absolute;

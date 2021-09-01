@@ -156,6 +156,8 @@ function Editor() {
 	this.delMoveFulfilled = false;  // Whether the API has responed after deleting and moving the editor's info
 	this.saveFulfilled = false;
 
+	this.viewMode = 'Part';
+
 	this.parts = [];
 	this.gcode;
 	this.gcodelines;
@@ -219,6 +221,16 @@ Editor.prototype = {
 
 		this.signals.objectAdded.dispatch( object );
 		this.signals.sceneGraphChanged.dispatch();
+
+	},
+
+	addLine: function ( object, parent, index ) {
+
+		// var scope = this;
+
+		this.scene.add( object )
+
+		// this.signals.sceneGraphChanged.dispatch();
 
 	},
 
