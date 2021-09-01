@@ -164,7 +164,7 @@ function Editor() {
 	this.gcode;
 	this.gcodelines;
 	this.layers = [];
-	this.layerOpacity = 0.5;
+	this.layerOpacity = 0.2;
 
 }
 
