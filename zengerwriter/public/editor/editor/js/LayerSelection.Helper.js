@@ -99,7 +99,7 @@ class LayerSelectionBall extends UIPanel {
 
                 this.handleMove(e);
 
-                this.handleDrag(e);
+                
 
             }
 
@@ -138,12 +138,18 @@ class LayerSelectionBall extends UIPanel {
 
             } else {
 
-                this.relY += this.dY;
                 this.cursorLastY = e.y;
+                
 
-                this.setPos( this.relY );
+            }
 
-            }            
+            console.log( this.y )
+            this.render();
+
+            // Update parent element
+            this.layerSelection.updateSelection();
+
+            this.handleDrag(e);
 
         }
 
@@ -156,14 +162,12 @@ class LayerSelectionBall extends UIPanel {
     }
 
 
-    // Always from top, relative to initial position
-    setPos( dist ) {
+    // Distance is absolute postition from the top of the document
+    render() {
 
-        var adjustedDistance = this.origin + dist;
-
-        this.dom.style.top = String(adjustedDistance) + 'px';
-        this.y = this.computeCenter()['y'];
-
+        console.log('calc( ' + String(this.y) + 'px' + ' - ' + getComputedStyle( this.dom ).getPropertyValue('--diameter') + '/2)')
+        this.dom.style.top = 'calc( ' + String(this.y) + 'px' + ' - ' + getComputedStyle( this.dom ).getPropertyValue('--diameter') + '/2)';
+        
     }
 
     setFromTop( dist ) {

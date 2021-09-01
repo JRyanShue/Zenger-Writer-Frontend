@@ -158,6 +158,8 @@
 			var layerSelection = new LayerSelection( editor );
 			document.body.appendChild( layerSelection.dom );
 
+			console.log( layerSelection.selection );
+
 			// Default to part view
 			editor.signals.partView.dispatch();
 

@@ -14,16 +14,13 @@ function LayerSelection( editor ) {
     this.bottomBall = new LayerSelectionBall( this );
 
     // These methods cannot be set within their class because they depend on dynamic factors
-    var minDistBetweenBalls = 50;
+    this.minDistBetweenBalls = 50;
     this.topBall.handleSelect = () => {
-        this.topBall.maxY = this.bottomBall.y - minDistBetweenBalls;
+        this.topBall.maxY = this.bottomBall.y - this.minDistBetweenBalls;
     }
     this.bottomBall.handleSelect = () => {
-        this.bottomBall.minY = this.topBall.y + minDistBetweenBalls;
+        this.bottomBall.minY = this.topBall.y + this.minDistBetweenBalls;
     }
-
-    this.topBallY;
-    this.bottomBallY;
 
     var signals = editor.signals;
     signals.partView.add( () => {
@@ -45,6 +42,12 @@ function LayerSelection( editor ) {
         this.topBall.setFromTop(0);
         this.bottomBall.setFromBottom(0);        
 
+        this.minY = this.topBall.y;
+        this.maxY = this.bottomBall.y;
+
+        this.sliderLength = this.maxY - this.minY;
+        this.functionalSliderLength = this.sliderLength - this.minDistBetweenBalls;
+
         this.layerSelectionArea.update( { 'top': this.topBall.y, 'bottom': this.bottomBall.y } );
 
         this.topBall.handleDrag = (e) => {
@@ -58,10 +61,41 @@ function LayerSelection( editor ) {
 
     } )
 
+
+    // Bounds of the range slider
+    this.minY;
+    this.maxY;
+
+    this.sliderLength;
+    this.functionalSliderLength;  // Amount of length that dictates layer selection (subtract buffer between balls)
+
+    this.selection = {
+        
+        'start': 0,
+        'end': 100
+
+    }
+
+    this.numLayers = 100.0;
+
+    this.updateSelection = () => {
+
+        // distance from origin on balls
+        var top = this.layerSelectionArea.top - this.minY;
+        var bottom = this.maxY - this.layerSelectionArea.bottom;
+
+        this.selection['end'] = this.functionalSliderLength - top;
+        this.selection['start'] = bottom;
+
+        console.log( this.selection['start'], this.selection['end'] )
+
+    }
+
     container.add( this.layerSlider );
     container.add( this.layerSelectionArea );
     container.add( this.topBall );
     container.add( this.bottomBall );
+
     return container;
 
 }
