@@ -379,7 +379,7 @@ function Viewport( editor, size, height ) {
 		// Initialize z
 		var zVal = editor.settings.dict["quality"]["initial_layer_height"] || 0.2;
 
-		const material = new THREE.LineBasicMaterial( { color: 0x0000ff, transparent: true, opacity: 0.1 } );
+		
 
 		for ( var index in editor.gcodelines ) {  // .slice( 1 )
 
@@ -405,8 +405,12 @@ function Viewport( editor, size, height ) {
 				
 				layer.push( new THREE.Vector3( xVal - sidelen/2, yVal - sidelen/2, zVal ) );	
 
-				const geometry = new THREE.BufferGeometry( { boundingSphere: null } ).setFromPoints( layer );
-				const line = new THREE.Line( geometry, material );
+				// Must have new material each time to edit layers individually
+				var material = new THREE.LineBasicMaterial( { color: 0x0000ff, transparent: true, opacity: editor.layerOpacity } );
+				var geometry = new THREE.BufferGeometry( { boundingSphere: null } ).setFromPoints( layer );
+				var line = new THREE.Line( geometry, material );
+
+				console.log( line )
 				editor.layers.push( line );
 				editor.scene.add( line );
 				
@@ -417,6 +421,8 @@ function Viewport( editor, size, height ) {
 		}
 
 		render();
+		signals.gcodeLoaded.dispatch();
+		console.log( editor.layers );
 
 	}
 
@@ -454,6 +460,7 @@ function Viewport( editor, size, height ) {
 			editor.removeObject(removeObjects[ index ] );
 
 		}
+		editor.layers = [];
 		render();
 
 	}

@@ -110,7 +110,9 @@ function Editor() {
 		homeButtonClicked: new Signal(),
 
 		partView: new Signal(),
-		layerView: new Signal()
+		layerView: new Signal(),
+
+		gcodeLoaded: new Signal()
 
 	};
 
@@ -162,6 +164,7 @@ function Editor() {
 	this.gcode;
 	this.gcodelines;
 	this.layers = [];
+	this.layerOpacity = 0.5;
 
 }
 

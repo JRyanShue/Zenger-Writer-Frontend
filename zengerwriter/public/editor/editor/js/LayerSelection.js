@@ -47,6 +47,7 @@ function LayerSelection( editor ) {
 
         this.sliderLength = this.maxY - this.minY;
         this.functionalSliderLength = this.sliderLength - this.minDistBetweenBalls;
+        this.yPerLayer = this.functionalSliderLength / this.numLayers;
 
         this.layerSelectionArea.update( { 'top': this.topBall.y, 'bottom': this.bottomBall.y } );
 
@@ -57,6 +58,50 @@ function LayerSelection( editor ) {
         this.bottomBall.handleDrag = (e) => {
             // Update layer selection area
             this.layerSelectionArea.update( { 'bottom': this.bottomBall.y } )
+        }
+
+    } )
+    signals.gcodeLoaded.add( () => {
+
+        this.numLayers = editor.layers.length;
+        this.yPerLayer = this.functionalSliderLength / this.numLayers;
+
+        console.log( editor.materials )
+
+        // Adjust layer visibility based on layer selection
+        this.updateLayers = () => {
+
+            console.log( this.selection['start'], this.selection['end'] );
+
+            // Make transparent layers above the top slider ball
+            var tLayer = this.numLayers - 1;
+            while ( tLayer > this.selection['end'] + 1 ) {
+
+                editor.layers[ tLayer ].material.opacity = 0;
+                tLayer --;
+
+            }
+
+            // Make transparent layers below the bottom slider ball
+            var bLayer = 0;
+            while ( bLayer < this.selection['start'] - 1 ) {
+
+                editor.layers[ bLayer ].material.opacity = 0;
+                bLayer ++;
+
+            }
+
+            // Make all other layers transluscent
+            var layer = bLayer;
+            while ( layer < tLayer ) {
+
+                editor.layers[ layer ].material.opacity = editor.layerOpacity;
+                layer ++;
+
+            }
+
+            signals.rendererUpdated.dispatch();
+
         }
 
     } )
@@ -77,6 +122,7 @@ function LayerSelection( editor ) {
     }
 
     this.numLayers = 100.0;
+    this.yPerLayer;
 
     this.updateSelection = () => {
 
@@ -84,12 +130,14 @@ function LayerSelection( editor ) {
         var top = this.layerSelectionArea.top - this.minY;
         var bottom = this.maxY - this.layerSelectionArea.bottom;
 
-        this.selection['end'] = this.functionalSliderLength - top;
-        this.selection['start'] = bottom;
+        this.selection['end'] = Math.ceil( (this.functionalSliderLength - top) / this.yPerLayer );
+        this.selection['start'] = Math.ceil( bottom / this.yPerLayer );
 
-        console.log( this.selection['start'], this.selection['end'] )
-
+        this.updateLayers(); 
+        
     }
+
+    this.updateLayers = () => {}
 
     container.add( this.layerSlider );
     container.add( this.layerSelectionArea );
