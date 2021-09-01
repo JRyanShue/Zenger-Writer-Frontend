@@ -6,6 +6,8 @@
 
 	--home-icon-width: calc( 2*var(--padding-amount) + 40px );
 	--home-icon-height: calc( 2*var(--padding-amount) + 40px );
+
+	--layerSelectionBar-X: 30px;
 }
 
 body {
@@ -75,12 +77,28 @@ textarea, input { outline: none; } /* osx */
 	border-radius: calc(var(--width)/2);
 
 	top: calc(var(--top-distance) - var(--width)/2);
-	left: calc(30px - var(--width)/2);
+	left: calc(var(--layerSelectionBar-X) - var(--width)/2);
 	bottom: calc(var(--topbottom-distance) - var(--width)/2);
+
+	z-index: 7;
+
+	background-color: black;
+
+}
+
+#LayerSelectionArea {
+
+	--width: 10px;
+
+	position: absolute;
+
+	width: var(--width);
+
+	left: calc(var(--layerSelectionBar-X) - var(--width)/2);
 
 	z-index: 8;
 
-	background-color: black;
+	background-color: blue;
 
 }
 
