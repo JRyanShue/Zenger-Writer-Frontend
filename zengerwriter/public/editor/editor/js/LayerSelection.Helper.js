@@ -1,5 +1,5 @@
 
-import { UIPanel, UIDiv } from './libs/ui.js';
+import { UIPanel, UIDiv, UIInput } from './libs/ui.js';
 
 
 class LayerSlider extends UIPanel {
@@ -62,7 +62,7 @@ class LayerSelectionArea extends UIPanel {
 
 }
 
-class LayerSelectionBall extends UIPanel {
+class LayerSelectionBall extends UIDiv {
 
     constructor( layerSelection ) {
 
@@ -99,8 +99,6 @@ class LayerSelectionBall extends UIPanel {
 
                 this.handleMove(e);
 
-                
-
             }
 
         }
@@ -112,7 +110,7 @@ class LayerSelectionBall extends UIPanel {
 
         } )
 
-        this.dom.onpointermove = () => {};        
+        this.dom.onpointermove = () => {};
 
     }
 
@@ -139,7 +137,6 @@ class LayerSelectionBall extends UIPanel {
             } else {
 
                 this.cursorLastY = e.y;
-                
 
             }
 
@@ -167,7 +164,7 @@ class LayerSelectionBall extends UIPanel {
 
         console.log('calc( ' + String(this.y) + 'px' + ' - ' + getComputedStyle( this.dom ).getPropertyValue('--diameter') + '/2)')
         this.dom.style.top = 'calc( ' + String(this.y) + 'px' + ' - ' + getComputedStyle( this.dom ).getPropertyValue('--diameter') + '/2)';
-        
+
     }
 
     setFromTop( dist ) {
@@ -214,6 +211,32 @@ class LayerSelectionBall extends UIPanel {
 
 }
 
+class BallLocLabel extends UIInput {
+
+    constructor( y ) {
+
+        super( y );
+
+        this.y = y;
+
+        this.dom.className = 'BallLocLabel'
+
+        // this.dom.style.width = 'max-content'
+
+        this.dom.size = 3;
+
+    }
+
+    setY( y ) {
+
+        this.y = y
+
+        this.dom.style.top = 'calc(' + getComputedStyle( this.layerSlider.dom ).getPropertyValue('--top-distance') + ' + ' + String(dist) + 'px' + ' - ' + getComputedStyle( this.dom ).getPropertyValue('--diameter') + '/2)';
+
+    }
+
+}
+
 class TopBall extends UIDiv {
 
     constructor() {
@@ -238,4 +261,4 @@ class BottomBall extends UIDiv {
 
 }
 
-export { LayerSlider, LayerSelectionArea, LayerSelectionBall, TopBall, BottomBall }
+export { LayerSlider, LayerSelectionArea, LayerSelectionBall, BallLocLabel, TopBall, BottomBall }

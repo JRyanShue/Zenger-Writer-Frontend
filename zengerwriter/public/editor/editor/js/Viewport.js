@@ -420,6 +420,9 @@ function Viewport( editor, size, height ) {
 
 		}
 
+		// Remove first layer ( it is the line on the side )
+		editor.layers.splice( 0, 1 )
+
 		render();
 		signals.gcodeLoaded.dispatch();
 		console.log( editor.layers );

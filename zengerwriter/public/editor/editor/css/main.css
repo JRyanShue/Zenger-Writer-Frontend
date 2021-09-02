@@ -135,6 +135,20 @@ textarea, input { outline: none; } /* osx */
 	} */
 
 
+.BallLocLabel {
+
+	position: absolute;
+
+	top: 100px;
+	
+	margin-left: 20px;
+	border: 1px solid black;
+	width: min-content;
+	/* width: 10px; */
+
+}
+
+
 #Preview {
 
 	position: absolute;
@@ -142,7 +156,6 @@ textarea, input { outline: none; } /* osx */
 	width: 100vw;
 	height: 100vh;
 
-	top: var(--bar-height);
 	left: 0;
 	right: 0;
 	bottom: 0;

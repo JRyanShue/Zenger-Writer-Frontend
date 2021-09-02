@@ -1,19 +1,21 @@
 
 import { UIPanel, UIDiv } from './libs/ui.js';
-import { LayerSlider, LayerSelectionArea, LayerSelectionBall } from './LayerSelection.Helper.js'
+import { LayerSlider, LayerSelectionArea, LayerSelectionBall, BallLocLabel } from './LayerSelection.Helper.js'
 
 function LayerSelection( editor ) {
 
-    var container = new UIPanel();
+    var container = new UIDiv();
 
     this.layerSlider = new LayerSlider();
 
     this.layerSelectionArea = new LayerSelectionArea();
 
     this.topBall = new LayerSelectionBall( this );
+    this.topBallLabel = new BallLocLabel( this );
     this.bottomBall = new LayerSelectionBall( this );
+    this.bottomBallLabel = new BallLocLabel( this );
 
-    // These methods cannot be set within their class because they depend on dynamic factors
+    // These methods cannot be set within their class because they deptop on dynamic factors
     this.minDistBetweenBalls = 50;
     this.topBall.handleSelect = () => {
         this.topBall.maxY = this.bottomBall.y - this.minDistBetweenBalls;
@@ -64,18 +66,23 @@ function LayerSelection( editor ) {
     signals.gcodeLoaded.add( () => {
 
         this.numLayers = editor.layers.length;
-        this.yPerLayer = this.functionalSliderLength / this.numLayers;
+        this.yPerLayer = this.functionalSliderLength / (this.numLayers - 1);
 
         console.log( editor.materials )
 
         // Adjust layer visibility based on layer selection
         this.updateLayers = () => {
 
-            console.log( this.selection['start'], this.selection['end'] );
+            console.log( this.selection['bottom'], this.selection['top'] );
+
+            var invisible = [];
+            var transluscent = [];
+
+
 
             // Make transparent layers above the top slider ball
             var tLayer = this.numLayers - 1;
-            while ( tLayer > this.selection['end'] + 1 ) {
+            while ( tLayer > this.selection['top'] ) {
 
                 editor.layers[ tLayer ].material.opacity = 0;
                 tLayer --;
@@ -84,7 +91,8 @@ function LayerSelection( editor ) {
 
             // Make transparent layers below the bottom slider ball
             var bLayer = 0;
-            while ( bLayer < this.selection['start'] - 1 ) {
+            console.log( this.selection['bottom'] )
+            while ( bLayer < this.selection['bottom'] ) {
 
                 editor.layers[ bLayer ].material.opacity = 0;
                 bLayer ++;
@@ -92,14 +100,16 @@ function LayerSelection( editor ) {
             }
 
             // Make all other layers transluscent
-            var layer = bLayer;
-            while ( layer < tLayer ) {
+            var layer = this.selection['bottom'];
+            while ( layer <= this.selection['top'] ) {
 
+                console.log( layer )
                 editor.layers[ layer ].material.opacity = editor.layerOpacity;
                 layer ++;
 
             }
 
+            console.log( editor.layers )
             signals.rendererUpdated.dispatch();
 
         }
@@ -116,8 +126,8 @@ function LayerSelection( editor ) {
 
     this.selection = {
         
-        'start': 0,
-        'end': 100
+        'bottom': 0,
+        'top': 100
 
     }
 
@@ -130,8 +140,8 @@ function LayerSelection( editor ) {
         var top = this.layerSelectionArea.top - this.minY;
         var bottom = this.maxY - this.layerSelectionArea.bottom;
 
-        this.selection['end'] = Math.ceil( (this.functionalSliderLength - top) / this.yPerLayer );
-        this.selection['start'] = Math.ceil( bottom / this.yPerLayer );
+        this.selection['top'] = Math.ceil( (this.functionalSliderLength - top) / this.yPerLayer );
+        this.selection['bottom'] = Math.ceil( bottom / this.yPerLayer );
 
         this.updateLayers(); 
         
@@ -142,7 +152,9 @@ function LayerSelection( editor ) {
     container.add( this.layerSlider );
     container.add( this.layerSelectionArea );
     container.add( this.topBall );
+    // container.add( this.topBallLabel );
     container.add( this.bottomBall );
+    // container.add( this.bottomBallLabel );
 
     return container;
 

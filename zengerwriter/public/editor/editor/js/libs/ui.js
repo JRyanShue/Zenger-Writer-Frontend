@@ -311,14 +311,14 @@ class UIInput extends UIElement {
 		super( document.createElement( 'input' ) );
 
 		this.dom.className = 'Input';
-		this.dom.style.padding = '2px';
-		this.dom.style.border = '1px solid transparent';
+		// this.dom.style.padding = '2px';
+		// this.dom.style.border = '1px solid transparent';
 
-		this.dom.addEventListener( 'keydown', function ( event ) {
+		// this.dom.addEventListener( 'keydown', function ( event ) {
 
-			event.stopPropagation();
+		// 	event.stopPropagation();
 
-		}, false );
+		// }, false );
 
 		this.setValue( text );
 

@@ -153,7 +153,7 @@ function Editor() {
 
 	this.addCamera( this.camera );
 
-	this.settings = new SliceSettings(); 
+	this.settings = new SliceSettings();
 	
 	this.delMoveFulfilled = false;  // Whether the API has responed after deleting and moving the editor's info
 	this.saveFulfilled = false;
