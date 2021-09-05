@@ -37,6 +37,7 @@ class SetPositionCommand extends Command {
 
 	execute() {
 
+		console.log( "setpositioncommand" )
 		this.object.position.copy( this.newPosition );
 		this.object.updateMatrixWorld( true );
 		this.editor.signals.objectChanged.dispatch( this.object );

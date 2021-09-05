@@ -61,18 +61,6 @@
 			editorName = decodeURIComponent(editorName);  // Decode percent encoding
 			console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
 
-			// Suppress selective errors
-			window.onerror = ( message ) => {
-
-				console.log( message )
-				if ( message == 'THREE.BufferGeometry.computeBoundingBox(): Computed min/max have NaN values. The "position" attribute is likely to have NaN values.' ) {
-
-					return true;
-
-				}
-
-			}
-
 
 			import * as THREE from '../build/three.module.js';
 
