@@ -270,8 +270,10 @@ class TransformControls extends Object3D {
 				this._quaternionStart.copy( this.object.quaternion );
 				this._scaleStart.copy( this.object.scale );
 
+				// Update starting position
 				this.object.matrixWorld.decompose( this.worldPositionStart, this.worldQuaternionStart, this._worldScaleStart );
 
+				// Relative starting position
 				this.pointStart.copy( planeIntersect.point ).sub( this.worldPositionStart );
 
 			}
@@ -291,55 +293,40 @@ class TransformControls extends Object3D {
 		const object = this.object;
 		let space = this.space;
 
-		if ( mode === 'scale' ) {
-
-			space = 'local';
-
-		} else if ( axis === 'E' || axis === 'XYZE' || axis === 'XYZ' ) {
-
-			space = 'world';
-
-		}
+		console.log( 'axis:', axis, 'mode:', mode, 'object:', object, 'space:', space, 'offset:', this._offset );
 
 		if ( object === undefined || axis === null || this.dragging === false || pointer.button !== - 1 ) return;
 
+		// Find click point based on camera angle
 		_raycaster.setFromCamera( pointer, this.camera );
 
+		// Find intersection with build plate plane
 		const planeIntersect = intersectObjectWithRay( this._plane, _raycaster, true );
 
 		if ( ! planeIntersect ) return;
 
+		// 'pointEnd' is a Vector3. Find relative change by copying planeIntersect location and subtracting the location of the drag start
 		this.pointEnd.copy( planeIntersect.point ).sub( this.worldPositionStart );
 
 		if ( mode === 'translate' ) {
 
 			// Apply translate
 
+			// Calculate translation offset
 			this._offset.copy( this.pointEnd ).sub( this.pointStart );
 
-			if ( space === 'local' && axis !== 'XYZ' ) {
-
-				this._offset.applyQuaternion( this._worldQuaternionInv );
-
-			}
-
+			// If axis excludes dimension
 			if ( axis.indexOf( 'X' ) === - 1 ) this._offset.x = 0;
 			if ( axis.indexOf( 'Y' ) === - 1 ) this._offset.y = 0;
 			if ( axis.indexOf( 'Z' ) === - 1 ) this._offset.z = 0;
 
-			if ( space === 'local' && axis !== 'XYZ' ) {
+			//
+			this._offset.applyQuaternion( this._parentQuaternionInv ).divide( this._parentScale );
 
-				this._offset.applyQuaternion( this._quaternionStart ).divide( this._parentScale );
-
-			} else {
-
-				this._offset.applyQuaternion( this._parentQuaternionInv ).divide( this._parentScale );
-
-			}
-
+			// Set object position
 			object.position.copy( this._offset ).add( this._positionStart );
 
-			// Apply translation snap
+			// Apply translation snap (when not continuously translating)
 
 			if ( this.translationSnap ) {
 
@@ -400,72 +387,6 @@ class TransformControls extends Object3D {
 						object.position.sub( _tempVector.setFromMatrixPosition( object.parent.matrixWorld ) );
 
 					}
-
-				}
-
-			}
-
-		} else if ( mode === 'scale' ) {
-
-			if ( axis.search( 'XYZ' ) !== - 1 ) {
-
-				let d = this.pointEnd.length() / this.pointStart.length();
-
-				if ( this.pointEnd.dot( this.pointStart ) < 0 ) d *= - 1;
-
-				_tempVector2.set( d, d, d );
-
-			} else {
-
-				_tempVector.copy( this.pointStart );
-				_tempVector2.copy( this.pointEnd );
-
-				_tempVector.applyQuaternion( this._worldQuaternionInv );
-				_tempVector2.applyQuaternion( this._worldQuaternionInv );
-
-				_tempVector2.divide( _tempVector );
-
-				if ( axis.search( 'X' ) === - 1 ) {
-
-					_tempVector2.x = 1;
-
-				}
-
-				if ( axis.search( 'Y' ) === - 1 ) {
-
-					_tempVector2.y = 1;
-
-				}
-
-				if ( axis.search( 'Z' ) === - 1 ) {
-
-					_tempVector2.z = 1;
-
-				}
-
-			}
-
-			// Apply scale
-
-			object.scale.copy( this._scaleStart ).multiply( _tempVector2 );
-
-			if ( this.scaleSnap ) {
-
-				if ( axis.search( 'X' ) !== - 1 ) {
-
-					object.scale.x = Math.round( object.scale.x / this.scaleSnap ) * this.scaleSnap || this.scaleSnap;
-
-				}
-
-				if ( axis.search( 'Y' ) !== - 1 ) {
-
-					object.scale.y = Math.round( object.scale.y / this.scaleSnap ) * this.scaleSnap || this.scaleSnap;
-
-				}
-
-				if ( axis.search( 'Z' ) !== - 1 ) {
-
-					object.scale.z = Math.round( object.scale.z / this.scaleSnap ) * this.scaleSnap || this.scaleSnap;
 
 				}
 
