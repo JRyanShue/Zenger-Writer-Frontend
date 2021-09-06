@@ -10,7 +10,6 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "three": "^0.131.3",
-    "three/examples/jsm/examples/STLExporter": "",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
