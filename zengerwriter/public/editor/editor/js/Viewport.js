@@ -1,6 +1,7 @@
 import * as THREE from '../../build/three.module.js';
 
 import { TransformControls } from './TransformControls.js';
+import { ObjectManipulation } from './ObjectManipulation.js';
 
 import { UIPanel } from './libs/ui.js';
 
@@ -23,7 +24,7 @@ import { SavePreview, GetGcode } from './API.js';
 
 import { ViewSelection } from './ViewSelection.js';
 
-
+import { TranslateHelper } from './Viewport.TranslateHelper.js';
 
 import { GcodeViewHelper } from './GcodeViewHelper.js';
 
@@ -72,6 +73,9 @@ function Viewport( editor, size, height ) {
 	grid2.material.depthFunc = THREE.AlwaysDepth;
 	grid2.material.vertexColors = false;
 	grid.add( grid2 );
+
+	var translateHelper = new TranslateHelper();
+	var originalPos;
 
 	// Build volume box
 	const mesh = new THREE.Mesh(
@@ -238,10 +242,14 @@ function Viewport( editor, size, height ) {
 					// helper
 
 					editor.select( object.userData.object );
+					translateHelper.attachObject( object.userData.object );
 
 				} else {
 
 					editor.select( object );
+					translateHelper.attachObject( object );
+
+					console.log( editor.selected )
 
 				}
 
@@ -257,12 +265,72 @@ function Viewport( editor, size, height ) {
 
 	}
 
+	function handlePress() {
+
+		var intersects = getIntersects( onDownPosition, objects );
+
+		if ( intersects.length > 0 ) {
+
+			var object = intersects[ 0 ].object;
+
+			if ( object.userData.object !== undefined ) {
+
+				// helper
+
+				editor.select( object.userData.object );
+
+			} else {
+
+				editor.select( object );
+				translateHelper.attachObject( object );
+
+				console.log( editor.selected )
+
+			}
+
+			// Enable dragging
+			document.addEventListener( 'pointermove', onPointerMove, false );
+
+			// Disable drag on mouseup
+			document.addEventListener( 'mouseup', () => {
+				document.removeEventListener( 'pointermove', onPointerMove, false )
+			}, false );
+
+
+		} else {
+
+			editor.select( null );
+
+		}
+
+		render();
+
+	}
+
+	// Assuming that the object is selected 
+	function onPointerMove( event ) {
+
+		console.log( 'drag', event.clientX, event.clientY )
+
+		var newPos = new THREE.Vector2( event.clientX, event.clientY );
+
+		// Translate using relative change (does not drift because originalPos stays constant for drag operation's duration)
+		translateHelper.translateRelative( editor.selected, newPos.sub( originalPos ), event );
+
+	}
+
 	function onMouseDown( event ) {
 
 		// event.preventDefault();
 
 		var array = getMousePosition( container.dom, event.clientX, event.clientY );
 		onDownPosition.fromArray( array );
+
+		// Set origin drag position
+		originalPos = new THREE.Vector2( event.clientX, event.clientY );
+
+		// Highlight object and enable dragging
+		handlePress();
 
 		document.addEventListener( 'mouseup', onMouseUp, false );
 
@@ -273,7 +341,7 @@ function Viewport( editor, size, height ) {
 		var array = getMousePosition( container.dom, event.clientX, event.clientY );
 		onUpPosition.fromArray( array );
 
-		handleClick();
+		// handleClick();
 
 		document.removeEventListener( 'mouseup', onMouseUp, false );
 

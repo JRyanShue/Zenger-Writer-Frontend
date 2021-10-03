@@ -273,6 +273,8 @@ class TransformControls extends Object3D {
 				// Update starting position
 				this.object.matrixWorld.decompose( this.worldPositionStart, this.worldQuaternionStart, this._worldScaleStart );
 
+				console.log( this.worldPositionStart );
+
 				// Relative starting position
 				this.pointStart.copy( planeIntersect.point ).sub( this.worldPositionStart );
 
@@ -286,16 +288,18 @@ class TransformControls extends Object3D {
 
 	}
 
-	pointerMove( pointer ) {
+	pointerMove( pointer ) {  // Pointer parameter is an object with 'x', 'y', 'button'
 
-		const axis = this.axis;
+		// const axis = this.axis;
+		const axis = 'XY';
 		const mode = this.mode;
 		const object = this.object;
 		let space = this.space;
 
-		console.log( 'axis:', axis, 'mode:', mode, 'object:', object, 'space:', space, 'offset:', this._offset );
-
+		// Need to set this.dragging to true when the drag starts within the object/raycaster intersection
 		if ( object === undefined || axis === null || this.dragging === false || pointer.button !== - 1 ) return;
+
+		console.log( 'axis:', axis, 'mode:', mode, 'object:', object, 'space:', space, 'offset:', this._offset );
 
 		// Find click point based on camera angle
 		_raycaster.setFromCamera( pointer, this.camera );
@@ -303,11 +307,14 @@ class TransformControls extends Object3D {
 		// Find intersection with build plate plane
 		const planeIntersect = intersectObjectWithRay( this._plane, _raycaster, true );
 
+		console.log( planeIntersect )
+
 		if ( ! planeIntersect ) return;
 
 		// 'pointEnd' is a Vector3. Find relative change by copying planeIntersect location and subtracting the location of the drag start
 		this.pointEnd.copy( planeIntersect.point ).sub( this.worldPositionStart );
 
+		console.log( mode )
 		if ( mode === 'translate' ) {
 
 			// Apply translate
@@ -565,6 +572,8 @@ TransformControls.prototype.isTransformControls = true;
 
 function getPointer( event ) {
 
+	// Return x and y, both from -1 to 1, and the event button
+
 	if ( this.domElement.ownerDocument.pointerLockElement ) {
 
 		return {
@@ -615,6 +624,7 @@ function onPointerDown( event ) {
 
 function onPointerMove( event ) {
 
+	// If mouse is not down (hovering instead)
 	if ( ! this.enabled ) return;
 
 	this.pointerMove( this._getPointer( event ) );
@@ -970,9 +980,9 @@ class TransformControlsGizmo extends Object3D {
 
 			const gizmo = new Object3D();
 
-			for ( const name in gizmoMap ) {
+			for ( const name in gizmoMap ) {  // 'XY', 'X', etc. 
 
-				for ( let i = gizmoMap[ name ].length; i --; ) {
+				for ( let i = gizmoMap[ name ].length; i --; ) {  // Each array within the array
 
 					const object = gizmoMap[ name ][ i ][ 0 ].clone();
 					const position = gizmoMap[ name ][ i ][ 1 ];
