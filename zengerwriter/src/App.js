@@ -7,6 +7,8 @@ import { Banner } from './Banner'
 import { Dividers } from './Dividers';
 import { useEffect, useRef, useState } from 'react';
 
+import { ThreeTest } from './ThreeTest.js'
+
 function App(props) {
 
     /*
