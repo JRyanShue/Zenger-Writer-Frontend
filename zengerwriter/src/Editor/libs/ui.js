@@ -1,6 +1,6 @@
 
 /*
-	UI library from THREE.js Editor
+	UI library adapted from THREE.js Editor
 */
 
 import { addProgrammaticBackspace } from './ProgrammaticBackspace.js'
