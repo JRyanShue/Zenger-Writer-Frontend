@@ -14,7 +14,7 @@ import { CreateID } from './libs/ID.js';
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
 _DEFAULT_CAMERA.name = 'Camera';
 _DEFAULT_CAMERA.position.set( 0, 5, 10 );
-_DEFAULT_CAMERA.up.set(0,0,1);  // Use 3D printers' x/y/z orientation
+_DEFAULT_CAMERA.up.set( 0, 0, 1 );  // Use 3D printers' x/y/z orientation
 _DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
 // Set default orientation
@@ -117,7 +117,7 @@ function Editor() {
 	};
 
 	this.config = new Config();
-	this.history = new _History( this );
+	this.history = new _History( this );  // Needed for undo/redo functionality
 	this.storage = new _Storage();
 	this.strings = new Strings( this.config );
 

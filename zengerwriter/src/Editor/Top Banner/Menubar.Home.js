@@ -32,8 +32,6 @@ function MenubarHome ( editor ) {
 
         });
 
-        
-
     })
 
     // var title = new UIPanel();

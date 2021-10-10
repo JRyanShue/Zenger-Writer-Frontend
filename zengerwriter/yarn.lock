@@ -5033,6 +5033,11 @@
   dependencies:
     "bser" "2.1.1"
 
+"fflate@^0.7.1":
+  "integrity" "sha512-VYM2Xy1gSA5MerKzCnmmuV2XljkpKwgJBKezW+495TTnTCh1x5HcYa1aH8wRU/MfTGhW4ziXqgwprgQUVl3Ohw=="
+  "resolved" "https://registry.npmjs.org/fflate/-/fflate-0.7.1.tgz"
+  "version" "0.7.1"
+
 "figgy-pudding@^3.5.1":
   "integrity" "sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw=="
   "resolved" "https://registry.npmjs.org/figgy-pudding/-/figgy-pudding-3.5.2.tgz"
@@ -9952,6 +9957,16 @@
   "integrity" "sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA=="
   "resolved" "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.3.tgz"
   "version" "3.0.3"
+
+"signal-js@^2.4.0":
+  "integrity" "sha512-oComqdSM9cfFuxX3Ubi3jnH4sEnlkYf2zA/WqLk7bZaf4yO+32z3ngG9Wm9NwbSjPwlk7uGkoRZCmRFEFcXQOA=="
+  "resolved" "https://registry.npmjs.org/signal-js/-/signal-js-2.4.0.tgz"
+  "version" "2.4.0"
+
+"signals@^1.0.0":
+  "integrity" "sha1-ZfDBWZNSs1Ny7KrlolDmEHN27Wk="
+  "resolved" "https://registry.npmjs.org/signals/-/signals-1.0.0.tgz"
+  "version" "1.0.0"
 
 "simple-swizzle@^0.2.2":
   "integrity" "sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo="

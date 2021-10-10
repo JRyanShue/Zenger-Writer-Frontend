@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import Editor from './Editor/Editor'
+import EditorComponent from './Editor/Editor'
 
 import reportWebVitals from './reportWebVitals';
 
@@ -15,7 +15,7 @@ var username = "testman";
 ReactDOM.render(
   <React.StrictMode>
     {/* <App username={username}/> */}
-    <Editor username={username}/>
+    <EditorComponent username={username}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

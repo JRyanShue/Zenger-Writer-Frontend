@@ -1,12 +1,15 @@
-import * as THREE from '../../build/three.module.js';
+import * as THREE from 'three';
 
-import { TGALoader } from '../../examples/jsm/loaders/TGALoader.js';
+import { TGALoader } from './Loaders/TGALoader.js';
 
-import { AddObjectCommand } from './commands/AddObjectCommand.js';
+import { AddObjectCommand } from '../Commands/AddObjectCommand.js';
 
 import { LoaderUtils } from './LoaderUtils.js';
 
-
+/*
+	Class taken from THREE.js editor
+	Parses and adds objects to scene from files
+*/
 
 function Loader( editor ) {
 
@@ -82,7 +85,7 @@ function Loader( editor ) {
 
 				reader.addEventListener( 'load', async function ( event ) {
 
-					var { ThreeMFLoader } = await import( '../../examples/jsm/loaders/3MFLoader.js' );
+					var { ThreeMFLoader } = await import( './Loaders/3MFLoader.js' );
 
 					var loader = new ThreeMFLoader();
 					var object = loader.parse( event.target.result );
@@ -100,7 +103,7 @@ function Loader( editor ) {
 
 					var contents = event.target.result;
 
-					var { OBJLoader } = await import( '../../examples/jsm/loaders/OBJLoader.js' );
+					var { OBJLoader } = await import( './Loaders/OBJLoader.js' );
 
 					var object = new OBJLoader().parse( contents );
 					object.name = filename;
@@ -119,7 +122,7 @@ function Loader( editor ) {
 					var contents = event.target.result;
 					console.log("Finished Loading.");
 
-					var { STLLoader } = await import( '../../examples/jsm/loaders/STLLoader.js' );
+					var { STLLoader } = await import( './Loaders/STLLoader.js' );
 
 					var geometry = new STLLoader().parse( contents );
 					var material = new THREE.MeshStandardMaterial();
