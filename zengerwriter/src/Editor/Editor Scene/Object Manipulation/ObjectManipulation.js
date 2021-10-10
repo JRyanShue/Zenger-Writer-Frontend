@@ -1,0 +1,8 @@
+
+class ObjectManipulation {
+
+
+
+}
+
+export { ObjectManipulation }

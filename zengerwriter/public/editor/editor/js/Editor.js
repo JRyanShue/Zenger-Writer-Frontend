@@ -135,7 +135,7 @@ function Editor() {
 
 	this.sceneHelpers = new THREE.Scene();
 
-	this.object = {};
+	this.object = {}; // ! 
 	this.geometries = {};
 	this.materials = {};
 	this.textures = {};
@@ -151,11 +151,11 @@ function Editor() {
 	this.cameras = {};
 	this.viewportCamera = this.camera;
 
-	this.addCamera( this.camera );
+	this.addCamera( this.camera ); // !
 
 	this.settings = new SliceSettings();
 	
-	this.delMoveFulfilled = false;  // Whether the API has responed after deleting and moving the editor's info
+	this.delMoveFulfilled = false;  // Whether the API has responded after deleting and moving the editor's info
 	this.saveFulfilled = false;
 
 	this.viewMode = 'Part';
@@ -168,11 +168,11 @@ function Editor() {
 
 }
 
-Editor.prototype = {
+Editor.prototype = { // !
 
 	setScene: function ( scene ) {
 
-	this.scene.uuid = scene.uuid;
+		this.scene.uuid = scene.uuid;
 		this.scene.name = scene.name;
 
 		this.scene.background = scene.background;

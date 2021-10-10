@@ -5,25 +5,19 @@ import signals from 'signals'
 
 import { Banner } from './Top Banner/Banner'
 import { Scene } from './Editor Scene/Scene'
+import { SceneHelpers } from './Editor Scene/SceneHelpers';
+import { EditorCamera } from './Editor Scene/EditorCamera';
 import { DragDrop } from './Drag and Drop/DragDrop'
+
 import { Strings } from './Utils/Strings'
+import { SliceSettings } from './Utils/SliceSettings';
 
 import { Loader } from './Utils/Loader';
+import { Slice } from './API';
 
 /*
     "Main" function for the editor
 */
-
-// Default definitions
-
-// THREE.js camera for the scene
-var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, 1000 );
-_DEFAULT_CAMERA.name = 'Camera';
-_DEFAULT_CAMERA.position.set( 0, 5, 10 );
-
-// Use 3D printers' x/y/z orientation
-_DEFAULT_CAMERA.up.set( 0, 0, 1 );  
-_DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
 // Set default orientation
 THREE.Object3D.DefaultUp = new THREE.Vector3(0,0,1);
@@ -36,7 +30,6 @@ function Editor() {
 
     // Scene rendering variables
 
-    var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
     var renderer = new THREE.WebGLRenderer();
 
@@ -67,26 +60,43 @@ function Editor() {
 
     // Add functionality
 
-    var dragDrop = new DragDrop();
+    this.dragDrop = new DragDrop();
 
-    //
+    // Loader: converts file drops into the THREE.js object format, and adds the object to the scene
 
+    this.loader = new Loader( this );
 
+    this.camera = new EditorCamera();
 
+    // Scene object: manages editor scene
 
-    var queries = ["?editorURL=", "&username=", "&editorID=", "&editorName="];
+    this.scene = new Scene( this );
+    this.sceneHelpers = new SceneHelpers();
 
-    var urlVars = window.location.search.toString();
-    var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
-    var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
-    var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.indexOf(queries[3]) );
-    var editorName = urlVars.slice( urlVars.indexOf(queries[3]) + queries[3].length, urlVars.length );
-    editorName = decodeURIComponent(editorName);  // Decode percent encoding
-    console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
+    // Currently selected object
 
-    var scene = new Scene()
-    document.body.appendChild( scene.dom )
+    this.selected = null;
 
+    // Slice settings
+
+    this.sliceSettings = new SliceSettings();
+
+    // 
+
+    this.delMoveFulfilled = false;  // Whether the API has responded after deleting and moving the editor's info
+	this.saveFulfilled = false;
+
+    // Current viewmode (part and layer views available)
+
+    this.viewMode = 'Part';
+	this.parts = [];
+
+    // Variables for gcode preview on layer view
+
+	this.gcode = null;
+	this.gcodelines = [];
+	this.layers = [];
+	this.layerOpacity = 0.2;
 
     // === THREE.JS CODE START ===
         
@@ -113,6 +123,16 @@ function EditorComponent() {
     var editor;
 
     useEffect(() => {
+
+        var queries = ["?editorURL=", "&username=", "&editorID=", "&editorName="];
+
+        var urlVars = window.location.search.toString();
+        var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
+        var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
+        var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.indexOf(queries[3]) );
+        var editorName = urlVars.slice( urlVars.indexOf(queries[3]) + queries[3].length, urlVars.length );
+        editorName = decodeURIComponent(editorName);  // Decode percent encoding
+        console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
 
         // Subsequent code is built in vanilla JS
 

@@ -48,7 +48,7 @@ function Viewport( editor, size, height ) {
 	//
 
 	var renderer = null;
-	var pmremGenerator = null;
+	var pmremGenerator = null;  // Not necessary in Zenger Writer
 
 	var camera = editor.camera;
 	var scene = editor.scene;
@@ -751,7 +751,7 @@ function Viewport( editor, size, height ) {
 				break;
 
 			case 'ModelViewer':
-
+				
 				scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).texture;
 
 				break;
