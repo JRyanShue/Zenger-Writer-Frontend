@@ -37,6 +37,26 @@ function Scene( editor ) {
 
     this.grid = new PlateGrid( XY, Z );
 
+    this.scene.add( this.grid )
+
+    this.container.dom.appendChild( this.renderer.domElement )
+
+    function render() {
+
+        
+        
+    }
+
+    this.render = () => {
+
+        this.renderer.setSize( window.innerWidth, window.innerHeight )
+        this.renderer.render( this.scene, camera );
+
+        console.log( this.renderer );
+        console.log( this.renderer.domElement )
+
+    }
+
 }
 
 export { Scene }

@@ -15,6 +15,8 @@ import { SliceSettings } from './Utils/SliceSettings';
 import { Loader } from './Utils/Loader';
 import { Slice } from './API';
 
+import { UIPanel } from './libs/ui';
+
 /*
     "Main" function for the editor
 */
@@ -98,23 +100,22 @@ function Editor() {
 	this.layers = [];
 	this.layerOpacity = 0.2;
 
-    // === THREE.JS CODE START ===
-        
-    // renderer.setSize( window.innerWidth, window.innerHeight );
-    // document.body.appendChild( renderer.domElement );
-    // var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    // var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    // var cube = new THREE.Mesh( geometry, material );
-    // scene.add( cube );
-    // camera.position.z = 5;
-    // var animate = function () {
-    // requestAnimationFrame( animate );
-    // cube.rotation.x += 0.01;
-    // cube.rotation.y += 0.01;
-    // renderer.render( scene, camera );
-    // };
-    // animate();
-        // === THREE.JS EXAMPLE CODE END ===
+    this.ui = new UIEditor( this );
+    document.body.appendChild( this.ui.dom );
+
+}
+
+/* 
+Using the three.js authors' UI library, mimick React behavior without needing to adhere to the React project structure
+The UIEditor element serves as the 'root'
+*/
+function UIEditor( editor ) {
+
+    var container = new UIPanel;
+
+    container.add( editor.scene.container );
+
+    return container;
 
 }
 
@@ -138,6 +139,8 @@ function EditorComponent() {
 
         editor = new Editor();
 
+        editor.scene.render();
+
         // var banner = new Banner();
         // document.body.appendChild( banner.dom )
 
@@ -151,7 +154,7 @@ function EditorComponent() {
         // scene.add( cube );
         // camera.position.z = 5;
         // var animate = function () {
-        // requestAnimationFrame( animate );
+        // requestAnimationFrame( animate );  // Keeps animation loop continuing
         // cube.rotation.x += 0.01;
         // cube.rotation.y += 0.01;
         // renderer.render( scene, camera );
