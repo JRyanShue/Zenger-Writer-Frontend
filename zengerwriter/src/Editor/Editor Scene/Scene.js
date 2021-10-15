@@ -3,6 +3,8 @@ import * as THREE from 'three'
 import { UIPanel } from '../libs/ui'
 import { PlateGrid } from '../3D Components/PlateGrid'
 
+import { EditorControls } from './Mouse Manipulation/EditorControls';
+
 // Build plate dimensions
 
 const XY = 235
@@ -39,23 +41,16 @@ function Scene( editor ) {
 
     this.scene.add( this.grid )
 
-    this.container.dom.appendChild( this.renderer.domElement )
-
-    function render() {
-
-        
-        
-    }
+    this.container.dom.appendChild( this.renderer.domElement );
 
     this.render = () => {
 
         this.renderer.setSize( window.innerWidth, window.innerHeight )
         this.renderer.render( this.scene, camera );
 
-        console.log( this.renderer );
-        console.log( this.renderer.domElement )
-
     }
+
+    this.editorControls = new EditorControls( editor, camera, this.container.dom );
 
 }
 

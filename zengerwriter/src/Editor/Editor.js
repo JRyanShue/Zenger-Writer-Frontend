@@ -17,6 +17,10 @@ import { Slice } from './API';
 
 import { UIPanel } from './libs/ui';
 
+
+
+import './css/main.css';
+
 /*
     "Main" function for the editor
 */

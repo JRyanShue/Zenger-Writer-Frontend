@@ -3,7 +3,7 @@ import * as THREE from 'three';
 
 import { eulerX, eulerY } from "./EulerControls.js";
 
-function EditorControls( object, domElement ) {
+function EditorControls( editor, object, domElement ) {
 
 	// API
 
@@ -108,14 +108,6 @@ function EditorControls( object, domElement ) {
 		// Update vector
 		vector.copy( object.position ).sub( center );
 
-		// if (!setPos) {
-		// 	// Starting position for debugging
-		// 	vector.x = startingPosition.x;
-		// 	vector.y = startingPosition.y;
-		// 	vector.z = startingPosition.z;
-		// 	setPos = true;
-		// }
-
 		// dT1: amount of xy orbit evoked at point
 		dT1 = 400 * delta.x * scope.rotationSpeed;
 		eulerX( vector, dT1 );
@@ -124,8 +116,6 @@ function EditorControls( object, domElement ) {
 		dT2 = 400 * delta.y * scope.rotationSpeed;
 		eulerY( vector, dT2 );
 
-		// console.log("dx:", (dx/dT).toPrecision(3), "dy:", (dy/dT).toPrecision(3), "x", (vector.x).toPrecision(3), "y", (vector.y).toPrecision(3), "z", (vector.z).toPrecision(3), "o", +xFlipIs); 
-
 		// vector.z += 200 * delta.y * scope.rotationSpeed;
 
 		object.position.copy( center ).add( vector );
@@ -133,6 +123,8 @@ function EditorControls( object, domElement ) {
 		object.lookAt( center );
 
 		scope.dispatchEvent( changeEvent );
+
+		editor.scene.render();
 
 	};
 
