@@ -43,9 +43,16 @@ function Scene( editor ) {
 
     this.container.dom.appendChild( this.renderer.domElement );
 
+    this.renderer.setPixelRatio( window.devicePixelRatio );
+    
+    // Value to shif the viewport - must be shifted by default due to window dynamics
+    this.viewportOffset = -window.innerHeight / 2 - 150;
+
     this.render = () => {
 
-        this.renderer.setSize( window.innerWidth, window.innerHeight )
+        this.renderer.setSize( this.container.dom.offsetWidth, this.container.dom.offsetHeight )
+        this.renderer.setViewport( 0, this.viewportOffset, this.container.dom.offsetWidth, this.container.dom.offsetWidth );
+        // this.renderer.setViewport( 0, 0, this.container.dom.width, this.container.dom.height );
         this.renderer.render( this.scene, camera );
 
     }

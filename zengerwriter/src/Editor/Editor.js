@@ -17,8 +17,6 @@ import { Slice } from './API';
 
 import { UIPanel } from './libs/ui';
 
-
-
 import './css/main.css';
 
 /*
@@ -33,11 +31,6 @@ function Editor() {
     // Signals constructor
 
     var Signal = signals.Signal;
-
-    // Scene rendering variables
-
-    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-    var renderer = new THREE.WebGLRenderer();
 
     // Default signals for easy communication between classes
 
