@@ -1,2 +1,2 @@
 # Zenger-Writer-Frontend
-Frontend for Zenger Writer to be ported into all-encompassing docker container to run on AWS.
+Client-side source code for Zenger Writer, served via EC2, connected to WSGI-served API. 
