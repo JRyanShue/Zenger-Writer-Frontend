@@ -3,7 +3,7 @@ import * as THREE from 'three';
 
 function EditorLights( editor ) {
 
-    // Ambient Light
+    // Add three light types to illuminate the scene
 
     var color = 0x222222;
 
