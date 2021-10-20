@@ -1,23 +1,23 @@
 
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import * as THREE from 'three'
 import signals from 'signals'
 
 import { Banner } from './Top Banner/Banner'
 import { Scene as SceneManager } from './Editor Scene/Scene'
-import { SceneHelpers } from './Editor Scene/SceneHelpers';
-import { EditorCamera } from './Editor Scene/EditorCamera';
+import { SceneHelpers } from './Editor Scene/SceneHelpers'
+import { EditorCamera } from './Editor Scene/EditorCamera'
 import { DragDrop } from './Drag and Drop/DragDrop'
 
 import { Strings } from './Utils/Strings'
-import { SliceSettings } from './Utils/SliceSettings';
+import { SliceSettings } from './Utils/SliceSettings'
 
-import { Loader } from './Utils/Loader';
-import { Slice } from './API';
+import { Loader } from './Utils/Loader'
+import { Slice } from './API'
 
-import { UIPanel } from './libs/ui';
+import { UIPanel } from './libs/ui'
 
-import './css/main.css';
+import './css/main.css'
 
 /*
     "Main class" for the editor
