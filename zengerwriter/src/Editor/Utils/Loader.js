@@ -97,7 +97,8 @@ function Loader( editor ) {
 		var reader = new FileReader();
 		reader.addEventListener( 'progress', function ( event ) {
 
-			var size = '(' + Math.floor( event.total / 1000 ).format() + ' KB)';
+			// var size = '(' + Math.floor( event.total / 1000 ).format() + ' KB)';
+			var size = '(' + Math.floor( event.total / 1000 ) + ' KB)';
 			var progress = Math.floor( ( event.loaded / event.total ) * 100 ) + '%';
 
 			console.log( 'Loading', filename, size, progress );
@@ -105,6 +106,8 @@ function Loader( editor ) {
 		} );
 
 		switch ( extension ) {
+
+			/* Use different loaders for different file types */
 
 			case '3mf':
 
@@ -115,7 +118,8 @@ function Loader( editor ) {
 					var loader = new ThreeMFLoader();
 					var object = loader.parse( event.target.result );
 
-					editor.execute( new AddObjectCommand( editor, object ) );
+					// editor.execute( new AddObjectCommand( editor, object ) );
+					editor.addObject( object );
 
 				}, false );
 				reader.readAsArrayBuffer( file );
@@ -133,7 +137,8 @@ function Loader( editor ) {
 					var object = new OBJLoader().parse( contents );
 					object.name = filename;
 
-					editor.execute( new AddObjectCommand( editor, object ) );
+					// editor.execute( new AddObjectCommand( editor, object ) );
+					editor.addObject( object );
 
 				}, false );
 				reader.readAsText( file );
@@ -156,7 +161,8 @@ function Loader( editor ) {
 					mesh.name = filename;
 					console.log("Created Mesh.");
 
-					editor.execute( new AddObjectCommand( editor, mesh ) );
+					// editor.execute( new AddObjectCommand( editor, mesh ) );
+					editor.addObject( mesh );
 
 				}, false );
 

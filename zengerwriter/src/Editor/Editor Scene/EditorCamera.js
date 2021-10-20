@@ -4,7 +4,7 @@ import * as THREE from 'three'
 // Default definitions
 
 // THREE.js camera for the scene
-var maxDist = 2500;  // Far plane for the PerspectiveCamera
+var maxDist = 5000;  // Far plane for the PerspectiveCamera
 var _DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.01, maxDist );
 _DEFAULT_CAMERA.name = 'Camera';
 var distanceAway = 650;

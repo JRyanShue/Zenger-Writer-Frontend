@@ -84,6 +84,8 @@ function EditorControls( editor, object, domElement ) {
 
 		scope.dispatchEvent( changeEvent );
 
+		editor.scene.render();
+
 	};
 
 	this.zoom = function ( delta ) {
@@ -99,6 +101,8 @@ function EditorControls( editor, object, domElement ) {
 		object.position.add( delta );
 
 		scope.dispatchEvent( changeEvent );
+
+		editor.scene.render();
 
 	};
 

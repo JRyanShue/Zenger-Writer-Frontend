@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import signals from 'signals'
 
 import { Banner } from './Top Banner/Banner'
-import { Scene } from './Editor Scene/Scene'
+import { Scene as SceneManager } from './Editor Scene/Scene'
 import { SceneHelpers } from './Editor Scene/SceneHelpers';
 import { EditorCamera } from './Editor Scene/EditorCamera';
 import { DragDrop } from './Drag and Drop/DragDrop'
@@ -20,7 +20,9 @@ import { UIPanel } from './libs/ui';
 import './css/main.css';
 
 /*
-    "Main" function for the editor
+    "Main class" for the editor
+    Handles everything. Appends all child elements to the DOM.
+    Many functions split into other classes. 
 */
 
 // Set default orientation
@@ -35,6 +37,8 @@ function Editor() {
     // Default signals for easy communication between classes
 
     this.signals = {
+
+        render: new Signal(),
 
         homeButtonClicked: new Signal(),
 
@@ -59,17 +63,30 @@ function Editor() {
 
     // Add functionality
 
-    this.dragDrop = new DragDrop();
+    this.dragDrop = new DragDrop( this );
 
     // Loader: converts file drops into the THREE.js object format, and adds the object to the scene
 
     this.loader = new Loader( this );
 
-    this.camera = new EditorCamera();
+    this.camera = new EditorCamera();    
+
+    // THREE.js Scene: held by editor so that children can access
+
+    this.threeScene = new THREE.Scene();
+
+    // Function Definitions
+
+    this.addObject = ( object, parent, index ) => {
+
+        this.threeScene.add( object );
+        this.signals.render.dispatch();
+
+    }
 
     // Scene object: manages editor scene
 
-    this.scene = new Scene( this );
+    this.scene = new SceneManager( this );
     this.sceneHelpers = new SceneHelpers();
 
     // Currently selected object
@@ -97,14 +114,27 @@ function Editor() {
 	this.layers = [];
 	this.layerOpacity = 0.2;
 
+    // Add parent element to DOM
+
     this.ui = new UIEditor( this );
     document.body.appendChild( this.ui.dom );
+
+    // Add generic listeners
+
+    window.addEventListener( 'resize', this.signals.render.dispatch )
+
+}
+
+Editor.prototype = {
+
+    
 
 }
 
 /* 
-Using the three.js authors' UI library, mimick React behavior without needing to adhere to the React project structure
-The UIEditor element serves as the 'root'
+    Using the three.js authors' UI library, 
+    mimick React behavior without needing to adhere to the React project structure (React is bad for this application)
+    The UIEditor element serves as the 'root'
 */
 function UIEditor( editor ) {
 
@@ -122,15 +152,15 @@ function EditorComponent() {
 
     useEffect(() => {
 
-        var queries = ["?editorURL=", "&username=", "&editorID=", "&editorName="];
+        // var queries = ["?editorURL=", "&username=", "&editorID=", "&editorName="];
 
-        var urlVars = window.location.search.toString();
-        var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
-        var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
-        var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.indexOf(queries[3]) );
-        var editorName = urlVars.slice( urlVars.indexOf(queries[3]) + queries[3].length, urlVars.length );
-        editorName = decodeURIComponent(editorName);  // Decode percent encoding
-        console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
+        // var urlVars = window.location.search.toString();
+        // var editorURL = urlVars.slice( urlVars.indexOf(queries[0]) + queries[0].length, urlVars.indexOf(queries[1]) );
+        // var username = urlVars.slice( urlVars.indexOf(queries[1]) + queries[1].length, urlVars.indexOf(queries[2]) );
+        // var editorID = urlVars.slice( urlVars.indexOf(queries[2]) + queries[2].length, urlVars.indexOf(queries[3]) );
+        // var editorName = urlVars.slice( urlVars.indexOf(queries[3]) + queries[3].length, urlVars.length );
+        // editorName = decodeURIComponent(editorName);  // Decode percent encoding
+        // console.log("URL:", editorURL, "Username:", username, "editorID:", editorID, "editorName:", editorName);
 
         // Subsequent code is built in vanilla JS
 
@@ -160,6 +190,8 @@ function EditorComponent() {
         // === THREE.JS EXAMPLE CODE END ===
 
     })
+
+    // Return blank div -- this class renders directly through the document rather than using React's structure. 
 
     return (
 
