@@ -34,11 +34,17 @@ function Editor() {
 
     var Signal = signals.Signal;
 
-    // Default signals for easy communication between classes
+    // Default signals for easy communication between classes. They allow classes to use "this" without bugging out. 
 
     this.signals = {
 
         render: new Signal(),
+        objectAdded: new Signal(),  // This signal adds the THREE.js object to arrays (for tracking) in various objects. 
+
+        objectClicked: new Signal(),
+        objectDragged: new Signal(),
+
+        moveObjectTo: new Signal(),
 
         homeButtonClicked: new Signal(),
 
@@ -75,12 +81,30 @@ function Editor() {
 
     this.threeScene = new THREE.Scene();
 
+    // Track all objects added to the scene
+
+    this.objects = [];
+    this.signals.objectAdded.add( ( object ) => {
+
+        this.objects.push( object );
+
+    } )
+
+    this.selectedObject = null;
+
     // Function Definitions
 
     this.addObject = ( object, parent, index ) => {
 
         this.threeScene.add( object );
+        this.signals.objectAdded.dispatch( object );
         this.signals.render.dispatch();
+
+    }
+
+    this.select = ( object ) => {
+
+        this.selectedObject = object;
 
     }
 
@@ -121,7 +145,7 @@ function Editor() {
 
     // Add generic listeners
 
-    window.addEventListener( 'resize', this.signals.render.dispatch )
+    window.addEventListener( 'resize', this.signals.render.dispatch );
 
 }
 

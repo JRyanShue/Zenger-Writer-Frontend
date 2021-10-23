@@ -4,7 +4,10 @@ import { UIPanel } from '../libs/ui';
 import { PlateGrid } from '../3D Components/PlateGrid';
 import { EditorLights } from '../3D Components/EditorLights';
 
-import { EditorControls } from './Mouse Manipulation/EditorControls';
+import { EditorControls } from './Controls/EditorControls';
+import { ObjectControls } from './Controls/ObjectControls';
+
+import { SnapDown } from '../Utils/ObjectUtils';
 
 // Build plate dimensions
 
@@ -31,23 +34,21 @@ function Scene( editor ) {
 
     this.container = new UIPanel();
     this.container.setId( 'viewport' );
-	// this.container.setPosition( 'absolute' );
-
-    // this.scene = new THREE.Scene();
+	
     this.scene = editor.threeScene;
     this.scene.name = 'Scene';
     const clearColor = new THREE.Color();
     this.scene.background = clearColor;
 
-    this.mixer = new THREE.AnimationMixer( this.scene );
+    this.mixer = new THREE.AnimationMixer( this.scene );  // ?
 
     // Printing plate and volume
-    this.grid = new PlateGrid( XY, Z );
-    this.scene.add( this.grid )
+    this.scene.add( new PlateGrid( XY, Z ) );
 
     // Lights for the objects
-    this.lights = new EditorLights( editor );
+    EditorLights( editor );
 
+    // Attach THREE.js scene to the DOM element
     this.container.dom.appendChild( this.renderer.domElement );
 
     this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -67,11 +68,29 @@ function Scene( editor ) {
 
     this.editorControls = new EditorControls( editor, camera, this.container.dom );
 
-    signals.render.add(() => {
+    signals.render.add( () => {
 
         this.render();
 
-    })
+    } )
+
+    /**
+     * @param {Vector3} newPos Vector3 that holds the object's new position
+     */
+    function setObjectPos( object, newPos ) {
+
+        object.position.set( newPos.x, newPos.y, newPos.z );
+        signals.render.dispatch();
+
+    }
+
+    signals.moveObjectTo.add( ( object, newPos ) => {
+
+        setObjectPos( object, newPos );
+
+    } )
+
+    this.objectControls = new ObjectControls( editor, camera, this.container.dom );
 
 }
 
