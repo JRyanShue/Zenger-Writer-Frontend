@@ -34,34 +34,38 @@ function ObjectControls( editor, camera, domElement ) {
 
     function onMouseDown( e ) {  // LEFT OFF HERE
 
-        // Get mouse position as a value from 0 to 1 for x and y within the DOM element
-        mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
+        if ( e.button == 0 ) {
 
-        // From this mouse position, find intersections with objects
-        var intersects = getObjectIntersects( mouseDownPosition, objects );
-        console.log( intersects )
-        
-        if ( intersects.length > 0 ) {
+            // Get mouse position as a value from 0 to 1 for x and y within the DOM element
+            mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
 
-            var chosenObject = intersects[0];
-            editor.select( chosenObject.object );
+            // From this mouse position, find intersections with objects
+            var intersects = getObjectIntersects( mouseDownPosition, objects );
+            console.log( intersects )
+            
+            if ( intersects.length > 0 ) {
 
-            editor.signals.render.dispatch();
+                var chosenObject = intersects[0];
+                editor.select( chosenObject.object );
 
-            editor.signals.objectClicked.dispatch( mouseDownPosition );
+                editor.signals.render.dispatch();
 
-            // Enable dragging
-            document.addEventListener( 'pointermove', onPointerMove, false );
+                editor.signals.objectClicked.dispatch( mouseDownPosition );
 
-            // Disable drag on mouseup
-            document.addEventListener( 'mouseup', () => {
-                document.removeEventListener( 'pointermove', onPointerMove, false );
-                SnapDown( editor );
-            }, false );
+                // Enable dragging
+                document.addEventListener( 'pointermove', onPointerMove, false );
 
-        } else {
+                // Disable drag on mouseup
+                document.addEventListener( 'mouseup', () => {
+                    document.removeEventListener( 'pointermove', onPointerMove, false );
+                    SnapDown( editor );
+                }, false );
 
-            editor.select( null );
+            } else {
+
+                editor.select( null );
+
+            }
 
         }
 
