@@ -39,20 +39,7 @@ function Scene( editor ) {
 
         } );
     
-        // Define camera
-
-        var maxDist = 5000;  // Far plane for the PerspectiveCamera
-        var aspectRatio = this.container.dom.offsetWidth / this.container.dom.offsetHeight;
-        console.log( this.container.dom.offsetWidth, this.container.dom.offsetHeight )
-        this.camera = new THREE.PerspectiveCamera( 50, aspectRatio, 0.01, maxDist );
-        this.camera.name = 'Camera';
-        var distanceAway = 250;
-        this.camera.position.set( distanceAway, distanceAway, distanceAway );
-
-        // Use 3D printers' x/y/z orientation
-        
-        this.camera.up.set( 0, 0, 1 );  
-        this.camera.lookAt( new THREE.Vector3() );
+        CreateCamera( this );
 
         console.log( this.camera )
         
@@ -116,11 +103,33 @@ function Scene( editor ) {
         
         signals.windowResize.add( () => {
 
+            this.camera.aspect = this.container.dom.offsetWidth / this.container.dom.offsetHeight;
+            this.camera.updateProjectionMatrix();
+
             signals.render.dispatch();
 
         } )
 
     } )
+
+}
+
+function CreateCamera( scene ) {
+
+    // Define camera
+
+    var maxDist = 5000;  // Far plane for the PerspectiveCamera
+    var aspectRatio = scene.container.dom.offsetWidth / scene.container.dom.offsetHeight;
+    console.log( scene.container.dom.offsetWidth, scene.container.dom.offsetHeight )
+    scene.camera = new THREE.PerspectiveCamera( 50, aspectRatio, 0.01, maxDist );
+    scene.camera.name = 'Camera';
+    var distanceAway = 250;
+    scene.camera.position.set( distanceAway, distanceAway, distanceAway );
+
+    // Use 3D printers' x/y/z orientation
+    
+    scene.camera.up.set( 0, 0, 1 );  
+    scene.camera.lookAt( new THREE.Vector3() );
 
 }
 
