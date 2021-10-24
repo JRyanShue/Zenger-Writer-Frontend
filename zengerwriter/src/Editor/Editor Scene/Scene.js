@@ -7,8 +7,7 @@ import { EditorLights } from '../3D Components/EditorLights';
 import { EditorControls } from './Controls/EditorControls';
 import { ObjectControls } from './Controls/ObjectControls';
 
-import { SnapDown } from '../Utils/ObjectUtils';
-import { Vector3, VideoTexture } from 'three';
+import { ViewSelection } from '../DOM Elements/View Control/ViewSelection';
 
 // Build plate dimensions
 
@@ -48,8 +47,6 @@ function Scene( editor ) {
         const clearColor = new THREE.Color();
         this.scene.background = clearColor;
 
-        this.mixer = new THREE.AnimationMixer( this.scene );  // ?
-
         // Printing plate and volume
         this.scene.add( new PlateGrid( XY, Z ) );
 
@@ -82,7 +79,7 @@ function Scene( editor ) {
         } )
 
         /**
-         * @param {Vector3} newPos Vector3 that holds the object's new position
+         * @param {THREE.Vector3} newPos Vector3 that holds the object's new position
          */
         function setObjectPos( object, newPos ) {
 
@@ -109,6 +106,10 @@ function Scene( editor ) {
             signals.render.dispatch();
 
         } )
+
+        // Add ViewSelection
+
+        this.container.add( new ViewSelection( editor ) );
 
     } )
 
