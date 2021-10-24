@@ -1,5 +1,7 @@
 
 /*
+The code below was adapted from the THREE.js editor:
+
 The MIT License
 
 Copyright © 2010-2021 three.js authors

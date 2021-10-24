@@ -9,18 +9,18 @@ function EditorLights( editor ) {
 
     var light = new THREE.AmbientLight( color );
     light.name = 'AmbientLight';
-    editor.addObject( light );
+    editor.addElement( light );
 
 	var intensity = 1;
     var light = new THREE.DirectionalLight( color, intensity );
 	light.name = 'DirectionalLight';
-    editor.addObject( light );
+    editor.addElement( light );
 
     var intensity = 1;
     var distance = 0;
     var light = new THREE.PointLight( color, intensity, distance );
     light.name = 'PointLight';
-    editor.addObject( light );
+    editor.addElement( light );
 
 }
 

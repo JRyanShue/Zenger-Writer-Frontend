@@ -2,8 +2,6 @@
 import * as THREE from 'three';
 import { Vector3 } from 'three';
 
-import { SnapDown } from '../../Utils/ObjectUtils';
-
 function ObjectControls( editor, camera, domElement ) {
 
     var container = domElement;
@@ -49,7 +47,6 @@ function ObjectControls( editor, camera, domElement ) {
                 editor.select( chosenObject.object );
 
                 signals.render.dispatch();
-
                 signals.objectClicked.dispatch( mouseDownPosition );
 
                 // Enable dragging
@@ -59,11 +56,7 @@ function ObjectControls( editor, camera, domElement ) {
                 document.addEventListener( 'mouseup', () => {
 
                     document.removeEventListener( 'pointermove', onObjectDrag, false );
-                    if ( editor.selectedObject ) {
-
-                        SnapDown( editor );
-
-                    }
+                    editor.snapDown();
                     
                 }, false );
 

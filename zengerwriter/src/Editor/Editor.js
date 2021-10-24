@@ -17,6 +17,8 @@ import { Slice } from './API'
 
 import { UIPanel } from './libs/ui'
 
+import { SnapDown } from './Utils/ObjectUtils';
+
 import './css/main.css'
 
 /*
@@ -91,12 +93,21 @@ function Editor() {
     this.signals.objectAdded.add( ( object ) => {
 
         this.objects.push( object );
+        this.select( object );
+        this.snapDown();
 
     } )
 
     this.selectedObject = null;
 
     // Function Definitions
+
+    this.addElement = ( element ) => {  // For non-mesh objects (that have different attributes)
+
+        this.threeScene.add( element );
+        this.signals.render.dispatch();
+
+    }
 
     this.addObject = ( object, parent, index ) => {
 
@@ -109,6 +120,18 @@ function Editor() {
     this.select = ( object ) => {
 
         this.selectedObject = object;
+
+    }
+
+    // Drop selected object to build plate 
+
+    this.snapDown = () => {
+
+        if ( this.selectedObject ) {
+
+            SnapDown( this );
+
+        }
 
     }
 

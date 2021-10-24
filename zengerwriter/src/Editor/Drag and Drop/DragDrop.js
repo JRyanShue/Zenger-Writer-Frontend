@@ -31,7 +31,8 @@ function DragDrop( editor ) {
         if ( event.dataTransfer.items ) {
 
             // DataTransferItemList supports folders
-            // This block is called when dropping in a random STL. 
+            // This block is called when dropping in an STL. 
+            
             scope.loader.loadItemList( event.dataTransfer.items );
             console.log(event.dataTransfer.items)
 
