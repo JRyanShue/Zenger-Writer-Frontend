@@ -76,20 +76,13 @@ function Scene( editor ) {
         
         this.render = () => {
 
-            // console.log( this.scene )
-            // this.scene.scale = new Vector3( 1, 1, 0.5 )
-            // Value to shift the viewport vertically by - already shifted by default below due to window dynamics
-            this.viewportOffset = -(this.container.dom.offsetHeight)/5;  // Empirically imperfect approximation, but good enough
             this.viewportOffset = 0;
 
             // Bugs out when the window width falls below 600 (for no reason -- height is greater than 600), seems to be a native feature of some dependency
 
             this.renderer.setSize( this.container.dom.offsetWidth, this.container.dom.offsetHeight );
-            this.renderer.setViewport( 0, -(this.container.dom.offsetWidth - this.container.dom.offsetHeight)/2 + this.viewportOffset, this.container.dom.offsetWidth, this.container.dom.offsetWidth );
-            this.renderer.setViewport( 0, 0, this.container.dom.offsetWidth, this.container.dom.offsetHeight );
+            this.renderer.setViewport( 0, this.viewportOffset, this.container.dom.offsetWidth, this.container.dom.offsetHeight );
             this.renderer.render( this.scene, this.camera );
-
-            console.log(this.renderer)
 
         }
 

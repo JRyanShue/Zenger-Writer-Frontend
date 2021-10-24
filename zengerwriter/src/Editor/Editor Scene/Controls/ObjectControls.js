@@ -42,27 +42,6 @@ function ObjectControls( editor, camera, domElement ) {
 
             // From this mouse position, find intersections with objects
             var intersects = getObjectIntersects( mouseDownPosition, objects );
-            // TEST
-            // BUG: Selection is messed up by the scene shifting thing. 
-            var printStr = ''
-            for ( var i = 0; i <= 1; i += 0.01 ) {
-
-                for ( var j = 0; j <= 1; j += 0.01 ) {
-                    var ints = getObjectIntersects( {x: j, y: i}, objects )
-                    if ( ints.length > 0 ) {
-                        printStr += '*';
-                        // console.log( {x: j, y: i} )
-                    } else {
-                        printStr += ' '
-                    }
-                }
-                printStr += '\n'
-
-            }
-            console.log( printStr )
-            // Acceptable y ranges from 0.3-0.56 - camera is shifted!!!!!
-            console.log( getObjectIntersects( {x: 0.5100000000000002, y: 0.5600000000000003}, objects ) )
-            console.log( mouseDownPosition, intersects )
             
             if ( intersects.length > 0 ) {
 
