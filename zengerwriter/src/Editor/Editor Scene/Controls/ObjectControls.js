@@ -8,6 +8,7 @@ function ObjectControls( editor, camera, domElement ) {
 
     var container = domElement;
     var objects = editor.objects;
+    var signals = editor.signals;
 
     this.delta = new THREE.Vector3();
     this.initialPlaneIntersect = new THREE.Vector3();
@@ -41,24 +42,50 @@ function ObjectControls( editor, camera, domElement ) {
 
             // From this mouse position, find intersections with objects
             var intersects = getObjectIntersects( mouseDownPosition, objects );
-            console.log( intersects )
+            // TEST
+            // BUG: Selection is messed up by the scene shifting thing. 
+            var printStr = ''
+            for ( var i = 0; i <= 1; i += 0.01 ) {
+
+                for ( var j = 0; j <= 1; j += 0.01 ) {
+                    var ints = getObjectIntersects( {x: j, y: i}, objects )
+                    if ( ints.length > 0 ) {
+                        printStr += '*';
+                        // console.log( {x: j, y: i} )
+                    } else {
+                        printStr += ' '
+                    }
+                }
+                printStr += '\n'
+
+            }
+            console.log( printStr )
+            // Acceptable y ranges from 0.3-0.56 - camera is shifted!!!!!
+            console.log( getObjectIntersects( {x: 0.5100000000000002, y: 0.5600000000000003}, objects ) )
+            console.log( mouseDownPosition, intersects )
             
             if ( intersects.length > 0 ) {
 
                 var chosenObject = intersects[0];
                 editor.select( chosenObject.object );
 
-                editor.signals.render.dispatch();
+                signals.render.dispatch();
 
-                editor.signals.objectClicked.dispatch( mouseDownPosition );
+                signals.objectClicked.dispatch( mouseDownPosition );
 
                 // Enable dragging
-                document.addEventListener( 'pointermove', onPointerMove, false );
+                document.addEventListener( 'pointermove', onObjectDrag, false );
 
                 // Disable drag on mouseup
                 document.addEventListener( 'mouseup', () => {
-                    document.removeEventListener( 'pointermove', onPointerMove, false );
-                    SnapDown( editor );
+
+                    document.removeEventListener( 'pointermove', onObjectDrag, false );
+                    if ( editor.selectedObject ) {
+
+                        SnapDown( editor );
+
+                    }
+                    
                 }, false );
 
             } else {
@@ -71,7 +98,35 @@ function ObjectControls( editor, camera, domElement ) {
 
     }
 
-    function onPointerMove( e ) {
+    // Highlight objects when the mouse hovers over them, default color otherwise
+    function onObjectHover( e ) {
+
+        mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
+        var intersects = getObjectIntersects( mouseDownPosition, objects );
+        if ( intersects.length > 0 ) {
+
+            intersects[0].object.material.color = {b: 1, r: 0, g: 0}
+
+        } 
+        else {
+
+            for ( var object in objects ) {
+
+                if ( objects[object].material ) {
+
+                    objects[object].material.color = {b:1, r:1, g:1};
+
+                }
+
+            }
+
+        }
+
+        signals.render.dispatch();
+    
+    }
+
+    function onObjectDrag( e ) {
 
         if ( editor.selectedObject ) {
 
@@ -79,13 +134,13 @@ function ObjectControls( editor, camera, domElement ) {
             mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
             var planeIntersect = getPlaneIntersect( mouseDownPosition, objects );
             
-            editor.signals.objectDragged.dispatch( planeIntersect );
+            signals.objectDragged.dispatch( planeIntersect );
 
         }
 
     }
 
-    editor.signals.objectClicked.add( ( mouseDownPosition ) => {
+    signals.objectClicked.add( ( mouseDownPosition ) => {
 
         // Set initial plane intersection position, to find delta later
         this.initialPlaneIntersect.copy( getPlaneIntersect( mouseDownPosition, objects ).point );
@@ -95,19 +150,20 @@ function ObjectControls( editor, camera, domElement ) {
 
     } )
 
-    editor.signals.objectDragged.add( ( planeIntersect ) => {
+    signals.objectDragged.add( ( planeIntersect ) => {
 
         // Calculate delta
         this.delta.copy( planeIntersect.point ).sub( this.initialPlaneIntersect );
 
         // Set new object position
-        editor.signals.moveObjectTo.dispatch( editor.selectedObject, new Vector3( this.initialObjectPos.x + this.delta.x, this.initialObjectPos.y + this.delta.y, this.initialObjectPos.z + this.delta.z ) );
+        signals.moveObjectTo.dispatch( editor.selectedObject, new Vector3( this.initialObjectPos.x + this.delta.x, this.initialObjectPos.y + this.delta.y, this.initialObjectPos.z + this.delta.z ) );
         
     } )
 
     //
 
     document.addEventListener( 'mousedown', onMouseDown );
+    document.addEventListener( 'mousemove', onObjectHover );
 
     // Utils
 

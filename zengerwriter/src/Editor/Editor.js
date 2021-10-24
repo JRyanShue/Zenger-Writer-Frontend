@@ -46,6 +46,10 @@ function Editor() {
 
         moveObjectTo: new Signal(),
 
+        sceneContainerAdded: new Signal(),
+
+        windowResize: new Signal(),
+
         homeButtonClicked: new Signal(),
 
 		partView: new Signal(),
@@ -75,7 +79,7 @@ function Editor() {
 
     this.loader = new Loader( this );
 
-    this.camera = new EditorCamera();    
+    this.camera = null;    
 
     // THREE.js Scene: held by editor so that children can access
 
@@ -143,9 +147,11 @@ function Editor() {
     this.ui = new UIEditor( this );
     document.body.appendChild( this.ui.dom );
 
+    this.signals.sceneContainerAdded.dispatch();
+
     // Add generic listeners
 
-    window.addEventListener( 'resize', this.signals.render.dispatch );
+    window.addEventListener( 'resize', this.signals.windowResize.dispatch );
 
 }
 
