@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './Home/App';
 
 import EditorComponent from './Editor/Editor'
 
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from './Home/reportWebVitals';
 
 var username = "testman";
 
