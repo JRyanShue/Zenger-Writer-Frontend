@@ -125,7 +125,7 @@ function CreateCamera( scene ) {
     scene.camera = new THREE.PerspectiveCamera( 50, aspectRatio, 0.01, maxDist );
     scene.camera.name = 'Camera';
     var distanceAway = 250;
-    scene.camera.position.set( distanceAway, distanceAway, distanceAway );
+    scene.camera.position.set( distanceAway/1.5, distanceAway, distanceAway );
 
     // Use 3D printers' x/y/z orientation
     

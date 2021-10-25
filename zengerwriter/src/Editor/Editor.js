@@ -57,6 +57,8 @@ function Editor() {
 		partView: new Signal(),
 		layerView: new Signal(),
 
+        setTransformMode: new Signal(),
+
 		gcodeLoaded: new Signal()
 
     };

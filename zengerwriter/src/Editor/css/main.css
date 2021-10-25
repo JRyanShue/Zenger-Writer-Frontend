@@ -166,6 +166,68 @@ textarea, input { outline: none; } /* osx */
 }
 
 
+.TransformSelection {
+
+	position: absolute;
+	text-align: center;
+	width: max-content;
+
+	/* Center element vertically */
+	margin: 0;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+
+	/* Horizontal location */
+	left: 10px;
+
+	/* Place children vertically */
+	display: block;
+
+	/* Always show */
+	z-index: 9;
+
+}
+
+
+.TransformButton {
+
+	--button-padding: 10px;
+	--border-radius: 5px;
+
+	/* position: absolute; */
+	text-align: center;
+	width: max-content;
+
+	margin: 5px;
+
+}
+
+	.TransformButton .unselected {
+
+		color: black;
+		padding: var( --button-padding );
+		border-radius: var( --border-radius );
+
+	}
+
+		.TransformButton .unselected:hover {
+
+			color: white;
+			background-color: gray;
+
+		}
+
+	.TransformButton .selected {
+
+		color: white;
+		background-color: blue;
+		padding: var( --button-padding );
+		border-radius: var( --border-radius );
+
+	}
+
+
 .ViewSelection {
 
 	position: absolute;
@@ -187,6 +249,7 @@ textarea, input { outline: none; } /* osx */
 	z-index: 9;
 
 }
+
 
 .ViewButton {
 

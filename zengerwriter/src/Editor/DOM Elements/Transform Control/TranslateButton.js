@@ -1,0 +1,8 @@
+
+function TranslateButton() {
+
+
+
+}
+
+export { TranslateButton }

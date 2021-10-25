@@ -115,7 +115,6 @@ function ObjectControls( editor, camera, domElement ) {
     signals.objectClicked.add( ( mouseDownPosition ) => {
 
         // Set initial plane intersection position, to find delta later
-        console.log( getPlaneIntersect( mouseDownPosition, objects ) ) // Undefined
         this.initialPlaneIntersect.copy( getPlaneIntersect( mouseDownPosition, objects ).point );
 
         // Set initial object position, to set new position later
@@ -162,7 +161,6 @@ function ObjectControls( editor, camera, domElement ) {
 		raycaster.setFromCamera( mouse, camera );
 
         // Find and return intersection
-        // console.log( objects )
 		return raycaster.intersectObjects( objects );
 
 	}
@@ -170,7 +168,6 @@ function ObjectControls( editor, camera, domElement ) {
     function getObjectIntersects( point, objects ) {
 
         var intersections = getIntersects( point, objects );
-        console.log( intersections )
         return intersections.filter( obj => {
             return obj.object.name != 'TransformControlsPlane';
         } );
@@ -180,7 +177,6 @@ function ObjectControls( editor, camera, domElement ) {
     function getPlaneIntersect( point, objects ) {
 
         var intersections = getIntersects( point, objects );
-        console.log( intersections )
         return intersections.filter( obj => {
             return obj.object.name === 'TransformControlsPlane';
         } )[0];

@@ -40,7 +40,7 @@ function ViewSelection( editor ) {
     container.add( layerView );
 
     // Select viewButtons index 0 (partView)
-    this.viewButtons[0].viewButtonInner.dom.click();
+    this.viewButtons[0].viewButtonInner.dom.onmousedown();
 
     return container;
 
