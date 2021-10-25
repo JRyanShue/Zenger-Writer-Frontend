@@ -17,7 +17,7 @@ function ObjectControls( editor, camera, domElement ) {
     function TransformControlsPlane() {
 
         var plane = new THREE.PlaneGeometry( 100000, 100000, 2, 2 );
-        var transparentMaterial = new THREE.MeshBasicMaterial( { transparent: true, opacity: 0.0 } );
+        var transparentMaterial = new THREE.MeshBasicMaterial( { transparent: true, opacity: 0.0, side: THREE.DoubleSide } );
         var object = new THREE.Mesh( plane, transparentMaterial );
 
         object.name = 'TransformControlsPlane'
@@ -79,12 +79,12 @@ function ObjectControls( editor, camera, domElement ) {
 
             intersects[0].object.material.color = {b: 1, r: 0, g: 0}
 
-        } 
+        }
         else {
 
             for ( var object in objects ) {
 
-                if ( objects[object].material ) {
+                if ( objects[object].material && objects[object].name != 'TransformControlsPlane' ) {
 
                     objects[object].material.color = {b:1, r:1, g:1};
 
@@ -115,6 +115,7 @@ function ObjectControls( editor, camera, domElement ) {
     signals.objectClicked.add( ( mouseDownPosition ) => {
 
         // Set initial plane intersection position, to find delta later
+        console.log( getPlaneIntersect( mouseDownPosition, objects ) ) // Undefined
         this.initialPlaneIntersect.copy( getPlaneIntersect( mouseDownPosition, objects ).point );
 
         // Set initial object position, to set new position later
@@ -161,6 +162,7 @@ function ObjectControls( editor, camera, domElement ) {
 		raycaster.setFromCamera( mouse, camera );
 
         // Find and return intersection
+        // console.log( objects )
 		return raycaster.intersectObjects( objects );
 
 	}
@@ -168,6 +170,7 @@ function ObjectControls( editor, camera, domElement ) {
     function getObjectIntersects( point, objects ) {
 
         var intersections = getIntersects( point, objects );
+        console.log( intersections )
         return intersections.filter( obj => {
             return obj.object.name != 'TransformControlsPlane';
         } );
@@ -177,6 +180,7 @@ function ObjectControls( editor, camera, domElement ) {
     function getPlaneIntersect( point, objects ) {
 
         var intersections = getIntersects( point, objects );
+        console.log( intersections )
         return intersections.filter( obj => {
             return obj.object.name === 'TransformControlsPlane';
         } )[0];
