@@ -8,6 +8,7 @@ import { EditorControls } from './Controls/EditorControls';
 import { ObjectControls } from './Controls/ObjectControls';
 
 import { ViewSelection } from '../DOM Elements/View Control/ViewSelection';
+import { TransformSelection } from '../DOM Elements/Transform Control/TransformSelection';
 
 // Build plate dimensions
 
@@ -110,6 +111,10 @@ function Scene( editor ) {
         // Add ViewSelection
 
         this.container.add( new ViewSelection( editor ) );
+
+        // Add TransformSelection
+
+        this.container.add( new TransformSelection( editor ) );
 
     } )
 

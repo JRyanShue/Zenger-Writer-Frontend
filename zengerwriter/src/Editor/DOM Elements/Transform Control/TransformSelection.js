@@ -34,14 +34,14 @@ function TransformSelection( editor ) {
     var signals = editor.signals;
 
     // translate is always at index 0
-    var translate = new TransformButton( editor, './Images/TranslateImage.png', this, () => { signals.partView.dispatch() } );
-    var rotate = new TransformButton( editor, './Images/RotateImage.png', this, () => { signals.layerView.dispatch() } );
+    var translate = new TransformButton( editor, './Images/TranslateImage.png', this, () => { signals.setTransformMode.dispatch(  'translate') } );
+    var rotate = new TransformButton( editor, './Images/RotateImage.png', this, () => { signals.setTransformMode.dispatch( 'rotate' ) } );
 
     container.add( translate );
     container.add( rotate );
 
     // Select transformButtons index 0 (translate)
-    this.transformButtons[0].viewButtonInner.dom.click();
+    this.transformButtons[0].transformButtonInner.dom.onmousedown();
 
     return container;
 

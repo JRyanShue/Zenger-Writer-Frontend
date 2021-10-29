@@ -11,13 +11,15 @@ function TransformButton( editor, name, viewSelection, handleClick ) {
     var container = new UIPanel();
 
     // TransformButton: basic styles
-	var transformButton = new UITransformButton();
+	var transformButton = new UIPanel();
+    transformButton.setClass( 'TransformButton' );
 
     // TransformButtonInner: additional styles based on selected/unselected. 
-    this.transformButtonInner = new UITransformButtonInner( false );
+    this.transformButtonInner = new UIPanel( false );
+    this.transformButtonInner.setClass( 'unselected' );
 
 	this.transformButtonInner.dom.innerHTML = name;
-    this.transformButtonInner.dom.onclick = () => {
+    this.transformButtonInner.dom.onmousedown = () => {
         
         // Select this button ( highlight it on the screen )
         select( this );

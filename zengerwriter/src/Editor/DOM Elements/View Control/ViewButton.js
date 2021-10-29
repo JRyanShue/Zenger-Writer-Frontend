@@ -16,17 +16,12 @@ function ViewButton( editor, name, viewSelection, handleClick ) {
     // ViewButtonInner: additional styles based on selected/unselected. 
     this.viewButtonInner = new UIViewButtonInner( false );
 
-    function onMouseDown( viewButton ) {
-
-        // Select this button ( highlight it on the screen )
-        select( viewButton );
-        handleClick();
-
-    }
-	this.viewButtonInner.dom.innerHTML = name;
+    this.viewButtonInner.dom.innerHTML = name;
     this.viewButtonInner.dom.onmousedown = () => {
 
-        onMouseDown( this );
+        // Select this button ( highlight it on the screen )
+        select( this );
+        handleClick();
 
     }
 
