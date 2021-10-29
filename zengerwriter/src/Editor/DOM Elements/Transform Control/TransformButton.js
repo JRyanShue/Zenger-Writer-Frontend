@@ -3,7 +3,7 @@ import { UIPanel, UITransformButton, UITransformButtonInner } from '../../libs/u
 
 // Toggles the view between part view and layer view
 
-function TransformButton( editor, name, viewSelection, handleClick ) {
+function TransformButton( editor, imagePath, viewSelection, handleClick ) {
 
     var select = viewSelection.select;
 
@@ -18,7 +18,15 @@ function TransformButton( editor, name, viewSelection, handleClick ) {
     this.transformButtonInner = new UIPanel( false );
     this.transformButtonInner.setClass( 'unselected' );
 
-	this.transformButtonInner.dom.innerHTML = name;
+	// this.transformButtonInner.dom.innerHTML = name;
+    // this.transformButtonInner.dom.style.background = 'url(' + imagePath + ')';
+    console.log( imagePath );
+    this.image = document.createElement( 'img' );
+    this.image.className = 'TransformButtonImage';
+    this.image.src = imagePath;
+
+    this.transformButtonInner.dom.appendChild( this.image );
+
     this.transformButtonInner.dom.onmousedown = () => {
         
         // Select this button ( highlight it on the screen )

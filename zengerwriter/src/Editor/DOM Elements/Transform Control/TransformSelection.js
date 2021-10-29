@@ -34,8 +34,8 @@ function TransformSelection( editor ) {
     var signals = editor.signals;
 
     // translate is always at index 0
-    var translate = new TransformButton( editor, './Images/TranslateImage.png', this, () => { signals.setTransformMode.dispatch(  'translate') } );
-    var rotate = new TransformButton( editor, './Images/RotateImage.png', this, () => { signals.setTransformMode.dispatch( 'rotate' ) } );
+    var translate = new TransformButton( editor, 'Images/TranslateImage.svg', this, () => { signals.setTransformMode.dispatch( 'translate' ) } );
+    var rotate = new TransformButton( editor, 'Images/RotateImage.svg', this, () => { signals.setTransformMode.dispatch( 'rotate' ) } );
 
     container.add( translate );
     container.add( rotate );

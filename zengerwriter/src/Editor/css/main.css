@@ -8,6 +8,8 @@
 	--home-icon-height: calc( 2*var(--padding-amount) + 40px );
 
 	--layerSelectionBar-X: 30px;
+
+	--transformbutton-edgelength: 50px;
 }
 
 body {
@@ -182,10 +184,19 @@ textarea, input { outline: none; } /* osx */
 	left: 10px;
 
 	/* Place children vertically */
-	display: block;
+	display: flex;
+	flex-direction: column;
 
 	/* Always show */
 	z-index: 9;
+
+}
+
+
+.TransformButtonImage {
+
+	width: var(--transformbutton-edgelength);
+	height: var(--transformbutton-edgelength);
 
 }
 
@@ -195,19 +206,21 @@ textarea, input { outline: none; } /* osx */
 	--button-padding: 10px;
 	--border-radius: 5px;
 
-	/* position: absolute; */
-	text-align: center;
-	width: max-content;
-
 	margin: 5px;
+
+	width: var(--transformbutton-edgelength);
+	height: var(--transformbutton-edgelength);
 
 }
 
 	.TransformButton .unselected {
 
 		color: black;
-		padding: var( --button-padding );
+		/* padding: var( --button-padding ); */
 		border-radius: var( --border-radius );
+		border: 1px solid black;
+		width: 100%;
+		height: 100%;
 
 	}
 
@@ -222,8 +235,12 @@ textarea, input { outline: none; } /* osx */
 
 		color: white;
 		background-color: blue;
-		padding: var( --button-padding );
+		/* padding: var( --button-padding ); */
 		border-radius: var( --border-radius );
+		/* background-image: url('./Images/RotateImage.png'); */
+		border: 1px solid black;
+		width: 100%;
+		height: 100%;
 
 	}
 
