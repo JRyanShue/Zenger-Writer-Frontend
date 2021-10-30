@@ -33,6 +33,22 @@ function ObjectControls( editor, camera, domElement ) {
 
     function onMouseDown( e ) {  // LEFT OFF HERE
 
+        if ( editor.transformMode === 'translate' ) {
+
+            translateObject( e );
+
+        } 
+        else if ( editor.transformMode === 'rotate' ) {
+
+            rotateObject( e );
+            // console.log( 'rotate' );
+
+        }
+
+    }
+
+    function translateObject( e ) {
+
         if ( e.button == 0 ) {
 
             // Get mouse position as a value from 0 to 1 for x and y within the DOM element
@@ -70,8 +86,32 @@ function ObjectControls( editor, camera, domElement ) {
 
     }
 
-    // Highlight objects when the mouse hovers over them, default color otherwise
+    function rotateObject( e ) {
+
+        if ( e.button == 0 ) {
+
+        }
+
+    }
+
     function onObjectHover( e ) {
+
+        if ( editor.transformMode === 'translate' ) {
+        
+            translateHover( e );
+
+        } else if ( editor.transformMode === 'rotate' ) {
+
+            rotateHover( e );
+            // console.log( 'rotate' );
+
+        }
+    
+    }
+
+    function translateHover( e ) {
+
+        /// Highlight objects when the mouse hovers over them, default color otherwise
 
         mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
         var intersects = getObjectIntersects( mouseDownPosition, objects );
@@ -95,7 +135,13 @@ function ObjectControls( editor, camera, domElement ) {
         }
 
         signals.render.dispatch();
-    
+
+    }
+
+    function rotateHover( e ) {
+
+
+        
     }
 
     function onObjectDrag( e ) {

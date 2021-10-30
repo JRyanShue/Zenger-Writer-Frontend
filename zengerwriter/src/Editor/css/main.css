@@ -195,8 +195,17 @@ textarea, input { outline: none; } /* osx */
 
 .TransformButtonImage {
 
-	width: var(--transformbutton-edgelength);
-	height: var(--transformbutton-edgelength);
+	width: calc(var(--transformbutton-edgelength)/2);
+	height: calc(var(--transformbutton-edgelength)/2);
+
+	position: relative;
+
+	/* vertical-align: middle; */
+
+	top: 50%;
+	/* left: 50%; */
+	transform: translateY(-50%);
+	/* transform: translate(-50%, -50%); */
 
 }
 
@@ -218,7 +227,7 @@ textarea, input { outline: none; } /* osx */
 		color: black;
 		/* padding: var( --button-padding ); */
 		border-radius: var( --border-radius );
-		border: 1px solid black;
+		/* border: 2px solid black; */
 		width: 100%;
 		height: 100%;
 
@@ -227,18 +236,18 @@ textarea, input { outline: none; } /* osx */
 		.TransformButton .unselected:hover {
 
 			color: white;
-			background-color: gray;
+			background-color: lightgray;
 
 		}
 
 	.TransformButton .selected {
 
 		color: white;
-		background-color: blue;
+		background-color: rgb(175, 175, 175);
 		/* padding: var( --button-padding ); */
 		border-radius: var( --border-radius );
 		/* background-image: url('./Images/RotateImage.png'); */
-		border: 1px solid black;
+		/* border: 2px solid black; */
 		width: 100%;
 		height: 100%;
 
@@ -291,8 +300,8 @@ textarea, input { outline: none; } /* osx */
 
 		.ViewButton .unselected:hover {
 
-			color: white;
-			background-color: gray;
+			/* color: white; */
+			background-color: lightgray;
 
 		}
 

@@ -71,6 +71,11 @@ function Editor() {
 
     }
 
+    // Transform mode: translate, rotate
+
+    this.transformMode = 'translate';
+    this.signals.setTransformMode.add( (mode) => { this.transformMode = mode; } );
+
     // Strings: text labels for DOM components
 
     this.strings = new Strings( this.config );
