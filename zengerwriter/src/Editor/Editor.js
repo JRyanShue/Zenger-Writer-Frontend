@@ -46,6 +46,8 @@ function Editor() {
         objectClicked: new Signal(),
         objectDragged: new Signal(),
 
+        deselect: new Signal(),
+
         moveObjectTo: new Signal(),
 
         sceneContainerAdded: new Signal(),
@@ -105,8 +107,6 @@ function Editor() {
 
     } )
 
-    this.selectedObject = null;
-
     // Function Definitions
 
     this.addElement = ( element ) => {  // For non-mesh objects (that have different attributes)
@@ -116,19 +116,50 @@ function Editor() {
 
     }
 
-    this.addObject = ( object, parent, index ) => {
+    this.addObject = ( object ) => {
 
-        this.threeScene.add( object );
+        this.threeScene.add( object );        
         this.signals.objectAdded.dispatch( object );
+        this.updateBoundingBox();
         this.signals.render.dispatch();
 
     }
 
+    //
+
+    this.selectedObject = null;
+    this.selectedObjectBoxHelper = new THREE.BoxHelper();
+    this.selectedObjectBoxHelper.visible = false;
+    this.addElement( this.selectedObjectBoxHelper );
+
+    //
+
     this.select = ( object ) => {
 
+        if ( this.selectedObject === object ) return;
+
         this.selectedObject = object;
+        this.selectedObjectBoxHelper.setFromObject( object );
+        this.selectedObjectBoxHelper.visible = true;
 
     }
+
+    this.updateBoundingBox = () => {
+
+        if ( this.selectedObject ) {
+
+            this.selectedObjectBoxHelper.update();
+
+        }        
+
+    }
+
+    this.signals.deselect.add( () => {
+
+        this.selectedObject = null;
+        this.selectedObjectBoxHelper.visible = false;
+
+    } )
 
     // Drop selected object to build plate 
 

@@ -14,7 +14,13 @@ function SnapDown( editor ) {
     // console.log( geometry )
     geometry.computeBoundingBox();
 
+    console.log( geometry.boundingBox )
+
+    // Have to update object.matrixWorld to get the correct bounding box   
+
     absoluteBounds.copy( geometry.boundingBox ).applyMatrix4( object.matrixWorld );  // Absolute bounding box
+
+    console.log( absoluteBounds )
 
     var newPosition = new THREE.Vector3(object.position.x, object.position.y, object.position.z - absoluteBounds.min.z)
     

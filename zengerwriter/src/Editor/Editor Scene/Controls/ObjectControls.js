@@ -90,6 +90,22 @@ function ObjectControls( editor, camera, domElement ) {
 
         if ( e.button == 0 ) {
 
+            mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
+            var intersects = getObjectIntersects( mouseDownPosition, objects );
+            if ( intersects.length > 0 ) {
+            
+                console.log(intersects[0].object.rotation.y)
+                intersects[0].object.rotation.y += 0.01;
+                // var bbox = new THREE.Box3().setFromObject(intersects[0].object);
+                // editor.addElement(bbox)
+                intersects[0].object.updateMatrixWorld( true );
+
+            }
+
+            editor.updateBoundingBox();
+
+            signals.render.dispatch();
+
         }
 
     }
@@ -111,7 +127,7 @@ function ObjectControls( editor, camera, domElement ) {
 
     function translateHover( e ) {
 
-        /// Highlight objects when the mouse hovers over them, default color otherwise
+        // Highlight objects when the mouse hovers over them, default color otherwise
 
         mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
         var intersects = getObjectIntersects( mouseDownPosition, objects );
@@ -140,8 +156,36 @@ function ObjectControls( editor, camera, domElement ) {
 
     function rotateHover( e ) {
 
+        // Highlight objects when the mouse hovers over them, default color otherwise
+
+        mouseDownPosition.fromArray( getMousePosition( domElement, e.clientX, e.clientY ) );
+        var intersects = getObjectIntersects( mouseDownPosition, objects );
+        if ( intersects.length > 0 ) {
+
+            // intersects[0].object.material.color = {b: 1, r: 0, g: 0}
+            // console.log(intersects[0].face);
+            // console.log(intersects[0].face.normal);
+            
+
+        }
+        // else {
+
+        //     for ( var object in objects ) {
+
+        //         if ( objects[object].material && objects[object].name != 'TransformControlsPlane' ) {
+
+        //             objects[object].material.color = {b:1, r:1, g:1};
+
+        //         }
+
+        //     }
+
+        // }
 
         
+
+        signals.render.dispatch();
+
     }
 
     function onObjectDrag( e ) {
@@ -161,7 +205,7 @@ function ObjectControls( editor, camera, domElement ) {
     signals.objectClicked.add( ( mouseDownPosition ) => {
 
         // Set initial plane intersection position, to find delta later
-        this.initialPlaneIntersect.copy( getPlaneIntersect( mouseDownPosition, objects ).point );
+        this.initialPlaneIntersect.copy( getPlaneIntersect( mouseDownPosition, objects ).point );  // BUG OCCASIONALLY HAPPENS HERE, after obeject is rotated.
 
         // Set initial object position, to set new position later
         this.initialObjectPos.copy( editor.selectedObject.position );
@@ -176,6 +220,9 @@ function ObjectControls( editor, camera, domElement ) {
         // Set new object position
         signals.moveObjectTo.dispatch( editor.selectedObject, new Vector3( this.initialObjectPos.x + this.delta.x, this.initialObjectPos.y + this.delta.y, this.initialObjectPos.z + this.delta.z ) );
         
+        // Update bounding box
+        editor.updateBoundingBox();
+
     } )
 
     //
